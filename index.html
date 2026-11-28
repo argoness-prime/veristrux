@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veristrux Inc. &mdash; Unreal Engine 5.9, Spatial Verification &amp; Agent Security Engineering</title>
+  <meta
+    name="description"
+    content="Veristrux Inc. builds deterministic engineering systems for Unreal Engine 5.8/5.9 rendering, 29-Prime Laguerre spatial verification (ViewDrift), and <5 ms PreToolUse security & prompt-cache governance (Iron Veil)."
+  />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="canonical" href="https://veristrux.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Veristrux Inc." />
+  <meta property="og:url" content="https://veristrux.com/" />
+  <meta property="og:title" content="Veristrux Inc. — Token Czar v2 · ViewDrift UE 5.9 · Iron Veil" />
+  <meta property="og:image" content="https://veristrux.com/media/og_social_card_1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Veristrux Inc. flagship suite: Token Czar v2 split-binary context guard, ViewDrift 29-Prime spatial verification for UE 5.9, and Iron Veil agent firewall. Illustrative session figures, not a provider spend cap. veristrux.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Veristrux Inc. — Token Czar v2 · ViewDrift UE 5.9 · Iron Veil" />
+  <meta name="twitter:description" content="Deterministic spatial verification for Unreal Engine 5.8/5.9 and zero-content-telemetry agent infrastructure: ViewDrift 29-Prime fiducial, Token Czar v2.0 split-binary guard, Iron Veil &lt;5 ms PreToolUse firewall, and 48-hour C++20/MCP rescues." />
+  <meta name="twitter:image" content="https://veristrux.com/media/og_social_card_1200x630.png" />
+  <meta
+    property="og:description"
+    content="Deterministic spatial verification for Unreal Engine 5.8/5.9 and zero-content-telemetry agent infrastructure: ViewDrift 29-Prime fiducial, Token Czar v2.0 split-binary guard, Iron Veil &lt;5 ms PreToolUse firewall, and 48-hour C++20/MCP rescues."
+  />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 7L16 25L25 7' fill='none' stroke='%23c99a52' stroke-width='2.6' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"
+  />
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #121214;
+      --surface-2: #17171a;
+      --rule: #252528;
+      --rule-strong: #363430;
+      --ink: #ece7de;
+      --muted: #989289;
+      --dim: #6d6860;
+      --brass: #c99a52;
+      --brass-bright: #dfb671;
+      --brass-bg: rgba(201, 154, 82, 0.11);
+      --brass-rule: rgba(201, 154, 82, 0.36);
+      --sage: #7ea88b;
+      --code-bg: #080809;
+      --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    a { color: var(--brass); text-decoration: none; }
+    a:hover { color: var(--brass-bright); }
+    a:focus-visible, button:focus-visible { outline: 1px solid var(--brass); outline-offset: 2px; }
+
+    code, pre, .mono { font-family: var(--mono); }
+    p code, li code, td code {
+      background: #1a1815;
+      border: 1px solid #2e2a23;
+      color: #e4d4b7;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-size: 0.85em;
+    }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 8px;
+      background: var(--brass); color: #0b0b0c; padding: 8px 14px; font-weight: 700; z-index: 100;
+    }
+    .skip-link:focus { left: 12px; }
+
+    /* Top Black Friday Hairline Strip */
+    .sale-strip {
+      background: #14110c;
+      border-bottom: 1px solid var(--brass-rule);
+      padding: 9px 20px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-align: center;
+    }
+    .sale-strip strong { color: var(--brass-bright); font-weight: 600; }
+    .sale-strip a {
+      color: var(--ink);
+      border-bottom: 1px solid var(--brass);
+      padding-bottom: 1px;
+      margin-left: 10px;
+    }
+
+    /* Architectural Navigation */
+    .site-header {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(11, 11, 12, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .brand:hover { color: var(--ink); }
+    .brand-mark {
+      width: 24px; height: 24px;
+      border: 1px solid var(--brass-rule);
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #14120e;
+    }
+    .brand-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--dim);
+      border-left: 1px solid var(--rule);
+      padding-left: 12px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.nav-lead { color: var(--brass-bright); }
+    .nav-cta {
+      padding: 8px 14px;
+      border: 1px solid var(--brass);
+      background: var(--brass-bg);
+      color: var(--brass-bright) !important;
+      border-radius: 2px;
+    }
+    .nav-cta:hover { background: var(--brass); color: #0b0b0c !important; }
+
+    /* Container & Section Headers */
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 28px 88px;
+    }
+    .sec { margin-top: 72px; }
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+    }
+    .sec-index {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brass);
+      display: block;
+      margin-bottom: 6px;
+    }
+    h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.55rem, 2.7vw, 2.1rem);
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .sec-note {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 460px;
+      text-align: right;
+    }
+
+    /* Editorial 2-Column Hero with Real UE 5.9 Studio Plate */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+    .kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 18px;
+      display: block;
+    }
+    h1 {
+      margin: 0 0 20px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.15rem, 4.1vw, 3.25rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .hero-lead {
+      color: var(--muted);
+      font-size: 1.03rem;
+      max-width: 540px;
+      margin: 0 0 28px;
+    }
+    .hero-lead strong { color: var(--ink); font-weight: 600; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 2px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+    .btn-brass {
+      background: var(--brass);
+      color: #0b0b0c;
+      border: 1px solid var(--brass);
+    }
+    .btn-brass:hover { background: var(--brass-bright); border-color: var(--brass-bright); color: #0b0b0c; }
+    .btn-line {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--rule-strong);
+    }
+    .btn-line:hover { border-color: var(--brass); color: var(--brass-bright); }
+    .btn-full { width: 100%; }
+
+    /* Telemetry Strip */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .tel-cell {
+      background: var(--surface);
+      padding: 12px 14px;
+    }
+    .tel-val {
+      display: block;
+      font-family: var(--mono);
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .tel-val.brass { color: var(--brass-bright); }
+    .tel-val.sage { color: var(--sage); }
+    .tel-lbl {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-top: 3px;
+    }
+
+    /* Studio Plate Frame — Real-Time 4K Retina WebGL2 360° PBR Stage + Key Easter Egg */
+    .plate-stage {
+      position: relative;
+    }
+    .plate-frame {
+      border: 1px solid var(--rule-strong);
+      background: var(--surface);
+      padding: 10px;
+      position: relative;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+      transition: border-color 180ms ease, box-shadow 220ms ease;
+    }
+    .plate-frame.dragging { cursor: grabbing; }
+    .plate-frame:hover {
+      border-color: var(--brass-rule);
+      box-shadow: 0 26px 64px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(201, 154, 82, 0.14);
+    }
+    .plate-media {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      background: #070708;
+      aspect-ratio: 16 / 9;
+    }
+    .plate-media img.plate-fallback {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.03) saturate(0.98);
+    }
+    .plate-media canvas#sovereign-key-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 0;
+      transition: opacity 280ms ease;
+    }
+    .plate-media canvas#sovereign-key-canvas.ready {
+      opacity: 1;
+    }
+    .plate-sheen {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 220ms ease;
+      background: radial-gradient(circle 280px at var(--mx, 50%) var(--my, 50%), rgba(223, 182, 113, 0.12), transparent 65%);
+      mix-blend-mode: screen;
+    }
+    .plate-frame:hover .plate-sheen { opacity: 1; }
+    .plate-reticle {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      z-index: 3;
+      border-color: rgba(201, 154, 82, 0.65);
+      border-style: solid;
+      border-width: 0;
+    }
+    .plate-reticle.tl { top: 18px; left: 18px; border-top-width: 1px; border-left-width: 1px; }
+    .plate-reticle.tr { top: 18px; right: 18px; border-top-width: 1px; border-right-width: 1px; }
+    .plate-reticle.bl { bottom: 44px; left: 18px; border-bottom-width: 1px; border-left-width: 1px; }
+    .plate-reticle.br { bottom: 44px; right: 18px; border-bottom-width: 1px; border-right-width: 1px; }
+    .plate-cap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 2px 2px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .plate-cap span:first-child { color: var(--brass); }
+    .plate-hint {
+      position: absolute;
+      right: 22px;
+      bottom: 48px;
+      z-index: 3;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(236, 231, 222, 0.78);
+      background: rgba(11, 11, 12, 0.76);
+      border: 1px solid rgba(201, 154, 82, 0.38);
+      padding: 3px 8px;
+      opacity: 0;
+      transition: opacity 200ms ease;
+      pointer-events: none;
+    }
+    .plate-frame:hover .plate-hint { opacity: 1; }
+
+    /* Architectural Hairline Grids (Zero Rounded Floating Blobs) */
+    .ledger-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .ledger-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .ledger-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .cell {
+      background: var(--surface);
+      padding: 26px 26px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .cell.elev { background: var(--surface-2); }
+    .cell-tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .cell h3 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.32rem;
+      line-height: 1.22;
+      color: var(--ink);
+    }
+    .cell p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+    .spec-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--rule);
+    }
+    .spec-list li {
+      padding: 8px 0 8px 18px;
+      border-bottom: 1px solid rgba(37, 37, 40, 0.65);
+      font-size: 0.86rem;
+      color: var(--muted);
+      position: relative;
+    }
+    .spec-list li::before {
+      content: "/";
+      font-family: var(--mono);
+      color: var(--brass);
+      position: absolute;
+      left: 0;
+      top: 8px;
+    }
+
+    /* Pricing Typography */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .price-now {
+      font-family: var(--mono);
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .discount-tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brass-bright);
+      border: 1px solid var(--brass-rule);
+      background: var(--brass-bg);
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+    .price-meta {
+      width: 100%;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: -4px;
+    }
+
+    /* Express Bar */
+    .express-bar {
+      margin-top: 1px;
+      background: #141310;
+      border: 1px solid var(--rule);
+      border-top: none;
+      padding: 20px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+    .express-copy { max-width: 720px; }
+    .express-copy strong { color: var(--ink); }
+    .express-copy p { margin: 4px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+    /* CAD Schematic Viewport for ViewDrift & UE5.9 Pipeline */
+    .schematic-box {
+      background: #0a0a0b;
+      border: 1px solid var(--rule);
+      margin-bottom: 18px;
+      padding: 14px;
+    }
+    .schematic-box svg { width: 100%; height: auto; display: block; }
+    .schematic-cap {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    /* Terminal & Table Proof */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .terminal-pane {
+      background: var(--code-bg);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .term-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--rule-strong);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .copy-btn:hover { border-color: var(--brass); color: var(--brass-bright); }
+    pre {
+      margin: 0;
+      padding: 18px 20px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #d8d2c6;
+      overflow-x: auto;
+    }
+    .t-prompt { color: var(--brass); }
+    .t-ok { color: var(--sage); }
+    .t-dim { color: var(--dim); }
+
+    table { width: 100%; border-collapse: collapse; background: var(--surface); }
+    th, td {
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.87rem;
+      vertical-align: top;
+    }
+    th {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: #0f0f11;
+    }
+    td { color: var(--muted); }
+    td strong { color: var(--ink); font-weight: 600; }
+    .metric-col { font-family: var(--mono); font-size: 11.5px; color: var(--sage); white-space: nowrap; }
+
+    /* Footer */
+    footer {
+      margin-top: 76px;
+      padding-top: 22px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--dim);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover { color: var(--brass-bright); }
+
+    .tokenczar-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: center; }
+
+    /* Hero v3: concrete H1, product reel in place of decorative plate */
+    .h1-code {
+      font-family: var(--mono);
+      font-size: 0.82em;
+      letter-spacing: -0.03em;
+      color: var(--brass-bright);
+    }
+    .hero-sub {
+      margin: -18px 0 26px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--dim);
+    }
+    .hero-sub a { color: var(--muted); border-bottom: 1px solid var(--rule-strong); }
+    .hero-sub a:hover { color: var(--brass-bright); border-color: var(--brass); }
+    .hero-reel {
+      margin: 0;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface);
+      padding: 10px;
+    }
+    .reel .plate-frame { padding: 0; border: none; background: transparent; }
+    .reel .plate-frame:hover { box-shadow: none; }
+    .reel .plate-reticle.bl, .reel .plate-reticle.br { bottom: 40px; }
+    .reel .plate-hint { bottom: 44px; }
+
+    /* Prompt-cache & read-bloat waste estimator */
+    .calc {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 6px 28px;
+      padding: 16px 24px 14px;
+      border-bottom: 1px solid var(--rule);
+      background: #0f0e0b;
+    }
+    .calc-in { display: grid; grid-template-columns: 1fr; gap: 4px; }
+    .calc-in label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .calc-in output { color: var(--ink); font-weight: 600; }
+    .calc-in input[type="range"] { width: 100%; accent-color: var(--brass); margin: 2px 0 8px; }
+    .calc-out { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .calc-out .tel-val { font-size: 1.6rem; }
+    .calc-split { font-family: var(--mono); font-size: 11px; line-height: 1.6; color: var(--dim); }
+    .calc-split b { color: var(--ink); font-weight: 600; }
+    .calc-note {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--dim);
+    }
+
+    /* Flagship Suite index rail (directly under hero) */
+    .h1-accent { font-style: normal; color: var(--brass-bright); }
+    .suite {
+      margin-top: 44px;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface);
+    }
+    .suite-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding: 18px 24px 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .suite-head h2 { font-size: clamp(1.35rem, 2.3vw, 1.75rem); }
+    .suite-promise {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .suite-promise b { color: var(--brass-bright); font-weight: 600; }
+    .suite-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+    }
+    .suite-cell {
+      background: var(--surface);
+      padding: 20px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .suite-cell.lead { background: var(--surface-2); }
+    .suite-cell h3 {
+      margin: 0 0 6px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.16rem;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .suite-cell p { margin: 0; color: var(--muted); font-size: 0.86rem; }
+    .suite-price {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .suite-price .price-now { font-size: 1.45rem; }
+    .suite-meta {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: var(--dim);
+      margin-top: 8px;
+      word-break: break-word;
+    }
+    .suite-foot {
+      padding: 12px 24px 14px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .suite-foot strong { color: var(--muted); }
+
+    /* Token Czar: estimator + Pro / Free Lite cards */
+    .tc-calc-wrap { margin-top: 4px; border: 1px solid var(--brass-rule); background: #0f0e0b; }
+    .tc-calc-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      padding: 14px 24px 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .tc-calc-head .sec-index { margin: 0; }
+    .tc-calc-wrap .calc { border-bottom: none; }
+    .tc-calc-wrap .calc-note { font-size: 10px; color: var(--dim); }
+    #top h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+    .tc-cards {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .kit-foot {
+      margin-top: 1px;
+      background: #0f0f11;
+      border: 1px solid var(--rule);
+      border-top: none;
+      padding: 12px 24px 14px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .kit-foot strong { color: var(--muted); }
+
+    /* Visual & Video Showcase */
+    .reel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .reel {
+      margin: 0;
+      background: var(--surface);
+      padding: 10px 10px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .reel-media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #070708;
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .reel-media video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .reel figcaption { padding: 14px 8px 0; }
+    .reel figcaption h3 {
+      margin: 0 0 6px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.18rem;
+      color: var(--ink);
+    }
+    .reel figcaption p { margin: 0; color: var(--muted); font-size: 0.86rem; }
+    .reel-sub {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.04em;
+      color: var(--dim);
+    }
+    .reel-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
+    @media (max-width: 1120px) {
+      .brand-sub { display: none; }
+      .nav-links { gap: 18px; }
+    }
+    @media (max-width: 960px) {
+      .reel-grid, .calc, .tc-cards { grid-template-columns: 1fr; }
+      .hero-grid, .ledger-2, .proof-grid, .tokenczar-grid { grid-template-columns: 1fr; }
+      .ledger-4, .suite-grid { grid-template-columns: repeat(2, 1fr); }
+      .sec-note { text-align: left; }
+      .nav-links a:not(.nav-keep) { display: none; }
+    }
+    .hero-grid > *, .reel-grid > *, .ledger-2 > *, .ledger-3 > *, .ledger-4 > *, .proof-grid > *, .suite-grid > *, .tokenczar-grid > *, .calc > *, .tc-cards > * { min-width: 0; max-width: 100%; }
+    @media (max-width: 640px) {
+      .nav-inner { padding: 12px 16px; }
+      .wrap { padding: 28px 16px 64px; }
+      .telemetry-strip { grid-template-columns: 1fr 1fr; }
+      .ledger-4, .suite-grid { grid-template-columns: 1fr; }
+      .cell { padding: 20px 16px; }
+      .btn { white-space: normal; text-align: center; }
+      .btn-pair { grid-template-columns: 1fr !important; }
+      .sale-strip { padding: 8px 12px; font-size: 11px; }
+      .proof-grid table { display: block; overflow-x: auto; max-width: 100%; }
+      .metric-col { white-space: normal; }
+      .plate-cap { flex-wrap: wrap; gap: 6px; }
+    }
+    svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <div class="sale-strip" role="region" aria-label="Veristrux Inc. flagship launch">
+    <strong>VERISTRUX INC. FLAGSHIP LAUNCH</strong> &mdash;
+    ViewDrift v1.5 for UE 5.8/5.9 &middot; Token Czar v2.0 &middot; 48h Engineering Rescues &mdash; Launch Rates through Dec 1 &middot; <code>BLACKFRIDAY26</code> pre-applied
+    <a href="#flagship-index">Explore the Suite</a>
+  </div>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Veristrux Inc.">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16">
+            <path d="M2 2.5L8 13.5L14 2.5" fill="none" stroke="#c99a52" stroke-width="1.8" stroke-linecap="square" />
+          </svg>
+        </span>
+        <span>Veristrux</span>
+        <span class="brand-sub">Systems &amp; UE 5.9 Lab</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#flagship-index" class="nav-lead nav-keep">Flagship</a>
+        <a href="#showcase">Showcase</a>
+        <a href="#tokenczar" class="nav-keep">Token Czar</a>
+        <a href="#flagship">UE 5.9 Suite</a>
+        <a href="#toolkits">Toolkits</a>
+        <a href="#rescues">48h Rescues</a>
+        <a href="./argoness.html">Dossier</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="wrap">
+    <!-- HERO -->
+    <section id="top" class="hero-grid">
+      <div>
+        <span class="kicker">Veristrux Inc. &middot; Flagship Launch &middot; Unreal Engine 5.8 / 5.9 &middot; Agent Infrastructure</span>
+        <h1>Deterministic Spatial Verification for <em class="h1-accent">UE&nbsp;5.9</em> &amp; Zero-Content-Telemetry Agent Infrastructure.</h1>
+        <p class="hero-lead">
+          <strong>ViewDrift</strong> brings a 29-Prime Laguerre spatial fiducial and <code>&le;0.50 mm</code> seam gate to Unreal Engine 5.8 / 5.9.
+          <strong>Token Czar v2.0</strong> is a split-binary local guard that keeps Claude Code &amp; Antigravity context lean, with zero content telemetry.
+          And when a build is on fire, our <strong>48-hour C++20 / MCP rescues</strong> deliver verified, fixed-scope patches.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn-brass" href="#flagship-index">Explore Flagship Suite &rarr;</a>
+          <a class="btn btn-line" href="https://github.com/argoness-prime/veristrux/releases/download/tokenczar-v2.0.0/TokenCzar-Setup-v2.0.0.exe" target="_blank" rel="noopener">Download Token Czar Lite (.exe) &mdash; Free &darr;</a>
+        </div>
+        <p class="hero-sub">Showcases &amp; Labs: <a href="./viewdrift-demo.html">ViewDrift Showcase</a> &middot; <a href="./tokenczar-demo.html">AST &amp; Cache</a> &middot; <a href="./ue5-doctor-demo.html">UE5 Triage</a> &middot; <a href="./silicon-tuner-demo.html">35B MoE Silicon</a> &middot; <a href="#rescues">48h rescue</a></p>
+
+        <div class="telemetry-strip" aria-label="Verifiable product specifications">
+          <div class="tel-cell">
+            <span class="tel-val brass">29-Prime</span>
+            <span class="tel-lbl">Laguerre Fiducial</span>
+          </div>
+          <div class="tel-cell">
+            <span class="tel-val">&le;0.50 mm</span>
+            <span class="tel-lbl">Seam Gate &middot; UE 5.9</span>
+          </div>
+          <div class="tel-cell">
+            <span class="tel-val sage">&lt;5 ms</span>
+            <span class="tel-lbl">Local Hook Latency</span>
+          </div>
+          <div class="tel-cell">
+            <span class="tel-val">48h</span>
+            <span class="tel-lbl">Rescue Delivery Target</span>
+          </div>
+        </div>
+        <p style="margin: 10px 0 0; font-family: var(--mono); font-size: 10px; line-height: 1.5; color: var(--dim);">
+          Run <code>iron-veil-core selftest</code> yourself in 60 seconds, or <code>iron-veil-core xray</code> to audit your own Claude Code transcripts for read bloat &amp; 5-minute cache cliffs (<a href="#proof">free MIT CLI, offline</a>). Tools are local workflow hooks&mdash;not a billing spend cap.
+        </p>
+      </div>
+
+      <figure class="hero-reel" aria-label="Token Czar v2.0 product reel">
+        <div class="reel-media">
+          <video autoplay loop muted playsinline preload="metadata" poster="./media/tokenczar_v2_showcase_poster.png" aria-label="Token Czar v2.0 product reel: unguarded full-file reads versus AST symbol-map windowing">
+            <source src="./media/tokenczar_v2_showcase.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <figcaption class="plate-cap">
+          <span>Reel A &middot; Token Czar v2.0 Live Desktop UI</span>
+          <span>Illustrative &middot; <a href="./tokenczar-demo.html">AST Lab &rarr;</a> &middot; <a href="https://youtu.be/Zr55UqFz7aw" target="_blank" rel="noopener">1080p YouTube &nearr;</a> &middot; <a href="https://www.youtube.com/shorts/rlzhbMHmoQ0" target="_blank" rel="noopener">9:16 Short &nearr;</a></span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- FLAGSHIP SUITE INDEX -->
+    <section id="flagship-index" class="suite" aria-labelledby="flagship-index-title">
+      <div class="suite-head">
+        <div>
+          <span class="sec-index">The Flagship Suite &middot; Veristrux Inc.</span>
+          <h2 id="flagship-index-title">Studio-Grade Systems for UE 5.9 &amp; Agent-Heavy Teams</h2>
+        </div>
+        <div class="suite-promise"><b>Launch rates through Dec 1</b> &middot; Polar.sh merchant of record &middot; Instant license delivery</div>
+      </div>
+
+      <div class="suite-grid">
+        <article class="suite-cell lead">
+          <div>
+            <span class="cell-tag">Flagship &middot; UE 5.8 / 5.9 C++ / HLSL</span>
+            <h3>ViewDrift v1.5 &mdash; 29-Prime Spatial Fiducial</h3>
+            <div class="suite-price"><span class="price-now">$77.40</span><span class="discount-tag">Launch &middot; $129 regular</span></div>
+            <p>Eliminates Projective&ndash;Radiometric Null-Space Drift (Modes I&ndash;III) across 6 Laguerre walls (<code>A-NORTH</code>&ndash;<code>F-CEILING</code>), <code>1536&times;1536</code> multi-buffer sheets &amp; <code>SelectiveDirtyBit</code> MCP firewall.</p>
+          </div>
+          <div>
+            <a class="btn btn-brass btn-full" href="https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" target="_blank" rel="noopener">Buy ViewDrift &mdash; $77.40 &rarr;</a>
+            <div class="suite-meta" style="text-align: center;">Studio-5 $479.40 ($799 reg) &middot; <a href="./viewdrift-demo.html">4-pillar showcase &rarr;</a> &middot; <a href="#flagship">spec &darr;</a></div>
+          </div>
+        </article>
+
+        <article class="suite-cell">
+          <div>
+            <span class="cell-tag">Local-First Agent Infrastructure</span>
+            <h3>Token Czar v2.0 Pro &mdash; Split-Binary Guard</h3>
+            <div class="suite-price"><span class="price-now">$59.40</span><span class="discount-tag">First Year &middot; then $99/yr</span></div>
+            <p>165K warm auto-compactor, diff-hunk write coordinator and 240s cache sleep guard, streamed as a signed native extension.</p>
+          </div>
+          <div>
+            <a class="btn btn-line btn-full" href="#tokenczar">Estimate Waste &amp; Compare Plans &darr;</a>
+            <div class="suite-meta" style="text-align: center;">Monthly $7.20 first mo, then $12/mo &middot; auto-renews until canceled &middot; <a href="./tokenczar-demo.html">live AST &amp; cache lab &rarr;</a></div>
+          </div>
+        </article>
+
+        <article class="suite-cell">
+          <div>
+            <span class="cell-tag">UE 5.9 HWRT &amp; DLSS 5 Cinema</span>
+            <h3>Standalone <code>-game</code> Capture &amp; <code>-15.5 LUFS</code> Kit</h3>
+            <div class="suite-price"><span class="price-now">$29.40</span><span class="discount-tag">Launch &middot; $49 regular</span></div>
+            <p>Genuine <code>ACineCameraActor</code> capture outside PIE, FOV-adaptive DoF, two-pass EBU R128 mastering and rolling credits.</p>
+          </div>
+          <div>
+            <a class="btn btn-line btn-full" href="https://buy.polar.sh/polar_cl_PD2J6tSXYKF8gG2KDYvfKRU2t28wIo0Zs8EF71r1Tgz" target="_blank" rel="noopener">Buy Cinema Kit &mdash; $29.40 &rarr;</a>
+            <div class="suite-meta" style="text-align: center;">One-time studio license &middot; instant ZIP &middot; <a href="./media/wave5/ue59_crash_and_cinema_16x9.mp4" target="_blank" rel="noopener">1080p reel &nearr;</a></div>
+          </div>
+        </article>
+
+        <article class="suite-cell">
+          <div>
+            <span class="cell-tag">Direct Engineering &middot; Fixed Scope</span>
+            <h3>48-Hour C++20 / RDG / MCP Rescues</h3>
+            <div class="suite-price"><span class="price-now">$249</span><span class="discount-tag">Launch &middot; $399 after Dec 1</span></div>
+            <p>Cook failures, RDG shaders, OpenXR 90 Hz budgets, or a Claude Code / MCP fleet lockdown ($199). Written root cause plus patch.</p>
+          </div>
+          <div>
+            <a class="btn btn-line btn-full" href="#rescues">Scope a 48h Rescue &darr;</a>
+            <div class="suite-meta" style="text-align: center;">Prepaid fixed scope &middot; zero calls &middot; async delivery</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="suite-foot">
+        <strong>Launch terms:</strong> <code>BLACKFRIDAY26</code> (40% off) is pre-applied at Polar.sh checkout through Dec 1, 11:59 PM ET. Subscriptions renew at the regular rate until canceled (<a href="#tokenczar">full renewal terms</a>).
+        Prefer a self-contained CLI? See the <a href="#toolkits">Standalone Python Source Kits</a>. All sales final upon delivery (<a href="./refunds.html">Refund Policy</a> &middot; <a href="./eula.html">EULA</a>).
+      </div>
+    </section>
+
+    <!-- VISUAL & VIDEO SHOWCASE -->
+    <section id="showcase" class="sec">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">In Motion &middot; Short Product Reels</span>
+          <h2>See Token Czar v2.0 &amp; ViewDrift UE 5.9 Work</h2>
+        </div>
+        <div class="sec-note">Rendered explainers of internal benchmark figures &middot; results vary.</div>
+      </div>
+
+      <div class="reel-grid">
+        <figure class="reel">
+          <div class="plate-stage">
+            <div class="plate-frame" id="sovereign-plate" role="img" aria-label="Interactive real-time 3D 360-degree orbital stage of the Obsidian Sovereign Key — drag to orbit">
+              <span class="plate-reticle tl" aria-hidden="true"></span>
+              <span class="plate-reticle tr" aria-hidden="true"></span>
+              <span class="plate-reticle bl" aria-hidden="true"></span>
+              <span class="plate-reticle br" aria-hidden="true"></span>
+              <div class="plate-media">
+                <img class="plate-fallback" src="./assets/ue59_hwrt_stage.jpg" alt="Obsidian Sovereign Key resting on royal crimson velvet cushion over fluted obsidian pedestal" width="1920" height="1080" loading="lazy" />
+                <canvas id="sovereign-key-canvas" aria-hidden="true"></canvas>
+                <div class="plate-sheen" aria-hidden="true"></div>
+              </div>
+              <span class="plate-hint" aria-hidden="true">Drag to Orbit</span>
+              <div class="plate-cap">
+                <span>Plate 01 &middot; Live 3D PBR &middot; 360&deg; Pan</span>
+                <span>Drag to Orbit</span>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            <span class="cell-tag">Live Stage &middot; Real-Time WebGL2 in Your Browser</span>
+            <h3>Sovereign Key &mdash; Interactive PBR Plate</h3>
+            <p>A real-time physically based render running in this page&mdash;obsidian, brass and velvet lit on your GPU. Drag to orbit the key; it is the same radiometric discipline behind ViewDrift&rsquo;s audit sheets.</p>
+            <span class="reel-sub">WebGL2 live render &middot; static UE 5.9 HWRT still shown if WebGL2 is unavailable.</span>
+            <div class="reel-cta">
+              <a class="btn btn-line" href="#flagship">UE 5.9 Cinema Kit &amp; ViewDrift</a>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="reel">
+          <div class="reel-media">
+            <video autoplay loop muted playsinline preload="metadata" poster="./media/viewdrift_ue59_showcase_poster.png" aria-label="ViewDrift Unreal Engine 5.9 product reel: 29-prime Laguerre optical chamber and multi-buffer audit sheet">
+              <source src="./media/viewdrift_ue59_showcase.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>
+            <span class="cell-tag">Reel B &middot; UE 5.8 / 5.9 Plugin</span>
+            <h3>ViewDrift &mdash; 29-Prime Spatial Verification</h3>
+            <p>6-wall (<code>A-NORTH</code>&ndash;<code>F-CEILING</code>) 29-Prime (<code>12P+17H</code>, <code>V=54, E=81, 4&pi;/29 sr</code>) Weighted Laguerre Power Diagram, <code>1536&times;1536</code> (<code>4&times;768&sup2;</code>) multi-buffer contact sheet, <code>&le;0.50 mm</code> seam &amp; fold gate, <code>8.9&times;</code> <code>0.30</code> Detail Lighting override, and stateful <code>SelectiveDirtyBit</code> MCP firewall.</p>
+            <span class="reel-sub">Captured from the real 3D 29-Prime Laguerre chamber &amp; docked PPD Spatial Fiducial Inspector (illustrative session). <a href="./media/viewdrift_ue59_showcase.mp4" target="_blank" rel="noopener">Direct 1080p MP4 &nearr;</a> &middot; <a href="./media/wave5/viewdrift_ue59_short.mp4" target="_blank" rel="noopener">9:16 Vertical Reel &nearr;</a></span>
+            <div class="reel-cta">
+              <a class="btn btn-brass" href="./viewdrift-demo.html">ViewDrift Showcase &amp; Walkthrough &rarr;</a>
+              <a class="btn btn-line" href="#flagship">ViewDrift &amp; Cinema Kit</a>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="reel-grid" style="margin-top: 22px;">
+        <figure class="reel">
+          <div class="reel-media">
+            <video controls muted playsinline preload="metadata" poster="./media/wave5/ue59_crash_and_cinema_poster.png" aria-label="UE 5.9 Build and VRAM Doctor plus Standalone -game Cinema Capture technical reel">
+              <source src="./media/wave5/ue59_crash_and_cinema_16x9.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>
+            <span class="cell-tag">Reel C &middot; UE 5.4&ndash;5.9 Triage &amp; Cinema Pipeline</span>
+            <h3>UE 5.9 Build / VRAM Doctor &amp; Standalone <code>-game</code> Capture</h3>
+            <p>Deterministic <code>&lt;50 ms</code> UBT <code>LNK2019 &rarr; Build.cs</code> resolution, dual <code>audit-ini</code> budgets (<code>r.Shadow.Virtual.MaxPhysicalPages</code>, <code>vr.InstancedStereo</code>), and genuine <code>ACineCameraActor</code> standalone <code>-game</code> capture for DLSS-RR / DLSS 5.</p>
+            <span class="reel-sub">Self-hosted 1080p MP4 &middot; <a href="./media/wave5/ue59_crash_and_cinema_16x9.mp4" target="_blank" rel="noopener">1080p Direct &nearr;</a> &middot; <a href="./media/wave5/ue59_crash_and_cinema_short.mp4" target="_blank" rel="noopener">9:16 Vertical Reel &nearr;</a></span>
+            <div class="reel-cta">
+              <a class="btn btn-brass" href="./ue5-doctor-demo.html">Launch UE5 Triage Lab &rarr;</a>
+              <a class="btn btn-line" href="#flagship">UE 5.9 Cinema Kit</a>
+              <a class="btn btn-line" href="#toolkits">UE5 Doctor CLI</a>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="reel">
+          <div class="reel-media">
+            <video controls muted playsinline preload="metadata" poster="./media/wave5/silicon_moe_35b_16gb_poster.png" aria-label="Hybrid Silicon Tuner 35B Mixture-of-Experts on 16 GB RTX VRAM and DDR5 math reel">
+              <source src="./media/wave5/silicon_moe_35b_16gb_16x9.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>
+            <span class="cell-tag">Reel D &middot; Local Silicon &amp; GQA KV-Cache Math</span>
+            <h3>35B MoE on 16 GB RTX &mdash; Exact Hybrid Split</h3>
+            <p>Why naive dense VRAM estimates OOM on 16 GB cards, and how exact GQA KV-cache accounting plus <code>--n-cpu-moe</code> / <code>-cmoe</code> pins attention + hot experts on GDDR7 while streaming cold routed experts from DDR5.</p>
+            <span class="reel-sub">Self-hosted 1080p MP4 &middot; <a href="./media/wave5/silicon_moe_35b_16gb_16x9.mp4" target="_blank" rel="noopener">1080p Direct &nearr;</a> &middot; <a href="./media/wave5/silicon_moe_35b_16gb_short.mp4" target="_blank" rel="noopener">9:16 Vertical Reel &nearr;</a></span>
+            <div class="reel-cta">
+              <a class="btn btn-brass" href="./silicon-tuner-demo.html">Launch 35B MoE Lab &rarr;</a>
+              <a class="btn btn-line" href="#toolkits">Hybrid Silicon Tuner</a>
+              <a class="btn btn-line" href="https://github.com/argoness-prime/silicon-tuner" target="_blank" rel="noopener">MIT Core on GitHub &nearr;</a>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 01: 48-HOUR ASYNC RESCUES -->
+    <section id="rescues" class="sec">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">01 / Direct Engineering</span>
+          <h2>48-Hour Fixed-Scope Async Rescues</h2>
+        </div>
+        <div class="sec-note">Zero calls. Prepaid fixed scope. Verified patches, C++/INI diffs, and regression tests delivered asynchronously.</div>
+      </div>
+
+      <div class="ledger-2">
+        <article class="cell elev">
+          <div>
+            <span class="cell-tag">Unreal Engine 5.8 / 5.9 &middot; C++20 / RDG / OpenXR</span>
+            <h3>Cook Failure, RDG Shader &amp; OpenXR 90 Hz Triage</h3>
+            <div class="price-row">
+              <span class="price-now">$249</span>
+              <span class="discount-tag">Launch Rate &middot; $399 after Dec 1</span>
+              <span class="price-meta">48h delivery target &middot; PayPal / Venmo / Card checkout</span>
+            </div>
+            <p>Send UBT/UAT cook logs, crash dumps, or a stripped repro. Receive a written root-cause analysis and best-effort C++20 / <code>Build.cs</code> / RDG / <code>DefaultEngine.ini</code> patch.</p>
+            <ul class="spec-list">
+              <li>16 GB VRAM &amp; Windows virtual commit ceilings (0 GB pagefile safe)</li>
+              <li><code>WorldPartitionHLODsBuilder</code>, Zen DDC locks &amp; MetaHuman Skin Cache seams</li>
+              <li>Quest 3 OpenXR passthrough &amp; 90 Hz frame-time budget isolation</li>
+            </ul>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://www.paypal.com/ncp/payment/7GY5UN93A5J5W" target="_blank" rel="noopener">
+            Book 48h UE5 Rescue &mdash; $249 &rarr;
+          </a>
+        </article>
+
+        <article class="cell">
+          <div>
+            <span class="cell-tag">Claude Code &amp; Cursor Fleets &middot; Prompt-Cache &amp; Hook Audits</span>
+            <h3>Prompt-Cache Repair &amp; MCP Security Lockdown Audit</h3>
+            <div class="price-row">
+              <span class="price-now">$199</span>
+              <span class="discount-tag">Launch Rate &middot; $349 after Dec 1</span>
+              <span class="price-meta">48h delivery target &middot; Direct PayPal invoice</span>
+            </div>
+            <p>Submit sanitized <code>.claude</code>, <code>.cursor</code>, or <code>mcp.json</code> configs to diagnose broken-cache spikes and harden untrusted local repo execution.</p>
+            <ul class="spec-list">
+              <li>Fail-closed <code>&lt;5 ms</code> <code>PreToolUse</code> secret airgap &amp; shell policy review</li>
+              <li>Prompt-cache prefix hygiene &amp; smart compaction configuration</li>
+              <li>Informed by Veristrux internal benchmarks (32.6B measured tokens saved across 99.5K turns; results vary)</li>
+            </ul>
+          </div>
+          <a class="btn btn-brass btn-full" href="mailto:argoness@veristrux.com?subject=Book%20Launch%2048h%20Claude%20Code%20%26%20Cursor%20Audit%20(%24199)" target="_blank" rel="noopener">
+            Book 48h Fleet Audit &mdash; $199 &rarr;
+          </a>
+        </article>
+      </div>
+
+      <div class="express-bar">
+        <div class="express-copy">
+          <span class="cell-tag" style="margin-bottom: 4px;">Custom Studio Scope &middot; Multi-Seat &amp; NDA</span>
+          <strong>Dedicated UE 5.8 / 5.9 Pipeline Audits, Custom RDG Shaders, or Multi-Seat Studio Licensing</strong>
+          <p>Need a custom fixed-scope engineering milestone, studio-wide ViewDrift deployment, or bilateral NDA? Send your stack and target deliverable directly to <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a> for a written same-day quote.</p>
+        </div>
+        <a class="btn btn-line" href="mailto:argoness@veristrux.com?subject=Veristrux%20Studio%20Scope%20%2F%20Multi-Seat%20Inquiry">
+          Request Studio Scope &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- 02: FLAGSHIP UE 5.9 SUITE -->
+    <section id="flagship" class="sec">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">02 / Flagship UE 5.8 &amp; 5.9 Releases</span>
+          <h2>Spatial Verification &amp; Standalone Cinema Pipeline</h2>
+        </div>
+        <div class="sec-note">Polar.sh Merchant of Record &middot; Instant ZIP delivery &middot; <code>BLACKFRIDAY26</code> (40% OFF) pre-applied through Dec 1.</div>
+      </div>
+
+      <div class="ledger-2">
+        <!-- ViewDrift /ppd v1.5.0 -->
+        <article class="cell elev">
+          <div>
+            <div class="schematic-box" aria-label="29-Prime Laguerre Spatial Fiducial Blueprint">
+              <svg viewBox="0 0 460 175" xmlns="http://www.w3.org/2000/svg" role="img">
+                <rect x="0" y="0" width="460" height="175" fill="#09090a" />
+                <!-- Hairline CAD grid -->
+                <g stroke="#1b1b1e" stroke-width="1">
+                  <line x1="0" y1="44" x2="460" y2="44" />
+                  <line x1="0" y1="88" x2="460" y2="88" />
+                  <line x1="0" y1="132" x2="460" y2="132" />
+                  <line x1="92" y1="0" x2="92" y2="175" />
+                  <line x1="184" y1="0" x2="184" y2="175" />
+                  <line x1="276" y1="0" x2="276" y2="175" />
+                  <line x1="368" y1="0" x2="368" y2="175" />
+                </g>
+                <!-- Laguerre Sphere Orthographic Projection -->
+                <g transform="translate(112, 88)">
+                  <circle cx="0" cy="0" r="64" fill="none" stroke="#c99a52" stroke-width="1.2" />
+                  <ellipse cx="0" cy="0" rx="64" ry="22" fill="none" stroke="#474137" stroke-width="1" stroke-dasharray="3 3" />
+                  <ellipse cx="0" cy="0" rx="22" ry="64" fill="none" stroke="#474137" stroke-width="1" stroke-dasharray="3 3" />
+                  <!-- 12P + 17H Lotus Facet Cells -->
+                  <polygon points="0,-24 22,-8 14,19 -14,19 -22,-8" fill="rgba(201,154,82,0.12)" stroke="#c99a52" stroke-width="1.2" />
+                  <polygon points="0,-24 22,-8 44,-22 30,-48 0,-54 -30,-48 -44,-22 -22,-8" fill="none" stroke="#7d6744" stroke-width="0.9" />
+                  <line x1="-74" y1="0" x2="74" y2="0" stroke="#35353a" stroke-width="1" />
+                  <line x1="0" y1="-74" x2="0" y2="74" stroke="#35353a" stroke-width="1" />
+                  <circle cx="0" cy="0" r="2.5" fill="#dfb671" />
+                </g>
+                <!-- Right Spec Callouts -->
+                <g font-family="ui-monospace, Consolas, monospace" font-size="10.5" fill="#989289">
+                  <text x="206" y="34" fill="#c99a52" letter-spacing="1.2">VIEWDRIFT // 29-PRIME LAGUERRE CHAMBER</text>
+                  <text x="206" y="58">TOPOLOGY     : 12P + 17H · V=54 E=81 F=29</text>
+                  <text x="206" y="78">6-WALL GAUGE : 4&#960;/29 sr · 1+6+10+12 LAGUERRE</text>
+                  <text x="206" y="98">SEAM &amp; FOLD  : d(&#8706;V_A, M_B) &#8804; 0.50 mm</text>
+                  <text x="206" y="118">RADIOMETRY   : 0.30 GRAY (8.9&#215;) + 64-SPP REL</text>
+                  <text x="206" y="138" fill="#7ea88b">MCP FIREWALL : SELECTIVE DIRTY-BIT (b_mesh/uv)</text>
+                </g>
+              </svg>
+              <div class="schematic-cap">
+                <span>CAD FIG 01 &middot; 6-WALL A-NORTH..F-CEILING FIDUCIAL</span>
+                <span>UE 5.8 + UE 5.9 SOURCE INCLUDED</span>
+              </div>
+            </div>
+
+            <span class="cell-tag">Flagship UE 5.8 &amp; 5.9 C++ / HLSL Plugin</span>
+            <h3>ViewDrift (<code>/ppd v1.5.0</code>) Spatial Fiducial &amp; AI Guard</h3>
+            <div class="price-row">
+              <span class="price-now">$77.40</span>
+              <span class="discount-tag">Launch Price through Dec 1 &middot; $129 regular</span>
+              <span class="price-meta">Personal License &middot; Studio-5 $479.40 through Dec 1 ($799 regular)</span>
+            </div>
+            <p>Eliminates Projective&ndash;Radiometric Null-Space Drift (Modes I&ndash;III: <code>20 mm</code> viewing-ray depth spikes, <code>&lt;2 px</code> ViT Nyquist seams, <code>8.9&times;</code> masked <code>SSS=0</code> dropouts &amp; <code>180&deg;</code> dorsal blind zones). Ships with 6-wall Weighted Laguerre D3D12 RDG shader, Weber&ndash;Fechner zoom-bloom (<code>D/R_bounds</code>), dockable Slate Inspector, <code>1536&times;1536</code> (<code>4&times;768&sup2;</code>) Q1&ndash;Q4 contact sheets, <code>64-SPP</code> relative Path-Tracer check, and stateful <code>SelectiveDirtyBit</code> MCP save firewall.</p>
+          </div>
+          <div>
+            <div class="btn-pair" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" target="_blank" rel="noopener">
+                Personal &mdash; $77.40
+              </a>
+              <a class="btn btn-line" href="https://buy.polar.sh/polar_cl_l04tSHl8LLF8eKXw502e8p6AMWonIqBKK8mQ808CGEe" target="_blank" rel="noopener">
+                Studio-5 &mdash; $479.40
+              </a>
+            </div>
+            <div class="suite-meta" style="text-align: center; margin-top: 10px;">
+              <a href="./viewdrift-demo.html">Watch the ViewDrift UE 5.9 Showcase &amp; 4-Pillar Architectural Walkthrough &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- UE 5.9 Cinema Capture & -15.5 LUFS Toolkit -->
+        <article class="cell">
+          <div>
+            <div class="schematic-box" aria-label="UE 5.9 Standalone -game HWRT/DLSS 5 Pipeline Schematic">
+              <svg viewBox="0 0 460 175" xmlns="http://www.w3.org/2000/svg" role="img">
+                <rect x="0" y="0" width="460" height="175" fill="#09090a" />
+                <g stroke="#1b1b1e" stroke-width="1">
+                  <line x1="0" y1="58" x2="460" y2="58" />
+                  <line x1="0" y1="116" x2="460" y2="116" />
+                </g>
+                <!-- Pipeline Nodes -->
+                <g font-family="ui-monospace, Consolas, monospace" font-size="10">
+                  <rect x="18" y="34" width="124" height="48" fill="#121214" stroke="#c99a52" stroke-width="1" />
+                  <text x="28" y="53" fill="#dfb671">01 -GAME VIEWPORT</text>
+                  <text x="28" y="70" fill="#989289">ACineCamera + DoF</text>
+
+                  <line x1="142" y1="58" x2="168" y2="58" stroke="#c99a52" stroke-width="1" />
+                  <rect x="168" y="34" width="124" height="48" fill="#121214" stroke="#474137" stroke-width="1" />
+                  <text x="178" y="53" fill="#ece7de">02 HWRT + DLSS 5</text>
+                  <text x="178" y="70" fill="#989289">3-Bounce / NGX 18</text>
+
+                  <line x1="292" y1="58" x2="318" y2="58" stroke="#c99a52" stroke-width="1" />
+                  <rect x="318" y="34" width="124" height="48" fill="#121214" stroke="#474137" stroke-width="1" />
+                  <text x="328" y="53" fill="#ece7de">03 NVENC CFR</text>
+                  <text x="328" y="70" fill="#989289">IEND PNG Gate</text>
+
+                  <rect x="18" y="106" width="204" height="44" fill="#121214" stroke="#35353a" stroke-width="1" />
+                  <text x="28" y="124" fill="#7ea88b">04 TWO-PASS EBU R128 AUDIO</text>
+                  <text x="28" y="140" fill="#989289">-15.5 LUFS / -1.5 dBTP / Sidechain</text>
+
+                  <line x1="222" y1="128" x2="246" y2="128" stroke="#7ea88b" stroke-width="1" />
+                  <rect x="246" y="106" width="196" height="44" fill="#121214" stroke="#35353a" stroke-width="1" />
+                  <text x="256" y="124" fill="#ece7de">05 MASTER COMPOSITOR</text>
+                  <text x="256" y="140" fill="#989289">Cosine Titles + Luma Credits</text>
+                </g>
+              </svg>
+              <div class="schematic-cap">
+                <span>CAD FIG 02 &middot; STANDALONE CAPTURE PIPELINE</span>
+                <span>BYPASSES bIsSceneCapture EXCLUSION</span>
+              </div>
+            </div>
+
+            <span class="cell-tag">UE 5.9 HWRT &amp; DLSS 5 Cinema Tooling</span>
+            <h3>Standalone <code>-game</code> Capture &amp; <code>-15.5 LUFS</code> Toolkit for Unreal Engine 5.9</h3>
+            <div class="price-row">
+              <span class="price-now">$29.40</span>
+              <span class="discount-tag">Launch Price through Dec 1 &middot; $49 regular</span>
+              <span class="price-meta">One-time studio license &middot; Instant Polar.sh ZIP download</span>
+            </div>
+            <p>Drives a genuine <code>ACineCameraActor</code> in standalone <code>-game</code> mode to unlock NVIDIA DLSS-RR and DLSS 5 Neural Rendering while saving ~6+ GB Windows commit over Editor PIE. Bundles FOV-adaptive DoF, two-pass EBU R128 audio mastering, and viewport-masked rolling credits.</p>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://buy.polar.sh/polar_cl_PD2J6tSXYKF8gG2KDYvfKRU2t28wIo0Zs8EF71r1Tgz" target="_blank" rel="noopener">
+            Buy UE 5.9 Cinema Kit &mdash; $29.40 &rarr;
+          </a>
+        </article>
+      </div>
+
+      <!-- Veristrux Token Czar v2.0 — Split-Binary Token Efficiency Subscription -->
+      <article id="tokenczar" class="cell elev" style="margin-top: 1px; border: 1px solid var(--rule); border-top: none;">
+        <div class="tokenczar-grid">
+          <div>
+            <span class="cell-tag">Flagship Desktop Utility &middot; Split-Binary Native Stream &middot; Local Workflow Middleware</span>
+            <h3>Veristrux Token Czar v2.0 &mdash; Context Hygiene &amp; 165K Auto-Compactor</h3>
+            <div class="price-row">
+              <span class="price-now">$7.20/mo</span>
+              <span class="discount-tag">Launch Price through Dec 1 &middot; $12/mo regular</span>
+              <span class="price-meta">Annual Pro $59.40/yr through Dec 1 ($99/yr regular, 3 seats) &middot; Free Lite Host (0 Pro bytes on disk)</span>
+            </div>
+            <p>
+              Built for Google Antigravity and Claude Code power users to reduce redundant local context reads. The free Lite host runs an active
+              <code>&le;350</code>-line AST Read Shield and deduplicated local Quota X-Ray with zero Pro code on disk. Subscribing streams the
+              Cython/MSVC-compiled native <code>tokenczar_pro.pyd</code> (<code>143 KB</code> gzipped, Ed25519 + HWID lease) live in
+              <code>&lt;200 ms</code>&mdash;unlocking the 165K Warm Auto-Compactor, 90% Diff-Hunk Write Coordinator,
+              Update-Drift Self-Healer, 7-Vector Parasite Reaper, and best-effort compatibility updates as upstream IDE schemas evolve (no fixed SLA).
+            </p>
+            <div class="telemetry-strip" style="margin-top: 16px;" aria-label="Internal Veristrux benchmark measurements">
+              <div class="tel-cell">
+                <span class="tel-val brass">32.6B</span>
+                <span class="tel-lbl">Measured Tokens Saved*</span>
+              </div>
+              <div class="tel-cell">
+                <span class="tel-val">11.6&times;</span>
+                <span class="tel-lbl">Internal Quota Stretch*</span>
+              </div>
+              <div class="tel-cell">
+                <span class="tel-val sage">93.5%</span>
+                <span class="tel-lbl">Measured Cache Hit*</span>
+              </div>
+              <div class="tel-cell">
+                <span class="tel-val">&lt;5 ms</span>
+                <span class="tel-lbl">Local Hook Latency</span>
+              </div>
+            </div>
+            <p style="margin: 10px 0 0; font-family: var(--mono); font-size: 10px; line-height: 1.5; color: var(--dim);">
+              *Measured on Veristrux internal Claude Code &amp; Antigravity workloads (99,498 deduplicated turns, Nov 2026). Results vary by workflow and are not guaranteed. Tools are local workflow hooks&mdash;<strong>not a billing spend cap</strong>; set hard spend limits directly in your AI provider console.
+            </p>
+            <p style="margin: 10px 0 0; font-family: var(--mono); font-size: 11px; color: var(--brass-hi);">
+              <a href="./tokenczar-demo.html" style="color: var(--brass-hi); text-decoration: underline;">Test Token Czar&rsquo;s &lt;3 ms AST Symbol-Map &amp; 165K vs 512K Cache-Curve Playground in your browser (zero-content-telemetry) &rarr;</a>
+            </p>
+          </div>
+          <div class="schematic-box" style="margin-bottom: 0;" aria-label="Token Czar v2.0 Split-Binary Streamed Architecture">
+            <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg" role="img">
+              <rect x="0" y="0" width="420" height="170" fill="#09090a" />
+              <g stroke="#1b1b1e" stroke-width="1">
+                <line x1="0" y1="56" x2="420" y2="56" />
+                <line x1="0" y1="114" x2="420" y2="114" />
+              </g>
+              <g font-family="ui-monospace, Consolas, monospace" font-size="9.5">
+                <rect x="14" y="20" width="176" height="54" fill="#121214" stroke="#474137" stroke-width="1" />
+                <text x="24" y="38" fill="#7ea88b">LITE HOST (FREE EXE)</text>
+                <text x="24" y="54" fill="#989289">&le;350L AST Read Shield</text>
+                <text x="24" y="67" fill="#6d6860">0% Pro code on disk</text>
+
+                <line x1="190" y1="47" x2="226" y2="47" stroke="#c99a52" stroke-width="1.2" />
+                <polygon points="226,44 232,47 226,50" fill="#c99a52" />
+
+                <rect x="232" y="20" width="174" height="54" fill="#121214" stroke="#c99a52" stroke-width="1" />
+                <text x="242" y="38" fill="#dfb671">POLAR + ED25519 EDGE</text>
+                <text x="242" y="54" fill="#989289">72h HWID Signed Lease</text>
+                <text x="242" y="67" fill="#989289">143 KB Native .pyd.gz</text>
+
+                <rect x="14" y="96" width="392" height="54" fill="#121214" stroke="#35353a" stroke-width="1" />
+                <text x="24" y="114" fill="#ece7de">PRO NATIVE EXTENSION (HOT-LOADED IN &lt;200 MS)</text>
+                <text x="24" y="130" fill="#989289">165K Auto-Compactor &middot; 90% Diff-Hunk &middot; 240s Sleep Guard</text>
+                <text x="24" y="143" fill="#c99a52">Drift Self-Healer &middot; 7-Vector Reaper &middot; 8-Day Deep Sweep</text>
+              </g>
+            </svg>
+            <div class="schematic-cap">
+              <span>CAD FIG 03 &middot; ZERO-JAILBREAK SPLIT-BINARY</span>
+              <span>WEBVIEW2 MATTE OBSIDIAN UI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prompt-Cache & Context-Waste Estimator (drives Pro + Free Lite below) -->
+        <div class="tc-calc-wrap">
+          <div class="tc-calc-head">
+            <span class="sec-index">Prompt-Cache &amp; Context-Waste Estimator</span>
+            <span class="suite-promise">Illustrative &middot; public list token rates &middot; drag to model your week</span>
+          </div>
+          <div class="calc" id="waste-calc" aria-label="Prompt-cache and context-waste estimator">
+            <div class="calc-in">
+              <label for="wc-r">Full-file reads / day <output id="wc-r-o">40</output></label>
+              <input type="range" id="wc-r" min="0" max="200" step="5" value="40" />
+              <label for="wc-p">Idle pauses &gt;5 min / day <output id="wc-p-o">6</output></label>
+              <input type="range" id="wc-p" min="0" max="30" step="1" value="6" />
+            </div>
+            <div class="calc-out">
+              <div><span class="tel-val brass" id="wc-total">$62</span><span class="tel-lbl">Illustrative re-billed API spend / month</span></div>
+              <div class="calc-split">Read bloat <b id="wc-read">$16</b> &rarr; Free Lite &le;350-line AST Read Shield<br />Cold-cache re-writes <b id="wc-cache">$46</b> &rarr; Token Czar Pro 240s Sleep Guard</div>
+            </div>
+            <p class="calc-note">Illustrative math using public token rates&mdash;actual savings vary. Assumes 6K excess tokens per unguarded read at $3/M input, plus a 100K-token prefix re-written at $3.75/M instead of read at $0.30/M after each cache expiry, 22 workdays/month. Estimate only; not a financial spend cap.</p>
+          </div>
+        </div>
+
+        <div class="tc-cards">
+          <article class="suite-cell lead">
+            <div>
+              <span class="cell-tag">Token Czar v2.0 Pro &middot; Polar.sh Subscription</span>
+              <h3>Pro &mdash; 165K Auto-Compactor, Diff-Hunk Writes &amp; Sleep Guard</h3>
+              <div class="suite-price">
+                <span class="price-now">$59.40</span>
+                <span class="discount-tag">Annual &middot; 3 Seats &middot; First Year</span>
+              </div>
+              <p>Streams the signed native <code>tokenczar_pro.pyd</code> into your free Lite host in <code>&lt;200 ms</code>. Monthly plan: <strong style="color: var(--ink);">$7.20</strong> first month.</p>
+            </div>
+            <div>
+              <div class="btn-pair" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6" target="_blank" rel="noopener">Annual Pro &mdash; $59.40 &rarr;</a>
+                <a class="btn btn-line" href="https://buy.polar.sh/polar_cl_dQXZToDEEbTQFeeGtSXEsnAQ34XAFUBWAEMwU0FsX9X" target="_blank" rel="noopener">Monthly Pro &mdash; $7.20 &rarr;</a>
+              </div>
+              <p style="margin: 12px 0 0; font-family: var(--mono); font-size: 10px; line-height: 1.55; color: var(--dim);">
+                <strong>Auto-Renewal &amp; Middleware Notice:</strong> Monthly bills <strong>$7.20 today</strong> with <code>BLACKFRIDAY26</code>, then <strong>$12/mo</strong> billed monthly until canceled; Annual bills <strong>$59.40 today</strong>, then <strong>$99/yr</strong> billed annually until canceled. Cancel anytime via your Polar.sh Customer Portal receipt link or <a href="mailto:argoness@veristrux.com" style="color: var(--muted);">argoness@veristrux.com</a> (access continues to period end). <strong>Not a financial spend cap</strong>&mdash;set hard billing limits directly in your AI provider console. Local middleware provided strictly &ldquo;AS IS&rdquo; with no fixed uptime guarantee across upstream IDE updates. All sales final upon delivery (<a href="./refunds.html" style="color: var(--muted);">Refund Policy</a> &middot; <a href="./terms.html" style="color: var(--muted);">Terms &amp; Arbitration</a>).
+              </p>
+            </div>
+          </article>
+
+          <article class="suite-cell">
+            <div>
+              <span class="cell-tag">Free &middot; Windows 10/11 Installer</span>
+              <h3>Token Czar v2.0 Lite</h3>
+              <div class="suite-price"><span class="price-now">$0</span><span class="discount-tag">Free Forever</span></div>
+              <p>Active <code>&le;350</code>-line AST Read Shield and local Quota X-Ray for Claude Code &amp; Antigravity, with zero Pro code on disk. Local context-hygiene guard &mdash; not a provider spend cap.</p>
+              <div class="suite-meta">TokenCzar-Setup-v2.0.0.exe &middot; 29.7 MB &middot; SHA-256 bff41254&hellip;fd177a7b6 (<a href="https://github.com/argoness-prime/veristrux/releases/tag/tokenczar-v2.0.0" target="_blank" rel="noopener">release &amp; SHA256SUMS</a>). Installer is not yet code-signed: if Windows SmartScreen appears, verify the SHA-256 above, then choose <em>More info &rarr; Run anyway</em>.</div>
+            </div>
+            <a class="btn btn-line btn-full" href="https://github.com/argoness-prime/veristrux/releases/download/tokenczar-v2.0.0/TokenCzar-Setup-v2.0.0.exe" target="_blank" rel="noopener">Download Token Czar Lite (.exe) &mdash; Free &darr;</a>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <!-- 03: DEVELOPER TOOLKITS -->
+    <section id="toolkits" class="sec">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">03 / Developer CLI Kits</span>
+          <h2>Zero-Dependency Python Toolkits</h2>
+        </div>
+        <div class="sec-note">Pure Python 3.10+ commercial source packages &middot; Black Friday direct pricing through Dec 1.</div>
+      </div>
+
+      <div class="ledger-4">
+        <article class="cell">
+          <div>
+            <span class="cell-tag">SKU 01 &middot; Agent Security</span>
+            <h3>Iron Veil + Token Miser Pro</h3>
+            <div class="price-row">
+              <span class="price-now">$5</span>
+              <span class="discount-tag">Launch Price &middot; $29 after Dec 1</span>
+            </div>
+            <p><code>&lt;5 ms</code> <code>PreToolUse</code> local hook guard for Claude Code &amp; Antigravity, Unicode/DOM sanitizer, repo trap quarantiner, 19/19 canary suite, and AST read-window guard.</p>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://argoness-prime.itch.io/iron-veil-token-miser-pro" target="_blank" rel="noopener">Buy &mdash; $5 Instant ZIP</a>
+        </article>
+
+        <article class="cell">
+          <div>
+            <span class="cell-tag">SKU 02 &middot; UE 5.4&ndash;5.9</span>
+            <h3>Build &amp; VRAM Doctor for Unreal Engine</h3>
+            <div class="price-row">
+              <span class="price-now">$5</span>
+              <span class="discount-tag">Launch Price &middot; $15 after Dec 1</span>
+            </div>
+            <p>Scans 100k+ line UBT/UAT/Cook logs in <code>&lt;50 ms</code>, maps <code>LNK2019</code> errors to <code>Build.cs</code> modules, and audits 16 GB / 90 Hz OpenXR VR VRAM pools (<a href="./ue5-doctor-demo.html">interactive browser lab &rarr;</a>).</p>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://argoness-prime.itch.io/ue5-build-vram-doctor" target="_blank" rel="noopener">Buy &mdash; $5 Instant ZIP</a>
+        </article>
+
+        <article class="cell">
+          <div>
+            <span class="cell-tag">SKU 03 &middot; Local Silicon</span>
+            <h3>Hybrid Silicon AI Tuner</h3>
+            <div class="price-row">
+              <span class="price-now">$9</span>
+              <span class="discount-tag">Launch Price &middot; $24 after Dec 1</span>
+            </div>
+            <p>GQA-exact GPU VRAM + DDR5 + NPU planner, MoE <code>--n-cpu-moe</code> offload calculator, <code>llama.cpp</code>/<code>Ollama</code>/<code>vLLM</code> flag generator, and p50/p95 TTFT benchmarks (<a href="./silicon-tuner-demo.html">interactive GQA &amp; MoE lab &rarr;</a>).</p>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://buy.polar.sh/polar_cl_TVRrxqrnOe6dEY5t90PvtwiVR38yJ1vzYBGBE249JMB" target="_blank" rel="noopener">Buy &mdash; $9 Instant ZIP</a>
+        </article>
+
+        <article class="cell elev">
+          <div>
+            <span class="cell-tag">Bundle &middot; All 3 CLI Kits</span>
+            <h3>All-Access Pro Bundle</h3>
+            <div class="price-row">
+              <span class="price-now">$12</span>
+              <span class="discount-tag">Launch Bundle &middot; $49 after Dec 1</span>
+            </div>
+            <p>Complete commercial source for <strong>Iron Veil + Token Miser Pro</strong>, <strong>Build &amp; VRAM Doctor for Unreal Engine</strong>, and <strong>Hybrid Silicon AI Tuner</strong> in one audited archive. Save $7 versus buying all three separately at current launch prices ($5 + $5 + $9 = $19).</p>
+          </div>
+          <a class="btn btn-brass btn-full" href="https://buy.polar.sh/polar_cl_OiHCEOTX9ovzwEUrH96Joo7mncVDINoG2l8Gg1fFWeH" target="_blank" rel="noopener">Buy Bundle &mdash; $12 Instant ZIP</a>
+        </article>
+      </div>
+      <div class="kit-foot">
+        <strong>How it works:</strong> Iron Veil Pro and UE5 Doctor check out via itch.io as Merchant of Record; Hybrid Silicon AI Tuner and the All-Access Pro Bundle check out via Polar.sh as Merchant of Record (launch discount pre-applied, zero billing address required). Every purchase delivers an instant audited ZIP download plus receipt email.
+        One-time charges only&mdash;nothing renews. All sales final upon delivery (<a href="./refunds.html">Refund Policy</a> &middot; <a href="./eula.html">EULA</a>). Questions: <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>.
+      </div>
+    </section>
+
+    <!-- 04: OPEN-CORE VERIFICATION -->
+    <section id="proof" class="sec">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">04 / Deterministic Proof</span>
+          <h2>Evaluate Free Open-Core Locally in 60 Seconds</h2>
+        </div>
+        <div class="sec-note">Zero network calls. Zero API keys. Reproducible local benchmarks before you buy.</div>
+      </div>
+
+      <div class="proof-grid">
+        <div class="terminal-pane">
+          <div class="term-head">
+            <span>Local Verification &middot; Python 3.10+</span>
+            <button type="button" class="copy-btn" id="copy-quickstart">Copy</button>
+          </div>
+          <pre><code id="quickstart-code"><span class="t-prompt">$</span> pip install git+https://github.com/argoness-prime/iron-veil.git
+<span class="t-prompt">$</span> iron-veil-core selftest
+<span class="t-ok">{ "ok": true, "score": "11/11", "latency_ms": 2.4 }</span>  <span class="t-dim"># open-core 11/11; Pro kit runs 19/19</span>
+
+<span class="t-dim"># X-ray your own Claude Code transcripts (offline, read-only):</span>
+<span class="t-prompt">$</span> iron-veil-core xray
+<span class="t-dim"># unwindowed reads &gt;350 lines, &gt;5 min cache cliffs, top tool-output bloat</span>
+
+<span class="t-dim"># Quarantine untrusted hooks/rules before inspecting any third-party clone:</span>
+<span class="t-prompt">$</span> git -c core.hooksPath=/dev/null -c protocol.file.allow=never clone --depth 1 &lt;repo&gt; ./sandbox
+<span class="t-prompt">$</span> iron-veil-core quarantine-repo ./sandbox
+
+<span class="t-dim"># Audit UE5 build/cook logs &amp; 16 GB / 90 Hz VR INI budgets:</span>
+<span class="t-prompt">$</span> git clone https://github.com/argoness-prime/ue5-doctor.git
+<span class="t-prompt">$</span> python ue5-doctor/ue5_doctor.py selftest</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Deterministic Scope</th>
+              <th>Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>iron-veil</code></strong></td>
+              <td>Secret airgap (<code>.env</code>, SSH, AWS, browser DBs), shell RCE/exfil blocks, Unicode/Bidi &amp; DOM sanitizer, AST read windowing.</td>
+              <td class="metric-col">&lt;5 ms &middot; 11/11 core &middot; 19/19 Pro</td>
+            </tr>
+            <tr>
+              <td><strong><code>ue5-doctor</code></strong></td>
+              <td>UBT/UAT/Cook root-cause scan, <code>LNK2019</code> -> <code>Build.cs</code> resolver, <code>DefaultEngine.ini</code> VRAM/OpenXR checks.</td>
+              <td class="metric-col">&lt;50 ms &middot; 0 deps</td>
+            </tr>
+            <tr>
+              <td><strong><code>ue59-cinema-kit</code></strong></td>
+              <td>Standalone <code>-game</code> HWRT/DLSS 5 CVar builder, FOV-adaptive DoF, two-pass <code>-15.5 LUFS</code> audio &amp; rolling credits.</td>
+              <td class="metric-col">-6+ GB commit</td>
+            </tr>
+            <tr>
+              <td><strong><code>ViewDrift /ppd</code></strong></td>
+              <td>6-wall (<code>A-NORTH</code>&ndash;<code>F-CEILING</code>) 29-Prime Laguerre chamber (<code>V=54, E=81</code>), <code>&le;0.50 mm</code> seam &amp; fold gate, <code>8.9&times;</code> <code>0.30</code> Detail Lighting, <code>64-SPP</code> relative PT check &amp; <code>SelectiveDirtyBit</code> firewall.</td>
+              <td class="metric-col">UE 5.8 + 5.9</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <span>&copy; 2026 VERISTRUX INC. &middot; DELAWARE, USA &middot; ALL RIGHTS RESERVED &middot; <a href="https://veristrux.com/">VERISTRUX.COM</a></span>
+        <div class="footer-links">
+          <a href="./terms.html">Terms</a>
+          <a href="./eula.html">EULA</a>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./refunds.html">Refunds</a>
+          <a href="./argoness.html">Dossier</a>
+          <a href="https://github.com/argoness-prime" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://bsky.app/profile/veristrux.com" target="_blank" rel="noopener">Bluesky</a>
+          <a href="https://www.youtube.com/@ArgonessVane" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://dev.to/argoness-prime" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://argoness-prime.itch.io" target="_blank" rel="noopener">itch.io</a>
+          <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>
+        </div>
+      </div>
+      <div style="width: 100%; margin-top: 10px; padding-top: 12px; border-top: 1px solid #1c1c1f; font-size: 10px; line-height: 1.55; color: #59554f;">
+        Purchases and software licenses are governed by the Veristrux Inc. <a href="./terms.html" style="color: #827b71;">Terms of Service (incl. Bilateral Arbitration &amp; 30-Day Opt-Out)</a>,
+        <a href="./eula.html" style="color: #827b71;">Commercial EULA</a>, <a href="./refunds.html" style="color: #827b71;">All-Sales-Final Upon Delivery Refund Policy</a>, and <a href="./privacy.html" style="color: #827b71;">Zero Content Telemetry Privacy Policy</a>.
+        All third-party product names and brands (including Unreal Engine, NVIDIA, DLSS, Claude, Claude Code, Google Antigravity, Cursor, Polar, PayPal, and Stripe) are trademarks of their respective owners.
+        Veristrux Inc. is an independent software vendor and is not affiliated with, endorsed by, or sponsored by any of the foregoing.
+      </div>
+    </footer>
+  </main>
+
+  <script src="./assets/sovereign_key_3d.js"></script>
+  <script src="./assets/sovereign_key_renderer.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById("copy-quickstart");
+      if (btn) {
+        var cmds = [
+          "pip install git+https://github.com/argoness-prime/iron-veil.git",
+          "iron-veil-core selftest",
+          "iron-veil-core xray",
+          "git clone https://github.com/argoness-prime/ue5-doctor.git",
+          "python ue5-doctor/ue5_doctor.py selftest"
+        ].join("\n");
+        btn.addEventListener("click", function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(cmds).then(function () {
+              btn.textContent = "Copied";
+              setTimeout(function () { btn.textContent = "Copy"; }, 1800);
+            }).catch(function () {});
+          }
+        });
+      }
+
+      // Waste estimator (illustrative; public list rates, 22 workdays/month)
+      var wr = document.getElementById("wc-r"), wp = document.getElementById("wc-p");
+      if (wr && wp) {
+        var setTxt = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+        var calc = function () {
+          var reads = +wr.value, pauses = +wp.value;
+          var readUsd = reads * 6000 * 3 / 1e6 * 22;
+          var cacheUsd = pauses * 100000 * (3.75 - 0.30) / 1e6 * 22;
+          var rR = Math.round(readUsd), cR = Math.round(cacheUsd);
+          setTxt("wc-r-o", reads); setTxt("wc-p-o", pauses);
+          setTxt("wc-read", "$" + rR); setTxt("wc-cache", "$" + cR);
+          setTxt("wc-total", "$" + (rR + cR));
+        };
+        wr.addEventListener("input", calc); wp.addEventListener("input", calc); calc();
+      }
+
+      // Showcase reels: honor prefers-reduced-motion (show poster, user can press play)
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var reels = document.querySelectorAll(".reel video, .hero-reel video");
+        for (var r = 0; r < reels.length; r++) {
+          reels[r].removeAttribute("autoplay");
+          reels[r].setAttribute("controls", "");
+          try { reels[r].pause(); } catch (err) {}
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

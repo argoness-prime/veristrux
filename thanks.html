@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed &mdash; Veristrux Inc.</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #121214;
+      --rule: #252528;
+      --ink: #ece7de;
+      --muted: #989289;
+      --brass: #c99a52;
+      --brass-bright: #dfb671;
+      --sage: #7ea88b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    .wrap { max-width: 740px; margin: 0 auto; padding: 72px 24px; }
+    .plate {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 36px;
+    }
+    .tag {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      border: 1px solid rgba(126, 168, 139, 0.35);
+      padding: 4px 10px;
+    }
+    h1 {
+      margin: 18px 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: 2rem;
+      letter-spacing: -0.015em;
+    }
+    p { color: var(--muted); margin: 0 0 16px; }
+    pre {
+      background: #080809;
+      border: 1px solid var(--rule);
+      padding: 16px;
+      overflow-x: auto;
+      color: #dfd8ca;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.86rem;
+    }
+    a { color: var(--brass); text-decoration: none; }
+    a:hover { color: var(--brass-bright); }
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 11px 20px;
+      border: 1px solid var(--brass);
+      color: var(--brass-bright);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .btn:hover { background: var(--brass); color: #0b0b0c; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="plate">
+      <span class="tag">Payment Confirmed &middot; Veristrux Inc.</span>
+      <h1>Thank you for supporting Veristrux engineering.</h1>
+      <p id="sku-line">Your commercial ZIP archive is dispatched to the email address on your receipt.</p>
+      <p>Need delivery to an alternate developer email or a custom team invoice? Write to <a href="mailto:argoness@veristrux.com?subject=Veristrux%20Order%20Fulfillment">argoness@veristrux.com</a> with your transaction ID.</p>
+
+      <h3 style="color: var(--ink); font-family: Georgia, serif; font-weight: 400; margin-top: 28px;">Open-Core Quickstart</h3>
+      <pre><code>pip install git+https://github.com/argoness-prime/iron-veil.git
+iron-veil-core selftest</code></pre>
+
+      <a class="btn" href="./index.html">&larr; Return to Veristrux Storefront</a>
+      <p style="margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--rule); font-family: ui-monospace, Consolas, monospace; font-size: 11px;">
+        &copy; 2026 Veristrux Inc. (Delaware, USA) &middot;
+        <a href="./terms.html">Terms</a> &middot;
+        <a href="./eula.html">EULA</a> &middot;
+        <a href="./privacy.html">Privacy</a> &middot;
+        <a href="./refunds.html">Refund Policy</a>
+      </p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var sku = params.get("sku");
+      var names = {
+        "iron-veil-pro": "Veristrux Iron Veil + Token Miser Pro Kit (v1.3)",
+        "silicon-tuner-pro": "Veristrux Hybrid Silicon Local-AI Tuner Pro (v1.1)",
+        "ue5-doctor": "Veristrux UE5 Build, Crash-Log & VRAM Doctor Pro (v1.1)",
+        "all-access-bundle": "Veristrux All-Access Agent & Silicon Pro Bundle (v1.1)"
+      };
+      if (sku && names[sku]) {
+        document.getElementById("sku-line").textContent =
+          "Order received for " + names[sku] + ". Your licensed ZIP archive is dispatched to your receipt email.";
+      }
+    })();
+  </script>
+</body>
+</html>

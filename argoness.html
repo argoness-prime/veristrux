@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argoness Vane &mdash; Vice President of Engineering | Veristrux Inc.</title>
+  <meta name="description" content="Engineering dossier for Argoness Vane, Vice President of Engineering at Veristrux Inc. — architect of ViewDrift (/ppd v1.5.0) for UE 5.8/5.9, Token Czar v2.0, Iron Veil, UE5 Build & VRAM Doctor, and Hybrid Silicon Tuner." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="canonical" href="https://veristrux.com/argoness.html" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Veristrux Inc." />
+  <meta property="og:url" content="https://veristrux.com/argoness.html" />
+  <meta property="og:title" content="Argoness Vane — Vice President of Engineering | Veristrux Inc." />
+  <meta property="og:description" content="Unreal Engine 5.8/5.9 C++20 & RDG spatial verification (ViewDrift 29-Prime Laguerre), <5 ms zero-content-telemetry agent infrastructure (Token Czar v2.0 & Iron Veil), and GQA/MoE silicon memory systems." />
+  <meta property="og:image" content="https://veristrux.com/media/og_social_card_1200x630.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Argoness Vane — Vice President of Engineering | Veristrux Inc." />
+  <meta name="twitter:description" content="Systems architecture across UE 5.8/5.9 C++20/RDG, local-first agent context & security guards, and Official Model Context Protocol (MCP) servers." />
+  <meta name="twitter:image" content="https://veristrux.com/media/og_social_card_1200x630.png" />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 7L16 25L25 7' fill='none' stroke='%23c99a52' stroke-width='2.6' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"
+  />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "url": "https://veristrux.com/argoness.html",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Argoness Vane",
+      "jobTitle": "Vice President of Engineering",
+      "email": "mailto:argoness@veristrux.com",
+      "url": "https://veristrux.com/argoness.html",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Veristrux Inc.",
+        "url": "https://veristrux.com/"
+      },
+      "sameAs": [
+        "https://github.com/argoness-prime",
+        "https://bsky.app/profile/veristrux.com",
+        "https://www.youtube.com/@ArgonessVane",
+        "https://dev.to/argoness-prime",
+        "https://argoness-prime.itch.io"
+      ]
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --paper: #121214;
+      --surface-2: #17171a;
+      --border: #252528;
+      --border-strong: #363430;
+      --text: #ece7de;
+      --muted: #989289;
+      --dim: #6d6860;
+      --accent: #c99a52;
+      --accent-bright: #dfb671;
+      --accent-bg: rgba(201, 154, 82, 0.11);
+      --ok: #7ea88b;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: clip; }
+    body {
+      margin: 0;
+      padding: 32px 20px 64px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(880px 380px at 78% 0%, rgba(201, 154, 82, 0.055), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.54;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-bright); text-decoration: underline; }
+    .toolbar {
+      max-width: 920px;
+      margin: 0 auto 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .toolbar-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .toolbar-links a { color: var(--muted); text-decoration: none; }
+    .toolbar-links a.lead, .toolbar-links a:hover { color: var(--accent-bright); }
+    .print-btn {
+      background: var(--accent-bg);
+      border: 1px solid rgba(201, 154, 82, 0.42);
+      color: var(--accent-bright);
+      padding: 6px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .print-btn:hover { border-color: var(--accent-bright); }
+
+    .sheet {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 38px 44px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-weight: 400;
+      font-size: 2.15rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .role {
+      margin-top: 6px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .contact {
+      text-align: right;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .contact a { color: var(--text); text-decoration: none; }
+    .contact a:hover { color: var(--accent-bright); }
+
+    /* Interactive Browser Labs Strip (Web Only) */
+    .labs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border-strong);
+      margin: 14px 0 6px;
+    }
+    .lab-tile {
+      background: var(--surface-2);
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 5px;
+      text-decoration: none !important;
+      transition: background 0.14s ease;
+    }
+    .lab-tile:hover { background: #1e1d19; }
+    .lab-kicker {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .lab-name {
+      font-weight: 600;
+      font-size: 0.84rem;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .lab-meta {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    h2 {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin: 22px 0 9px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+    }
+    p { margin: 0 0 9px; color: var(--muted); font-size: 0.91rem; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px 20px;
+      font-size: 0.87rem;
+      color: var(--muted);
+    }
+    .skills-grid strong { color: var(--text); }
+    .item { margin-bottom: 13px; }
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .item-title { font-weight: 600; color: var(--text); font-size: 0.94rem; }
+    .item-title a { color: var(--text); }
+    .item-title a:hover { color: var(--accent-bright); text-decoration: none; }
+    .item-meta {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.75rem;
+      color: var(--ok);
+    }
+    .item-meta a { color: var(--ok); }
+    ul { margin: 4px 0 0 18px; padding: 0; color: var(--muted); font-size: 0.87rem; }
+    li { margin-bottom: 3px; }
+    li strong { color: var(--text); }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.84em;
+      color: #e4d4b7;
+      background: #1a1815;
+      border: 1px solid #2e2a23;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+    .foot {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.76rem;
+      color: var(--dim);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .foot a { color: var(--muted); }
+    .foot a:hover { color: var(--accent-bright); }
+
+    @media (max-width: 780px) {
+      .sheet { padding: 26px 20px; }
+      .labs-grid, .skills-grid { grid-template-columns: 1fr; }
+      .contact { text-align: left; }
+    }
+
+    /* Single-Page Letter PDF Print Discipline (Zero Page-2 Spill) */
+    @media print {
+      @page { size: letter; margin: 0.24in 0.34in; }
+      body { background: #ffffff !important; color: #0f172a !important; padding: 0; font-size: 9.2px; line-height: 1.25; }
+      .toolbar, .web-only { display: none !important; }
+      .sheet {
+        max-width: none;
+        background: #ffffff !important;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      .top-bar { flex-wrap: nowrap; gap: 10px; padding-bottom: 5px; margin-bottom: 7px; }
+      h1 { font-size: 1.32rem; }
+      .role { font-size: 0.68rem; margin-top: 2px; }
+      .contact { font-size: 0.66rem; line-height: 1.28; white-space: nowrap; }
+      h2 { font-size: 0.64rem; margin: 7px 0 3px; padding-bottom: 2px; }
+      p { font-size: 0.71rem; margin: 0 0 4px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 2px 10px; font-size: 0.69rem; }
+      .item { margin-bottom: 5px; break-inside: avoid; }
+      .item-title { font-size: 0.74rem; }
+      .item-meta { font-size: 0.65rem; }
+      ul { margin: 1.5px 0 0 13px; font-size: 0.69rem; }
+      li { margin-bottom: 1px; }
+      .foot { margin-top: 6px; padding-top: 4px; font-size: 0.64rem; }
+      h1, .item-title, .item-title a, .skills-grid strong, li strong, .contact a { color: #0f172a !important; text-decoration: none !important; }
+      .role, h2 { color: #0f172a !important; border-color: #cbd5e1 !important; }
+      .item-meta, .item-meta a { color: #047857 !important; text-decoration: none !important; }
+      p, ul, .skills-grid, .contact, .foot, .foot a { color: #334155 !important; text-decoration: none !important; }
+      .top-bar, .foot { border-color: #cbd5e1 !important; }
+      code { background: #f1f5f9 !important; color: #0f172a !important; border-color: #cbd5e1 !important; font-size: 0.85em; padding: 0 3px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="toolbar-links">
+      <a class="lead" href="./index.html">&larr; Veristrux Suite</a>
+      <a href="./viewdrift-demo.html">ViewDrift Showcase</a>
+      <a href="./tokenczar-demo.html">Token Czar Lab</a>
+      <a href="./ue5-doctor-demo.html">UE5 Doctor Lab</a>
+      <a href="./silicon-tuner-demo.html">Silicon Tuner Lab</a>
+    </div>
+    <button type="button" class="print-btn" onclick="window.print()">Print / Save 1-Page PDF</button>
+  </div>
+
+  <article class="sheet">
+    <header class="top-bar">
+      <div>
+        <h1>Argoness Vane</h1>
+        <div class="role">Vice President of Engineering &middot; Spatial Verification, Agent Systems &amp; Real-Time Graphics &middot; Veristrux Inc.</div>
+      </div>
+      <div class="contact">
+        <div><a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a> &middot; <a href="https://veristrux.com/">veristrux.com</a></div>
+        <div><a href="https://github.com/argoness-prime" target="_blank" rel="noopener">github.com/argoness-prime</a> &middot; <a href="https://bsky.app/profile/veristrux.com" target="_blank" rel="noopener">@veristrux.com</a></div>
+        <div><a href="https://www.youtube.com/@ArgonessVane" target="_blank" rel="noopener">youtube.com/@ArgonessVane</a> &middot; <a href="https://dev.to/argoness-prime" target="_blank" rel="noopener">dev.to/argoness-prime</a></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Executive Summary</h2>
+      <p>
+        Vice President of Engineering at <strong>Veristrux Inc.</strong> (Delaware Corporation), leading systems architecture across
+        Unreal Engine 5.8/5.9 C++20 &amp; RDG spatial verification plugins, <code>&lt;5 ms</code> zero-content-telemetry agent context &amp; security middleware,
+        Official Model Context Protocol (MCP) servers, and deterministic GPU/DDR5 silicon planners. Available through Veristrux Inc. for
+        fixed-scope 48-hour C++20/RDG/OpenXR rescues, prompt-cache &amp; MCP fleet audits, and commercial studio licensing.
+      </p>
+
+      <div class="labs-grid web-only" aria-label="Live interactive client-side engineering labs">
+        <a class="lab-tile" href="./viewdrift-demo.html">
+          <span class="lab-kicker">Showcase 01 &middot; UE 5.8 / 5.9</span>
+          <span class="lab-name">ViewDrift UE 5.9 Showcase &rarr;</span>
+          <span class="lab-meta">1080p &amp; 9:16 Reels &middot; 4-Pillar Spec</span>
+        </a>
+        <a class="lab-tile" href="./tokenczar-demo.html">
+          <span class="lab-kicker">Lab 02 &middot; Context Hygiene</span>
+          <span class="lab-name">Token Czar &lt;3 ms AST &amp; Cache &rarr;</span>
+          <span class="lab-meta">&le;350L AST Shield &middot; 165K vs 512K</span>
+        </a>
+        <a class="lab-tile" href="./ue5-doctor-demo.html">
+          <span class="lab-kicker">Lab 03 &middot; Build &amp; VR90</span>
+          <span class="lab-name">UE5 Triage &amp; OpenXR 90 Hz INI &rarr;</span>
+          <span class="lab-meta">&lt;5 ms LNK2019 &rarr; Build.cs</span>
+        </a>
+        <a class="lab-tile" href="./silicon-tuner-demo.html">
+          <span class="lab-kicker">Lab 04 &middot; Local Silicon</span>
+          <span class="lab-name">Hybrid GQA &amp; --n-cpu-moe Split &rarr;</span>
+          <span class="lab-meta">Separated DWM &amp; DDR5-6400 Math</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Core Technical Stack</h2>
+      <div class="skills-grid">
+        <div><strong>Unreal Engine 5.8 / 5.9:</strong> C++20, Render Dependency Graph (RDG) HLSL, 29-Prime Laguerre spatial fiducials, Lumen/Nanite/VSM/Path Tracer, standalone <code>-game</code> DLSS 5 capture, OpenXR 90 Hz budgets.</div>
+        <div><strong>Agent Infrastructure &amp; Security:</strong> Split-binary native Cython/MSVC streaming (<code>Ed25519</code> + HWID lease), <code>&lt;5 ms</code> <code>PreToolUse</code> hooks, AST read windowing, Unicode/Bidi/DOM sanitization.</div>
+        <div><strong>Official MCP Registry Servers:</strong> Zero-dependency Python 3.10+ <code>stdio</code> JSON-RPC 2.0 servers (<code>io.github.argoness-prime/{iron-veil,ue5-doctor,silicon-tuner}</code>).</div>
+        <div><strong>Local Silicon &amp; Media Mastering:</strong> Exact GQA KV-cache element accounting (<code>q8_0</code>/<code>q4_0</code>), Sparse MoE <code>--n-cpu-moe</code> GDDR7/DDR5 splits, EBU R128 <code>-15.5 LUFS</code> audio pipelines.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Shipped Commercial Suites &amp; Official MCP Releases</h2>
+
+      <div class="item">
+        <div class="item-head">
+          <span class="item-title"><a href="./viewdrift-demo.html">ViewDrift (<code>/ppd v1.5.0</code>) &mdash; 29-Prime Laguerre Spatial Fiducial &amp; AI Guard for UE 5.8 / 5.9</a></span>
+          <span class="item-meta"><a href="./viewdrift-demo.html">veristrux.com/viewdrift-demo.html</a> &middot; UE 5.8 + 5.9 C++20 / RDG</span>
+        </div>
+        <ul>
+          <li>Architected a 6-wall (<code>A-NORTH</code>&ndash;<code>F-CEILING</code>) equal-solid-angle <strong>29-Prime (<code>12P+17H</code>, <code>V=54, E=81, 4&pi;/29 sr</code>)</strong> Weighted Laguerre Power Diagram with Weber&ndash;Fechner zoom-bloom (<code>D/R_bounds</code>) and <code>1536&times;1536</code> multi-buffer audit sheets.</li>
+          <li>Eliminates projective&ndash;radiometric null-space drift via a post-deformation <code>&le;0.50 mm</code> Ericson point-to-triangle seam gate, <code>8.9&times;</code> orphaned <code>SSS=0</code> contrast under UE 5.9 <code>0.30</code> Detail Lighting, <code>64-SPP</code> relative Path-Tracer checks, and a stateful <code>SelectiveDirtyBit</code> (<code>b_mesh</code>/<code>b_uv</code>) MCP Save Firewall.</li>
+          <li>Paired with the <strong>Standalone <code>-game</code> Cinema Capture &amp; <code>-15.5 LUFS</code> Kit for UE 5.9</strong>, driving genuine <code>ACineCameraActor</code> HWRT / DLSS 5 renders outside Editor PIE (~6+ GB Windows commit saved).</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-head">
+          <span class="item-title"><a href="./tokenczar-demo.html">Veristrux Token Czar v2.0 &amp; Iron Veil (<code>v1.3.0</code>) &mdash; Context Hygiene &amp; PreToolUse Firewall</a></span>
+          <span class="item-meta"><a href="https://glama.ai/mcp/servers/argoness-prime/iron-veil" target="_blank" rel="noopener">MCP: io.github.argoness-prime/iron-veil</a> &middot; <a href="https://youtu.be/Zr55UqFz7aw" target="_blank" rel="noopener">1080p Demo</a> &middot; <a href="https://www.youtube.com/shorts/rlzhbMHmoQ0" target="_blank" rel="noopener">Short</a></span>
+        </div>
+        <ul>
+          <li>Built a split-binary Windows host (Free Lite <code>.exe</code> with 0 Pro bytes on disk) that hot-streams a signed native <code>143 KB</code> <code>tokenczar_pro.pyd</code> extension in <code>&lt;200 ms</code>, adding a <code>165K</code> warm auto-compactor, <code>90%</code> diff-hunk write coordinator, and <code>240s</code> prompt-cache sleep guard (zero-content-telemetry; local workflow hook, not a billing spend cap).</li>
+          <li>Published <strong>Iron Veil v1.3.0</strong> on the Official MCP Registry &amp; Glama.ai: <code>&lt;5 ms</code> fail-closed secret airgap, Unicode Tag (<code>U+E0000</code>) &amp; Trojan-Source Bidi (<code>CVE-2021-42574</code>) sanitizer, third-party repo hook quarantiner, <code>&le;350</code>-line AST read shield, and offline Claude Code transcript <code>xray</code>.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-head">
+          <span class="item-title"><a href="./ue5-doctor-demo.html">UE5 Build, Crash-Log &amp; VRAM Doctor (<code>v1.1.0</code>) &mdash; UBT/Cook Triage &amp; OpenXR 90 Hz Auditor</a></span>
+          <span class="item-meta"><a href="https://glama.ai/mcp/servers/argoness-prime/ue5-doctor" target="_blank" rel="noopener">MCP: io.github.argoness-prime/ue5-doctor</a> &middot; <a href="https://github.com/argoness-prime/ue5-doctor" target="_blank" rel="noopener">GitHub</a></span>
+        </div>
+        <ul>
+          <li>Isolates originating UBT/UAT/Cook root causes across 100k+ line logs in <code>&lt;50 ms</code> CLI / <code>&lt;5 ms</code> in-browser, distinguishing public <code>.h</code> (<code>PublicDependencyModuleNames</code>) vs <code>.cpp</code>-only (<code>PrivateDependencyModuleNames</code>) <code>LNK2019</code> symbols to emit minimal <code>&lt;Module&gt;.Build.cs</code> patches.</li>
+          <li>Audits <code>DefaultEngine.ini</code> across 8&ndash;32 GB GPUs with strict pipeline separation between Desktop Deferred (<code>0.32</code> pool ratio, <code>4096</code> VSM pages) and OpenXR 90 Hz stereo (<code>0.22</code> pool ratio, <code>r.Shadow.Virtual.MaxPhysicalPages=2048</code>, <code>r.Lumen.Reflections.Allow=0</code>, <code>vr.InstancedStereo=True</code>).</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-head">
+          <span class="item-title"><a href="./silicon-tuner-demo.html">Hybrid Silicon Local-AI Tuner (<code>v1.1.0</code>) &mdash; Exact GQA KV-Cache &amp; Sparse MoE Split Planner</a></span>
+          <span class="item-meta"><a href="https://glama.ai/mcp/servers/argoness-prime/silicon-tuner" target="_blank" rel="noopener">MCP: io.github.argoness-prime/silicon-tuner</a> &middot; <a href="https://github.com/argoness-prime/silicon-tuner" target="_blank" rel="noopener">GitHub</a></span>
+        </div>
+        <ul>
+          <li>Computes deterministic Grouped-Query Attention element counts (<code>2 &times; L &times; H_kv &times; d &times; ctx</code> &mdash; e.g., <code>1,610,612,736</code> elements on 48L 4-KV-head 32K models, cutting cache from <code>24.00 GiB</code> counterfactual 32-head MHA <code>fp16</code> to <code>1.59 GiB</code> <code>q8_0</code>).</li>
+          <li>Separates <strong>GPU App Budget</strong> (<code>14.64 / 14.75 GiB</code>) from <strong>Physical Card Ceiling w/ 1.25 GiB DWM Reserve</strong> (<code>15.89 / 16.00 GiB</code> vs <code>24.56 GiB</code> naive <code>-ngl 48</code> OOM), routing cold MoE experts (<code>--n-cpu-moe 21</code>) across dual-channel 64-bit DDR5-6400 (<code>102.4 GB/s</code> theoretical peak) with 1-click <code>llama-server</code>, <code>Ollama</code>, and MCP configs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Studio Licensing &amp; 48-Hour Fixed-Scope Engagements</h2>
+      <p>
+        Commercial plugins, subscriptions, and Python Pro toolkits license instantly through <strong>Polar.sh</strong> and <strong>itch.io</strong> as Merchants of Record (<a href="./index.html#flagship-index">explore catalog</a>).
+        For prepaid 48-hour C++20/RDG/OpenXR rescues, Claude Code / MCP security audits, or multi-seat NDA licensing, contact <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>.
+      </p>
+    </section>
+
+    <footer class="foot">
+      <span>&copy; 2026 Veristrux Inc. &middot; Delaware, USA &middot; All Rights Reserved</span>
+      <span><a href="./index.html">Storefront</a> &middot; <a href="./terms.html">Terms</a> &middot; <a href="./eula.html">EULA</a> &middot; <a href="./privacy.html">Zero Content Telemetry Privacy</a> &middot; <a href="./refunds.html">Refunds</a></span>
+    </footer>
+  </article>
+</body>
+</html>

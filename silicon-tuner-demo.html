@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybrid Silicon Tuner v1.1.0 — Interactive GQA KV-Cache &amp; Sparse MoE Split Lab | Veristrux</title>
+  <meta name="description" content="Interactive 100% client-side GQA KV-cache element calculator and Sparse Mixture-of-Experts (--n-cpu-moe) GPU VRAM + DDR5-6400 split planner. Explicitly separates GPU App Budget (14.64 / 14.75 GiB) from Physical VRAM w/ 1.25 GiB DWM Reserve (15.89 / 16.00 GiB) vs 24.56 GiB naive OOM." />
+  <link rel="canonical" href="https://veristrux.com/silicon-tuner-demo.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Veristrux" />
+  <meta property="og:title" content="Hybrid Silicon Tuner v1.1.0 — Interactive GQA KV-Cache &amp; MoE Split Lab" />
+  <meta property="og:description" content="Zero-content-telemetry browser planner for Qwen3.6-35B-A3B, DeepSeek-V4-Lite, GLM-5.3, and custom GQA/MoE architectures across 8–48 GB GPUs and DDR5-6400." />
+  <meta property="og:url" content="https://veristrux.com/silicon-tuner-demo.html" />
+  <meta name="theme-color" content="#0b0b0c" />
+  <meta property="og:image" content="https://veristrux.com/media/og_silicon_tuner_lab.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Hybrid Silicon Tuner v1.1.0 Interactive GQA KV-Cache and Sparse MoE Split Lab" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hybrid Silicon Tuner — Interactive GQA KV-Cache &amp; MoE Split Lab" />
+  <meta name="twitter:description" content="Exact 2*L*H_kv*d*ctx element derivation, separated GPU App vs Physical DWM VRAM ledgers, and 1-click llama-server + Official MCP v1.1.0 commands." />
+  <meta name="twitter:image" content="https://veristrux.com/media/og_silicon_tuner_lab.png" />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 7L16 25L25 7' fill='none' stroke='%23c8a25a' stroke-width='2.6' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"
+  />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Hybrid Silicon Tuner v1.1.0 Interactive GQA KV-Cache & Sparse MoE Lab",
+        "url": "https://veristrux.com/silicon-tuner-demo.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "image": "https://veristrux.com/media/og_silicon_tuner_lab.png",
+        "description": "100% client-side GQA KV-cache element calculator (2*L*H_kv*d*ctx) and Sparse MoE (--n-cpu-moe) GPU VRAM + DDR5-6400 split planner with separated GPU App vs Physical DWM VRAM ledgers.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free client-side browser sandbox (zero-content-telemetry)"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Veristrux Inc.",
+          "url": "https://veristrux.com/"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Hybrid Silicon Local-AI Tuner (MIT MCP v1.1.0 & Pro Toolkit)",
+        "softwareVersion": "1.1.0",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, Linux, macOS",
+        "url": "https://github.com/argoness-prime/silicon-tuner",
+        "image": "https://veristrux.com/media/og_silicon_tuner_lab.png",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "MIT Open-Core CLI & Official MCP Server",
+            "price": "0",
+            "priceCurrency": "USD",
+            "url": "https://github.com/argoness-prime/silicon-tuner"
+          },
+          {
+            "@type": "Offer",
+            "name": "Hybrid Silicon Local-AI Tuner Pro (v1.1)",
+            "price": "9.00",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-02",
+            "url": "https://buy.polar.sh/polar_cl_TVRrxqrnOe6dEY5t90PvtwiVR38yJ1vzYBGBE249JMB"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet" /></noscript>
+
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #111114;
+      --surface-2: #16161a;
+      --surface-3: #1c1c21;
+      --code-bg: #09090b;
+      --rule: #252529;
+      --rule-strong: #35353c;
+      --ink: #ece7de;
+      --muted: #9b958b;
+      --dim: #6d675e;
+      --brass: #c8a25a;
+      --brass-hi: #e0bb73;
+      --brass-dim: rgba(200, 162, 90, 0.12);
+      --brass-rule: rgba(200, 162, 90, 0.36);
+      --sage: #73b98b;
+      --sage-bg: rgba(115, 185, 139, 0.11);
+      --crimson: #de5664;
+      --crimson-bg: rgba(222, 86, 100, 0.11);
+      --amber: #d89b48;
+      --amber-bg: rgba(216, 155, 72, 0.11);
+      --cyan: #5bb8e4;
+      --cyan-bg: rgba(91, 184, 228, 0.11);
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { background: var(--bg); color: var(--ink); scroll-behavior: smooth; overflow-x: clip; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.55;
+      background:
+        radial-gradient(960px 420px at 78% 0%, rgba(200, 162, 90, 0.055), transparent 70%),
+        var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    code, pre { font-family: var(--mono); }
+
+    /* Sticky Top Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(11, 11, 12, 0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .topbar-inner {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--brass);
+      display: inline-grid;
+      place-items: center;
+      background: rgba(200, 162, 90, 0.08);
+    }
+    .badge-pill {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--brass-rule);
+      background: var(--brass-dim);
+      color: var(--brass-hi);
+      border-radius: 2px;
+    }
+    .badge-sub {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--dim);
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .top-actions a:hover { color: var(--ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface-2);
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--brass); color: var(--brass-hi); }
+    .btn.active {
+      border-color: var(--brass);
+      background: rgba(200, 162, 90, 0.16);
+      color: var(--brass-hi);
+    }
+    .btn-brass {
+      background: var(--brass);
+      border-color: var(--brass);
+      color: #0b0b0c;
+      font-weight: 600;
+    }
+    .btn-brass:hover {
+      background: var(--brass-hi);
+      border-color: var(--brass-hi);
+      color: #0b0b0c;
+    }
+
+    /* Main Container */
+    .shell {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 18px 22px 64px;
+    }
+
+    /* Intro & Telemetry Strip */
+    .intro-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .intro-title h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.7rem, 2.5vw, 2.25rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+    }
+    .intro-title h1 span { color: var(--brass-hi); font-family: var(--mono); font-size: 0.78em; }
+    .intro-sub {
+      margin: 4px 0 0;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .mcp-pill-link {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      padding: 6px 11px;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface);
+      color: var(--muted);
+      border-radius: 2px;
+    }
+    .mcp-pill-link strong { color: var(--sage); font-weight: 600; }
+    .mcp-pill-link:hover { border-color: var(--brass); color: var(--ink); }
+
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 14px;
+    }
+    .kpi-cell {
+      background: var(--surface);
+      padding: 9px 12px;
+      min-width: 0;
+    }
+    .kpi-lbl {
+      display: block;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 3px;
+    }
+    .kpi-val {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kpi-val.brass { color: var(--brass-hi); }
+    .kpi-val.sage { color: var(--sage); }
+    .kpi-val.crimson { color: #ff8c99; }
+    .kpi-val.cyan { color: var(--cyan); }
+
+    /* Workbench 2-Column Layout */
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .panel-hdr {
+      padding: 9px 13px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .panel-hdr strong { color: var(--ink); }
+
+    /* Presets Strip */
+    .preset-strip {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--rule);
+      background: #0e0e11;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .preset-strip .btn {
+      padding: 5px 9px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+
+    /* Custom Architecture Matrix */
+    .arch-matrix {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+      background: #0d0d10;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .field-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .field-cell label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .field-cell input, .field-cell select {
+      background: var(--code-bg);
+      border: 1px solid var(--rule-strong);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 11.5px;
+      padding: 4px 7px;
+      border-radius: 2px;
+      width: 100%;
+    }
+    .field-cell input:focus, .field-cell select:focus {
+      outline: none;
+      border-color: var(--brass);
+    }
+
+    /* Hardware & Quant Pill Rows */
+    .controls-stack {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pill-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 132px;
+    }
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+    .pill-group .btn {
+      padding: 4px 8px;
+      font-size: 10px;
+      text-transform: none;
+      letter-spacing: 0.03em;
+    }
+
+    /* GQA Derivation Card */
+    .gqa-box {
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .formula-banner {
+      background: var(--code-bg);
+      border: 1px solid var(--brass-rule);
+      padding: 8px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.5;
+      color: #dfd9cd;
+    }
+    .formula-banner .hi { color: var(--brass-hi); font-weight: 600; }
+    .formula-banner .sub { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    .kv-compare-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .kv-row {
+      background: #0d0d10;
+      border: 1px solid var(--rule);
+      padding: 6px 9px;
+    }
+    .kv-row.selected {
+      border-color: var(--brass);
+      background: rgba(200, 162, 90, 0.07);
+    }
+    .kv-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      margin-bottom: 4px;
+    }
+    .kv-row-top strong { color: var(--ink); font-weight: 600; }
+    .kv-bar-bg {
+      height: 6px;
+      background: #1a1a20;
+      overflow: hidden;
+      border-radius: 1px;
+    }
+    .kv-bar-fill {
+      height: 100%;
+      transition: width 0.16s ease;
+    }
+
+    /* Right Column: Separated Ledgers, Layer Matrix & CLI Tabs */
+    .right-body {
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .ledger-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .ledger-card {
+      background: #0d0d10;
+      border: 1px solid var(--rule);
+      padding: 8px 10px;
+    }
+    .ledger-card.primary { border-color: var(--brass-rule); }
+    .ledger-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      margin-bottom: 5px;
+    }
+    .ledger-top .title {
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ledger-top strong { font-size: 11.5px; }
+    .seg-track {
+      height: 11px;
+      background: #17171c;
+      border: 1px solid var(--rule-strong);
+      display: flex;
+      overflow: hidden;
+    }
+    .seg-fill { height: 100%; }
+    .ledger-legend {
+      margin-top: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    /* Layer Split Block Map */
+    .layer-map-card {
+      background: #0d0d10;
+      border: 1px solid var(--rule);
+      padding: 8px 10px;
+    }
+    .layer-map-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .layer-cells {
+      display: grid;
+      grid-template-columns: repeat(24, 1fr);
+      gap: 3px;
+    }
+    .l-cell {
+      height: 14px;
+      border-radius: 1px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--mono);
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(11, 11, 12, 0.88);
+      font-weight: 700;
+    }
+    .l-cell.gpu-hot { background: #c8a25a; }
+    .l-cell.cpu-moe { background: #5bb8e4; }
+    .l-cell.cpu-dense { background: #6e7385; color: #ece7de; }
+    .bw-note {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .bw-note strong { color: var(--ink); }
+
+    /* Output Command Generator Box */
+    .cmd-card {
+      background: var(--code-bg);
+      border: 1px solid var(--rule-strong);
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+    .cmd-tabs-hdr {
+      padding: 6px 10px;
+      background: #141418;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cmd-tab-group {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .cmd-tab-group .btn {
+      padding: 3px 8px;
+      font-size: 10px;
+      text-transform: none;
+    }
+    .cmd-pre {
+      margin: 0;
+      padding: 10px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.55;
+      color: #dfd9cd;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 94px;
+    }
+
+    /* 4/4 Sibling Labs Strip + Executive Conversion Section */
+    .labs-bar {
+      margin-top: 16px;
+      border: 1px solid var(--brass-rule);
+      background: #12110e;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .labs-bar-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .labs-bar-label strong {
+      color: var(--brass-hi);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-right: 8px;
+    }
+    .labs-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sec {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--rule);
+    }
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .sec-index {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 4px;
+    }
+    .sec-head h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+      line-height: 1.15;
+    }
+    .sec-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      max-width: 470px;
+      text-align: right;
+    }
+
+    .suite-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule-strong);
+    }
+    .sku-card {
+      background: var(--surface);
+      padding: 22px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .sku-card.lead { background: var(--surface-2); }
+    .sku-tag {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 8px;
+    }
+    .sku-card h3 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.32rem;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .price-line {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .price-big {
+      font-family: var(--mono);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .price-note {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border: 1px solid var(--brass-rule);
+      background: var(--brass-dim);
+      color: var(--brass-hi);
+    }
+    .feat-list {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--rule);
+    }
+    .feat-list li {
+      padding: 6px 0 6px 16px;
+      border-bottom: 1px solid rgba(37, 37, 41, 0.7);
+      font-size: 12.5px;
+      color: var(--muted);
+      position: relative;
+    }
+    .feat-list li::before {
+      content: "/";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      font-family: var(--mono);
+      color: var(--brass);
+    }
+    .card-meta {
+      margin: 8px 0 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--dim);
+    }
+    .card-meta a { color: var(--muted); text-decoration: underline; }
+
+    footer {
+      margin-top: 44px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover { color: var(--brass-hi); }
+
+    .workbench-grid > *, .suite-grid-3 > *, .kpi-strip > *, .arch-matrix > *, .panel, .sku-card { min-width: 0; max-width: 100%; }
+    @media (max-width: 1180px) {
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+      .workbench-grid { grid-template-columns: 1fr; }
+      .suite-grid-3 { grid-template-columns: 1fr; }
+      .sec-note { text-align: left; }
+    }
+    @media (max-width: 720px) {
+      .kpi-strip, .arch-matrix { grid-template-columns: repeat(2, 1fr); }
+      .layer-cells { grid-template-columns: repeat(12, 1fr); }
+      .badge-sub { display: none; }
+      .topbar-inner { padding: 10px 14px; }
+      .shell { padding: 14px 12px 48px; }
+      .btn { white-space: normal; text-align: center; }
+      .sku-card { padding: 18px 16px; }
+      .sku-card div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+      .top-actions { flex-wrap: wrap; gap: 10px; }
+      .labs-links { flex-wrap: wrap; }
+    }
+    @media (max-width: 520px) {
+      .kpi-strip { grid-template-columns: 1fr; }
+      .kpi-value { white-space: normal; word-break: break-word; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <a class="brand" href="./index.html" aria-label="Veristrux Inc. Home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 16 16">
+              <path d="M2 2.5L8 13.5L14 2.5" fill="none" stroke="#c8a25a" stroke-width="1.8" stroke-linecap="square" />
+            </svg>
+          </span>
+          <span>Veristrux</span>
+        </a>
+        <span class="badge-pill">Hybrid Silicon Tuner v1.1.0 &middot; Live Lab</span>
+        <span class="badge-sub">100% Client-Side &middot; Zero-Content-Telemetry</span>
+      </div>
+
+      <nav class="top-actions" aria-label="Interactive lab navigation">
+        <a href="./viewdrift-demo.html">ViewDrift Showcase</a>
+        <a href="./tokenczar-demo.html">Token Czar AST Lab</a>
+        <a href="./ue5-doctor-demo.html">UE5 Triage Lab</a>
+        <a href="./index.html">Main Suite</a>
+        <a class="btn btn-brass" href="#suite-conversion">Explore Suite &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="intro-bar">
+      <div class="intro-title">
+        <h1><span>&lt;2 ms</span> GQA KV-Cache &amp; Sparse MoE Hybrid Split Planner</h1>
+        <p class="intro-sub">Exact <code>2 &times; L &times; H_kv &times; d &times; ctx</code> element accounting &amp; separated GPU App vs Physical DWM VRAM ledgers &mdash; zero unmeasured throughput claims.</p>
+      </div>
+      <a class="mcp-pill-link" href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.argoness-prime%2Fsilicon-tuner/versions/latest" target="_blank" rel="noopener">
+        Official MCP Registry: <strong>io.github.argoness-prime/silicon-tuner@1.1.0</strong> &nearr;
+      </a>
+    </div>
+
+    <!-- 6-Cell Live Telemetry Strip -->
+    <section class="kpi-strip" aria-label="Live planner telemetry">
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Execution Mode</span>
+        <div class="kpi-val sage" id="kpiFitMode">Hybrid MoE (--n-cpu-moe 21)</div>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">GPU App Budget (Excl. DWM)</span>
+        <div class="kpi-val brass" id="kpiGpuApp">14.64 / 14.75 GiB</div>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Physical VRAM (w/ DWM Reserve)</span>
+        <div class="kpi-val cyan" id="kpiPhysVram">15.89 / 16.00 GiB</div>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Naive Full-GPU fp16 Baseline</span>
+        <div class="kpi-val crimson" id="kpiNaiveOom">24.56 GiB (OOM +8.56)</div>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Exact GQA KV Elements</span>
+        <div class="kpi-val" id="kpiKvElems">1,610,612,736 (1.59 GiB)</div>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Host DDR5-6400 Offload</span>
+        <div class="kpi-val sage" id="kpiRamOffload">7.26 / 60.00 GiB</div>
+      </div>
+    </section>
+
+    <!-- Main 2-Column Interactive Planner -->
+    <section class="workbench-grid" aria-label="Interactive GQA and Sparse MoE Planner">
+      <!-- LEFT PANEL: Architecture, Hardware, Quantization & Exact GQA Element Math -->
+      <div class="panel">
+        <div class="panel-hdr">
+          <span>Model Architecture &amp; Silicon Topology</span>
+          <strong id="lblActivePreset">Qwen3.6-35B-A3B (MoE)</strong>
+        </div>
+
+        <div class="preset-strip" role="toolbar" aria-label="Model architecture presets">
+          <button type="button" class="btn active" data-preset="qwen3-35b-a3b">Qwen3.6-35B-A3B (MoE)</button>
+          <button type="button" class="btn" data-preset="deepseek-v4-lite">DeepSeek-V4-Lite (MoE)</button>
+          <button type="button" class="btn" data-preset="glm-5-3">GLM-5.3 (MoE)</button>
+          <button type="button" class="btn" data-preset="llama3-70b-dense">Llama-3.3-70B (Dense)</button>
+          <button type="button" class="btn" data-preset="custom">Custom (L, H_q, H_kv, d, ctx)</button>
+        </div>
+
+        <div class="arch-matrix" aria-label="Architecture hyperparameters">
+          <div class="field-cell">
+            <label for="inpTotalB">Total Params (B)</label>
+            <input type="number" id="inpTotalB" min="0.5" max="1000" step="0.1" value="35.0" />
+          </div>
+          <div class="field-cell">
+            <label for="inpActiveB">Active / Tok (B)</label>
+            <input type="number" id="inpActiveB" min="0.5" max="1000" step="0.1" value="3.2" />
+          </div>
+          <div class="field-cell">
+            <label for="inpLayers">Layers (L)</label>
+            <input type="number" id="inpLayers" min="1" max="256" step="1" value="48" />
+          </div>
+          <div class="field-cell">
+            <label for="inpHq">MHA Query Heads (H_q)</label>
+            <input type="number" id="inpHq" min="1" max="256" step="1" value="32" />
+          </div>
+          <div class="field-cell">
+            <label for="inpHkv">GQA KV Heads (H_kv)</label>
+            <input type="number" id="inpHkv" min="1" max="256" step="1" value="4" />
+          </div>
+          <div class="field-cell">
+            <label for="inpHeadDim">Head Dim (d)</label>
+            <input type="number" id="inpHeadDim" min="16" max="512" step="16" value="128" />
+          </div>
+          <div class="field-cell">
+            <label for="selTopology">FFN Routing</label>
+            <select id="selTopology">
+              <option value="moe" selected>Sparse MoE</option>
+              <option value="dense">Dense FFN</option>
+            </select>
+          </div>
+          <div class="field-cell">
+            <label for="inpExpertPct">Routed Experts (%)</label>
+            <input type="number" id="inpExpertPct" min="0" max="98" step="1" value="84" />
+          </div>
+        </div>
+
+        <div class="controls-stack">
+          <div class="pill-row">
+            <span class="pill-lbl">Physical GPU VRAM</span>
+            <div class="pill-group" role="group" aria-label="Physical GPU VRAM">
+              <button type="button" class="btn" data-vram="8">8 GB</button>
+              <button type="button" class="btn" data-vram="12">12 GB</button>
+              <button type="button" class="btn active" data-vram="16">16 GB</button>
+              <button type="button" class="btn" data-vram="24">24 GB</button>
+              <button type="button" class="btn" data-vram="32">32 GB</button>
+              <button type="button" class="btn" data-vram="48">48 GB</button>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill-lbl">System DDR5 RAM</span>
+            <div class="pill-group" role="group" aria-label="System DDR5 RAM">
+              <button type="button" class="btn" data-ram="32">32 GB</button>
+              <button type="button" class="btn active" data-ram="64">64 GB</button>
+              <button type="button" class="btn" data-ram="96">96 GB</button>
+              <button type="button" class="btn" data-ram="128">128 GB</button>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill-lbl">Context Window (ctx)</span>
+            <div class="pill-group" role="group" aria-label="Context length in tokens">
+              <button type="button" class="btn" data-ctx="8192">8K</button>
+              <button type="button" class="btn" data-ctx="16384">16K</button>
+              <button type="button" class="btn active" data-ctx="32768">32K (32,768)</button>
+              <button type="button" class="btn" data-ctx="65536">64K</button>
+              <button type="button" class="btn" data-ctx="131072">128K</button>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill-lbl">Weights Quant</span>
+            <div class="pill-group" role="group" aria-label="Weight quantization">
+              <button type="button" class="btn" data-quant="iq3_m">IQ3_M</button>
+              <button type="button" class="btn" data-quant="q3_k_m">Q3_K_M</button>
+              <button type="button" class="btn" data-quant="iq4_xs">IQ4_XS</button>
+              <button type="button" class="btn active" data-quant="q4_k_m">Q4_K_M</button>
+              <button type="button" class="btn" data-quant="q5_k_m">Q5_K_M</button>
+              <button type="button" class="btn" data-quant="q6_k">Q6_K</button>
+              <button type="button" class="btn" data-quant="q8_0">Q8_0</button>
+              <button type="button" class="btn" data-quant="fp16">FP16</button>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill-lbl">KV-Cache Quant (K&amp;V)</span>
+            <div class="pill-group" role="group" aria-label="KV cache quantization">
+              <button type="button" class="btn" data-kv="f16">fp16 (2.00 B/el)</button>
+              <button type="button" class="btn active" data-kv="q8_0">q8_0 (1.06 B/el)</button>
+              <button type="button" class="btn" data-kv="q4_0">q4_0 (0.56 B/el)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="gqa-box">
+          <div class="formula-banner" id="gqaFormulaBanner">
+            2 (K&amp;V) &times; L=48 &times; H_kv=4 &times; d=128 &times; ctx=32,768 = <span class="hi">1,610,612,736 elements</span>
+            <span class="sub">GQA ratio 8:1 (H_q=32 vs H_kv=4) + q8_0 KV cuts cache from 24.00 GiB counterfactual MHA fp16 &rarr; 1.59 GiB (-93.38%).</span>
+          </div>
+
+          <div class="kv-compare-rows" id="kvCompareList" aria-label="Counterfactual MHA vs GQA KV cache sizes"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: Separated VRAM Ledgers, Layer Split Grid & Copyable Commands -->
+      <div class="panel">
+        <div class="panel-hdr">
+          <span>Separated Memory Ledgers &amp; <code>--n-cpu-moe</code> Layer Topology</span>
+          <span id="lblPlannerLatency">0.12 ms &middot; Deterministic</span>
+        </div>
+
+        <div class="right-body">
+          <div class="ledger-stack">
+            <!-- Bar 1: Naive OOM Baseline -->
+            <div class="ledger-card">
+              <div class="ledger-top">
+                <span class="title" id="lblNaiveTitle">1. Counterfactual Naive Full-GPU (<code>-ngl 48</code>, fp16 KV + 1.25 GiB DWM)</span>
+                <strong id="lblNaiveBar" style="color:#ff8c99;">24.56 / 16.00 GiB (OOM +8.56 GiB)</strong>
+              </div>
+              <div class="seg-track">
+                <div class="seg-fill" id="segNaiveFit" style="width:65%;background:#de5664;"></div>
+                <div class="seg-fill" id="segNaiveOver" style="width:35%;background:repeating-linear-gradient(45deg,#8c2631,#8c2631 5px,#de5664 5px,#de5664 10px);"></div>
+              </div>
+              <div class="ledger-legend" id="legNaiveText">
+                <span>19.76 GiB Q4_K_M weights + 3.00 GiB fp16 KV + 0.55 GiB compute + 1.25 GiB OS/DWM &rarr; overflows 16 GiB physical GDDR7.</span>
+              </div>
+            </div>
+
+            <!-- Bar 2: GPU App Budget (Excl. DWM) -->
+            <div class="ledger-card primary">
+              <div class="ledger-top">
+                <span class="title">2. GPU Application Budget (<code>Physical &minus; 1.25 GiB DWM Reserve</code>)</span>
+                <strong id="lblAppBar" style="color:var(--brass-hi);">14.64 / 14.75 GiB (0.11 GiB Headroom)</strong>
+              </div>
+              <div class="seg-track">
+                <div class="seg-fill" id="segAppShared" style="width:21.4%;background:#e0bb73;" title="Shared Attention + Router"></div>
+                <div class="seg-fill" id="segAppExperts" style="width:63.3%;background:#9b7a3c;" title="GPU-Resident Expert Layers"></div>
+                <div class="seg-fill" id="segAppKv" style="width:10.8%;background:#73b98b;" title="Quantized GQA KV Cache"></div>
+                <div class="seg-fill" id="segAppComp" style="width:3.7%;background:#5bb8e4;" title="Compute Scratch Buffer"></div>
+              </div>
+              <div class="ledger-legend">
+                <span><i class="dot" style="background:#e0bb73;"></i>Shared Attn/Router (<span id="legShared">3.16 GiB</span>)</span>
+                <span><i class="dot" style="background:#9b7a3c;"></i>GPU Experts (<span id="legGpuExp">9.34 GiB</span>)</span>
+                <span><i class="dot" style="background:#73b98b;"></i>GQA KV (<span id="legKv">1.59 GiB</span>)</span>
+                <span><i class="dot" style="background:#5bb8e4;"></i>Compute (<span id="legComp">0.55 GiB</span>)</span>
+              </div>
+            </div>
+
+            <!-- Bar 3: Physical GPU VRAM w/ 1.25 GiB DWM -->
+            <div class="ledger-card">
+              <div class="ledger-top">
+                <span class="title">3. Physical GPU Card Ceiling (<code>1.25 GiB OS/DWM + GPU App Allocation</code>)</span>
+                <strong id="lblPhysBar" style="color:var(--sage);">15.89 / 16.00 GiB (Zero DX12 Demotion)</strong>
+              </div>
+              <div class="seg-track">
+                <div class="seg-fill" id="segPhysDwm" style="width:7.8%;background:#4a4e5c;" title="OS / DWM Compositor Reserve"></div>
+                <div class="seg-fill" id="segPhysApp" style="width:91.5%;background:#73b98b;" title="Total GPU Application Allocation"></div>
+              </div>
+              <div class="ledger-legend">
+                <span><i class="dot" style="background:#4a4e5c;"></i>Windows DWM / Compositor Reserve (<span>1.25 GiB</span>)</span>
+                <span><i class="dot" style="background:#73b98b;"></i>GPU App Used (<span id="legPhysApp">14.64 GiB</span>)</span>
+              </div>
+            </div>
+
+            <!-- Bar 4: Host System DDR5-6400 Offload -->
+            <div class="ledger-card">
+              <div class="ledger-top">
+                <span class="title">4. Host DDR5-6400 Cold-Expert Pool (<code>102.4 GB/s</code> 2&times;64-bit Theoretical Peak)</span>
+                <strong id="lblRamBar" style="color:var(--cyan);">7.26 / 60.00 GiB Usable DDR5</strong>
+              </div>
+              <div class="seg-track">
+                <div class="seg-fill" id="segRamUsed" style="width:12.1%;background:#5bb8e4;"></div>
+              </div>
+              <div class="ledger-legend" id="legRamNote">
+                <span>4.00 GiB OS host reserve excluded &middot; Cold expert FFN tensors streamed only when selected by top-k router.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layer-by-Layer Residency Map -->
+          <div class="layer-map-card">
+            <div class="layer-map-hdr">
+              <span id="lblLayerMapTitle">Transformer Block Residency (48 Layers: 27 GDDR7 Hot / 21 DDR5 Cold MoE)</span>
+              <span id="lblLayerLegend"><i class="dot" style="background:#c8a25a;"></i>GDDR7 Full &nbsp; <i class="dot" style="background:#5bb8e4;"></i>DDR5 Cold Experts (<code>--n-cpu-moe</code>)</span>
+            </div>
+            <div class="layer-cells" id="layerCellsGrid" aria-label="Per-layer GPU vs DDR5 residency grid"></div>
+            <div class="bw-note" id="activeRoutingNote">
+              <strong>Active-Expert Byte Accounting:</strong> Each token activates <strong>3.2B / 35.0B</strong> parameters (<strong>1.81 GiB</strong> active Q4_K_M weights vs 19.76 GiB full model). Attention + KV stay 100% in GDDR7 across all 48 layers; only routed cold-layer FFN slices touch dual-channel 64-bit DDR5-6400 (<strong>102.4 GB/s</strong> theoretical peak = <code>2 &times; 8 B &times; 6.4 GT/s</code>).
+            </div>
+          </div>
+
+          <!-- 1-Click Copyable CLI / Modelfile / MCP v1.1.0 Commands -->
+          <div class="cmd-card">
+            <div class="cmd-tabs-hdr">
+              <div class="cmd-tab-group" role="tablist" aria-label="Runtime configuration format">
+                <button type="button" class="btn active" data-cmdtab="llama">llama-server CLI</button>
+                <button type="button" class="btn" data-cmdtab="ollama">Ollama Modelfile</button>
+                <button type="button" class="btn" data-cmdtab="mcp">Official MCP v1.1.0</button>
+              </div>
+              <button type="button" class="btn btn-brass" id="btnCopyCmd" style="padding:3px 10px;font-size:10px;">Copy Command</button>
+            </div>
+            <pre class="cmd-pre" id="cmdOutputPre"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4/4 Sibling Interactive Labs Navigation Bar -->
+    <div class="labs-bar" role="navigation" aria-label="All 4 Veristrux Interactive Browser Labs">
+      <div class="labs-bar-label">
+        <strong>4 / 4 Interactive Labs</strong>
+        Zero-signup, 100% client-side engineering sandboxes:
+      </div>
+      <div class="labs-links">
+        <a class="btn" href="./viewdrift-demo.html">1. ViewDrift UE 5.9 Showcase &nearr;</a>
+        <a class="btn" href="./tokenczar-demo.html">2. Token Czar &lt;3 ms AST &amp; Cache &nearr;</a>
+        <a class="btn" href="./ue5-doctor-demo.html">3. UE 5.9 UBT &amp; OpenXR 90 Hz INI &nearr;</a>
+        <span class="btn active" aria-current="page">4. Hybrid Silicon GQA &amp; MoE Lab</span>
+      </div>
+    </div>
+
+    <!-- Executive Conversion Funnel -->
+    <section id="suite-conversion" class="sec" aria-labelledby="suite-conversion-title">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">Veristrux Inc. &middot; Production Agent &amp; UE 5.9 Infrastructure</span>
+          <h2 id="suite-conversion-title">Deploy Local Context Guards, Spatial Fiducials &amp; Silicon Toolkits</h2>
+        </div>
+        <div class="sec-note">
+          Polar.sh &amp; itch.io Merchants of Record &middot; Launch rates active through Dec 1 (<code>BLACKFRIDAY26</code> pre-applied on Polar.sh).
+        </div>
+      </div>
+
+      <div class="suite-grid-3">
+        <!-- Card 1: Token Czar v2.0 Pro -->
+        <article class="sku-card lead">
+          <div>
+            <span class="sku-tag">Local-First Agent Infrastructure &middot; Polar.sh MoR</span>
+            <h3>Token Czar v2.0 Pro &mdash; Split-Binary Guard</h3>
+            <div class="price-line">
+              <span class="price-big">$59.40</span>
+              <span class="price-note">First Year (3 Seats) &middot; then $99/yr</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13px;">
+              Keep local &amp; frontier coding sessions razor-lean. Free Lite host runs an active <code>&le;350</code>-line AST Read Shield; Pro streams <code>tokenczar_pro.pyd</code> in <code>&lt;200 ms</code>.
+            </p>
+            <ul class="feat-list">
+              <li><code>165K</code> warm auto-compactor &amp; <code>90%</code> diff-hunk write coordinator</li>
+              <li><code>240s</code> prompt-cache sleep guard &amp; update-drift self-healer</li>
+              <li>Zero content telemetry &mdash; source code never leaves your machine</li>
+            </ul>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6" target="_blank" rel="noopener">Annual Pro &mdash; $59.40 &rarr;</a>
+              <a class="btn" href="./tokenczar-demo.html">Open AST Lab &nearr;</a>
+            </div>
+            <p class="card-meta">
+              Monthly Pro <a href="https://buy.polar.sh/polar_cl_dQXZToDEEbTQFeeGtSXEsnAQ34XAFUBWAEMwU0FsX9X" target="_blank" rel="noopener">$7.20 first mo</a>, then $12/mo until canceled; Annual $59.40 today, then $99/yr until canceled via Polar.sh portal. Local workflow hook &mdash; not a financial spend cap.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2: ViewDrift v1.5.0 & UE 5.9 Cinema Kit -->
+        <article class="sku-card">
+          <div>
+            <span class="sku-tag">Flagship UE 5.8 / 5.9 C++20 &amp; RDG HLSL</span>
+            <h3>ViewDrift (<code>/ppd v1.5.0</code>) &amp; Cinema Kit</h3>
+            <div class="price-line">
+              <span class="price-big">$77.40</span>
+              <span class="price-note">Launch through Dec 1 &middot; $129 regular</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13px;">
+              Deterministic 29-Prime (<code>12P+17H</code>, <code>4&pi;/29 sr</code>) 6-wall Laguerre optical chamber, <code>&le;0.50 mm</code> seam gate, and <code>SelectiveDirtyBit</code> MCP firewall.
+            </p>
+            <ul class="feat-list">
+              <li>Exposes <code>20 mm</code> ray spikes &amp; <code>8.9&times;</code> orphaned <code>SSS=0</code> dropouts</li>
+              <li>Companion UE 5.9 Standalone <code>-game</code> DLSS 5 Cinema Kit (<code>$29.40</code>)</li>
+              <li>Instant ZIP delivery via Polar.sh &amp; itch.io Merchants of Record</li>
+            </ul>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" target="_blank" rel="noopener">ViewDrift &mdash; $77.40 &rarr;</a>
+              <a class="btn" href="https://buy.polar.sh/polar_cl_PD2J6tSXYKF8gG2KDYvfKRU2t28wIo0Zs8EF71r1Tgz" target="_blank" rel="noopener">Cinema Kit &mdash; $29.40 &nearr;</a>
+            </div>
+            <p class="card-meta">
+              Explore live: <a href="./viewdrift-demo.html">ViewDrift Showcase</a> &middot; <a href="./ue5-doctor-demo.html">UE5 Triage &amp; OpenXR Lab</a> &middot; <a href="https://argoness-prime.itch.io/ue59-cinema-capture-kit" target="_blank" rel="noopener">Cinema Kit on itch.io ($29)</a>.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3: Hybrid Silicon Tuner MIT + Commercial Packaged Toolkits -->
+        <article class="sku-card">
+          <div>
+            <span class="sku-tag">MIT Open-Core + MCP v1.1.0 &middot; Commercial Kits</span>
+            <h3>Hybrid Silicon Tuner &amp; Pro CLI Suite</h3>
+            <div class="price-line">
+              <span class="price-big">MIT</span>
+              <span class="price-note">Official MCP + Packaged Source Kits</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13px;">
+              Run <code>silicon-tuner-core</code> (zero-dep Python 3.10+) via <code>uvx</code> or Claude Code MCP, or license our packaged zero-dependency Python Pro toolkits with p50/p95 TTFT bench harnesses:
+            </p>
+            <ul class="feat-list">
+              <li>Official MCP Registry: <code>io.github.argoness-prime/silicon-tuner@1.1.0</code></li>
+              <li><code>llama.cpp</code>, <code>Ollama</code> &amp; <code>vLLM</code> config + TTFT benchmark suite</li>
+              <li>Instant Merchant-of-Record ZIP delivery via Polar.sh &amp; itch.io</li>
+            </ul>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_TVRrxqrnOe6dEY5t90PvtwiVR38yJ1vzYBGBE249JMB" target="_blank" rel="noopener">Silicon Pro &mdash; $9 &rarr;</a>
+              <a class="btn" href="https://github.com/argoness-prime/silicon-tuner" target="_blank" rel="noopener">MIT GitHub Repo &nearr;</a>
+            </div>
+            <p class="card-meta">
+              $9 launch through Dec 1 ($24 reg, Polar.sh MoR) &middot; <a href="https://buy.polar.sh/polar_cl_OiHCEOTX9ovzwEUrH96Joo7mncVDINoG2l8Gg1fFWeH" target="_blank" rel="noopener">All-Access 3-Kit Bundle ($12)</a> &middot; <a href="https://argoness-prime.itch.io/iron-veil-token-miser-pro" target="_blank" rel="noopener">Iron Veil ($5)</a> &middot; <a href="https://argoness-prime.itch.io/ue5-build-vram-doctor" target="_blank" rel="noopener">UE5 Doctor ($5)</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 VERISTRUX INC. &middot; DELAWARE, USA &middot; ALL RIGHTS RESERVED &middot; <a href="https://veristrux.com/">VERISTRUX.COM</a></span>
+      <div class="footer-links">
+        <a href="./index.html">Suite Home</a>
+        <a href="./viewdrift-demo.html">ViewDrift Showcase</a>
+        <a href="./tokenczar-demo.html">Token Czar Lab</a>
+        <a href="./ue5-doctor-demo.html">UE5 Doctor Lab</a>
+        <a href="./terms.html">Terms</a>
+        <a href="./eula.html">EULA</a>
+        <a href="./privacy.html">Zero Content Telemetry Privacy</a>
+        <a href="./refunds.html">Refunds</a>
+        <a href="https://github.com/argoness-prime/silicon-tuner" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================================
+      // 1. CANONICAL SILICON-TUNER v1.1.0 CONSTANTS & PRESETS (Matches planner.py)
+      // =========================================================================
+      var QUANT_BITS = {
+        iq3_m: 3.45,
+        q3_k_m: 3.90,
+        iq4_xs: 4.25,
+        q4_k_m: 4.85,
+        q5_k_m: 5.70,
+        q6_k: 6.55,
+        q8_0: 8.50,
+        fp16: 16.0
+      };
+
+      var KV_BPE = {
+        f16: 2.00,
+        q8_0: 1.06,
+        q4_0: 0.56
+      };
+
+      var PRESETS = {
+        'qwen3-35b-a3b': {
+          name: 'Qwen3.6-35B-A3B (MoE)',
+          ggufSlug: 'Qwen3.6-35B-A3B',
+          totalParamsB: 35.0,
+          activeParamsB: 3.2,
+          numLayers: 48,
+          numQueryHeads: 32,
+          numKvHeads: 4,
+          headDim: 128,
+          isMoe: true,
+          routedExpertPct: 84
+        },
+        'deepseek-v4-lite': {
+          name: 'DeepSeek-V4-Lite (MoE)',
+          ggufSlug: 'DeepSeek-V4-Lite-38B-A3.4B',
+          totalParamsB: 38.0,
+          activeParamsB: 3.4,
+          numLayers: 48,
+          numQueryHeads: 32,
+          numKvHeads: 4,
+          headDim: 128,
+          isMoe: true,
+          routedExpertPct: 86
+        },
+        'glm-5-3': {
+          name: 'GLM-5.3 (MoE)',
+          ggufSlug: 'GLM-5.3-32B-A3.6B',
+          totalParamsB: 32.0,
+          activeParamsB: 3.6,
+          numLayers: 40,
+          numQueryHeads: 32,
+          numKvHeads: 4,
+          headDim: 128,
+          isMoe: true,
+          routedExpertPct: 82
+        },
+        'llama3-70b-dense': {
+          name: 'Llama-3.3-70B (Dense)',
+          ggufSlug: 'Llama-3.3-70B-Instruct',
+          totalParamsB: 70.6,
+          activeParamsB: 70.6,
+          numLayers: 80,
+          numQueryHeads: 64,
+          numKvHeads: 8,
+          headDim: 128,
+          isMoe: false,
+          routedExpertPct: 0
+        }
+      };
+
+      var state = {
+        presetKey: 'qwen3-35b-a3b',
+        modelName: 'Qwen3.6-35B-A3B (MoE)',
+        ggufSlug: 'Qwen3.6-35B-A3B',
+        totalParamsB: 35.0,
+        activeParamsB: 3.2,
+        numLayers: 48,
+        numQueryHeads: 32,
+        numKvHeads: 4,
+        headDim: 128,
+        isMoe: true,
+        routedExpertPct: 84,
+        vramGib: 16.0,
+        ramGib: 64.0,
+        osHeadroomGib: 1.25,
+        ramBandwidthGbps: 102.4, // 2 * 8B * 6.4 GT/s dual-channel 64-bit DDR5-6400 peak
+        contextTokens: 32768,
+        quant: 'q4_k_m',
+        kvQuant: 'q8_0',
+        cmdTab: 'llama',
+        lastReport: null
+      };
+
+      function gibFromBytes(bytes) {
+        return bytes / (1024 * 1024 * 1024);
+      }
+
+      function round2(v) {
+        return Math.round(v * 100) / 100;
+      }
+
+      function fmtInt(n) {
+        return Math.round(n).toLocaleString('en-US');
+      }
+
+      // =========================================================================
+      // 2. EXACT GQA ELEMENT & SEPARATED GPU APP / PHYSICAL VRAM PLANNER
+      // =========================================================================
+      function computePlan() {
+        var t0 = performance.now();
+        var L = Math.max(1, Math.min(256, Math.round(state.numLayers)));
+        var Hq = Math.max(1, Math.min(256, Math.round(state.numQueryHeads)));
+        var Hkv = Math.max(1, Math.min(256, Math.round(state.numKvHeads)));
+        var d = Math.max(16, Math.min(512, Math.round(state.headDim)));
+        var ctx = Math.max(512, Math.round(state.contextTokens));
+        var totB = Math.max(0.5, state.totalParamsB);
+        var actB = Math.min(totB, Math.max(0.2, state.activeParamsB));
+        var isMoe = !!state.isMoe;
+        var routedFrac = isMoe ? Math.max(0, Math.min(0.98, state.routedExpertPct / 100)) : 0.0;
+
+        var bits = QUANT_BITS[state.quant] || 4.85;
+        var weightsBytes = totB * 1e9 * (bits / 8.0);
+        var weightsGib = gibFromBytes(weightsBytes);
+        var activeBytes = actB * 1e9 * (bits / 8.0);
+        var activeGib = gibFromBytes(activeBytes);
+
+        // Exact GQA KV-cache element math: 2 (K+V) * L * H_kv * d * ctx
+        var totalKvElements = 2 * L * Hkv * d * ctx;
+        var mhaElements = 2 * L * Hq * d * ctx;
+        var bpe = KV_BPE[state.kvQuant] || 1.06;
+        var kvGib = gibFromBytes(totalKvElements * bpe);
+        var kvFp16Gib = gibFromBytes(totalKvElements * 2.0);
+        var kvQ8Gib = gibFromBytes(totalKvElements * 1.06);
+        var kvQ4Gib = gibFromBytes(totalKvElements * 0.56);
+        var mhaFp16Gib = gibFromBytes(mhaElements * 2.0);
+        var kvSavingsVsMhaPct = (1.0 - ((totalKvElements * bpe) / Math.max(1, mhaElements * 2.0))) * 100.0;
+
+        var osDwm = state.osHeadroomGib;
+        var usableVram = Math.max(0.5, state.vramGib - osDwm);
+        var usableRam = Math.max(1.0, state.ramGib - 4.0);
+        var computeBuf = 0.55;
+
+        // Naive full-GPU fp16 physical baseline (matches planner.py line 331)
+        var naivePhysicalGib = weightsGib + kvFp16Gib + 0.55 + osDwm;
+
+        var fitMode = 'hybrid_layer_split';
+        var fitsMemory = true;
+        var gpuLayers = L;
+        var cpuMoeLayers = 0;
+        var sharedGib = 0;
+        var gpuExpertsGib = 0;
+        var vramUsed = 0;
+        var ramOffload = 0;
+
+        var fullGpuVram = weightsGib + kvGib + computeBuf;
+        if (fullGpuVram <= usableVram) {
+          fitMode = 'full_gpu_vram';
+          gpuLayers = L;
+          cpuMoeLayers = 0;
+          sharedGib = isMoe ? weightsGib * (1.0 - routedFrac) : weightsGib;
+          gpuExpertsGib = isMoe ? weightsGib * routedFrac : 0.0;
+          vramUsed = fullGpuVram;
+          ramOffload = 0.0;
+          fitsMemory = true;
+        } else if (isMoe && routedFrac > 0.0) {
+          var sGib = weightsGib * (1.0 - routedFrac);
+          var expTotalGib = weightsGib * routedFrac;
+          var expPerLayer = expTotalGib / L;
+          var vramForExperts = usableVram - (sGib + kvGib + computeBuf);
+
+          if (vramForExperts >= 0.0) {
+            var gpuExpLayers = Math.min(L, Math.floor(vramForExperts / Math.max(1e-6, expPerLayer)));
+            fitMode = 'hybrid_moe_expert_split';
+            gpuLayers = L;
+            cpuMoeLayers = L - gpuExpLayers;
+            sharedGib = sGib;
+            gpuExpertsGib = gpuExpLayers * expPerLayer;
+            vramUsed = sharedGib + gpuExpertsGib + kvGib + computeBuf;
+            ramOffload = cpuMoeLayers * expPerLayer;
+            fitsMemory = ramOffload <= usableRam;
+          }
+        }
+
+        if (fitMode === 'hybrid_layer_split') {
+          var perLayerGib = weightsGib / L;
+          var vramForLayers = Math.max(0.0, usableVram - (kvGib + computeBuf));
+          gpuLayers = Math.min(L, Math.floor(vramForLayers / Math.max(1e-6, perLayerGib)));
+          var cpuLayers = L - gpuLayers;
+          cpuMoeLayers = 0;
+          sharedGib = gpuLayers * perLayerGib;
+          gpuExpertsGib = 0.0;
+          computeBuf = gpuLayers > 0 ? 0.55 : 0.0;
+          vramUsed = sharedGib + (gpuLayers > 0 ? (kvGib + computeBuf) : 0.0);
+          ramOffload = cpuLayers * perLayerGib + (gpuLayers > 0 ? 0.0 : kvGib);
+          fitsMemory = ramOffload <= usableRam;
+        }
+
+        var gpuAppUsed = round2(vramUsed);
+        var gpuAppBudget = round2(usableVram);
+        var physUsed = round2(osDwm + gpuAppUsed);
+        var physTotal = round2(state.vramGib);
+        var elapsedMs = Math.max(0.05, performance.now() - t0);
+
+        var quantUpper = state.quant.toUpperCase();
+        var ggufFile = './models/' + state.ggufSlug + '-' + quantUpper + '.gguf';
+        var llamaParts = [
+          'llama-server',
+          '-m "' + ggufFile + '"',
+          '-ngl ' + gpuLayers
+        ];
+        if (cpuMoeLayers > 0) {
+          llamaParts.push('--n-cpu-moe ' + cpuMoeLayers);
+        }
+        llamaParts.push('-c ' + ctx);
+        llamaParts.push('-fa on');
+        if (state.kvQuant !== 'f16') {
+          llamaParts.push('-ctk ' + state.kvQuant + ' -ctv ' + state.kvQuant);
+        }
+        llamaParts.push('--port 8080 --host 127.0.0.1');
+        var llamaCmd = llamaParts.join(' ');
+
+        var ollamaLines = [
+          '# Modelfile generated by Veristrux Hybrid Silicon Tuner v1.1.0',
+          'FROM ' + ggufFile,
+          'PARAMETER num_ctx ' + ctx,
+          'PARAMETER num_gpu ' + gpuLayers
+        ];
+        if (cpuMoeLayers > 0) {
+          ollamaLines.push('# Note: For selective --n-cpu-moe ' + cpuMoeLayers + ' cold-expert routing + ' + state.kvQuant + ' KV, run llama-server directly.');
+        }
+        var ollamaCmd = ollamaLines.join('\n');
+
+        var cliPreset = (state.presetKey === 'llama3-70b-dense') ? 'llama3-70b-dense' : 'qwen3-35b-a3b';
+        var mcpCmd = [
+          '# Official MCP Registry: io.github.argoness-prime/silicon-tuner@1.1.0',
+          'claude mcp add silicon-tuner -- uvx --from https://github.com/argoness-prime/silicon-tuner/releases/download/v1.1.0/silicon_tuner_core-1.1.0-py3-none-any.whl silicon-tuner-core mcp',
+          '',
+          '# Run deterministic CLI plan & 8/8 offline selftest:',
+          'uvx --from https://github.com/argoness-prime/silicon-tuner/releases/download/v1.1.0/silicon_tuner_core-1.1.0-py3-none-any.whl silicon-tuner-core plan --preset ' + cliPreset + ' --vram ' + state.vramGib + ' --ram ' + state.ramGib + ' --quant ' + state.quant + ' --ctx ' + ctx,
+          'npx skills add argoness-prime/silicon-tuner'
+        ].join('\n');
+
+        return {
+          fitMode: fitMode,
+          fitsMemory: fitsMemory,
+          numLayers: L,
+          numQueryHeads: Hq,
+          numKvHeads: Hkv,
+          headDim: d,
+          contextTokens: ctx,
+          totalParamsB: totB,
+          activeParamsB: actB,
+          isMoe: isMoe,
+          routedExpertPct: isMoe ? state.routedExpertPct : 0,
+          gpuLayers: gpuLayers,
+          cpuMoeLayers: cpuMoeLayers,
+          weightsTotalGib: round2(weightsGib),
+          activeWeightsGib: round2(activeGib),
+          totalKvElements: totalKvElements,
+          mhaElements: mhaElements,
+          kvCacheGib: round2(kvGib),
+          kvFp16Gib: round2(kvFp16Gib),
+          kvQ8Gib: round2(kvQ8Gib),
+          kvQ4Gib: round2(kvQ4Gib),
+          mhaFp16Gib: round2(mhaFp16Gib),
+          kvSavingsVsMhaPct: round2(kvSavingsVsMhaPct),
+          gpuAppLedger: {
+            sharedAttentionRouterGib: round2(sharedGib),
+            gpuExpertLayersGib: round2(gpuExpertsGib),
+            kvCacheGib: round2(kvGib),
+            computeBufferGib: round2(computeBuf),
+            gpuAppUsedGib: gpuAppUsed,
+            gpuAppBudgetGib: gpuAppBudget
+          },
+          physicalVramLedger: {
+            osDwmReserveGib: round2(osDwm),
+            gpuAppUsedGib: gpuAppUsed,
+            physicalUsedGib: physUsed,
+            physicalTotalGib: physTotal,
+            naiveFullGpuFp16PhysicalGib: round2(naivePhysicalGib)
+          },
+          ramOffloadGib: round2(ramOffload),
+          usableRamGib: round2(usableRam),
+          ramBandwidthGbps: state.ramBandwidthGbps,
+          elapsedMs: round2(elapsedMs),
+          commands: {
+            llama: llamaCmd,
+            ollama: ollamaCmd,
+            mcp: mcpCmd
+          }
+        };
+      }
+
+      // =========================================================================
+      // 3. DOM RENDERING & SYNCHRONIZATION
+      // =========================================================================
+      function setText(id, txt) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      }
+
+      function render() {
+        var r = computePlan();
+        state.lastReport = r;
+
+        setText('lblActivePreset', state.modelName);
+        setText('lblPlannerLatency', r.elapsedMs.toFixed(2) + ' ms · Deterministic');
+
+        // KPI Strip
+        var kpiFit = document.getElementById('kpiFitMode');
+        if (kpiFit) {
+          if (!r.fitsMemory) {
+            kpiFit.textContent = 'EXCEEDS VRAM + DDR5';
+            kpiFit.className = 'kpi-val crimson';
+          } else if (r.fitMode === 'full_gpu_vram') {
+            kpiFit.textContent = '100% GPU VRAM (-ngl ' + r.gpuLayers + ')';
+            kpiFit.className = 'kpi-val sage';
+          } else if (r.fitMode === 'hybrid_moe_expert_split') {
+            kpiFit.textContent = 'Hybrid MoE (--n-cpu-moe ' + r.cpuMoeLayers + ')';
+            kpiFit.className = 'kpi-val sage';
+          } else {
+            kpiFit.textContent = 'Dense Split (-ngl ' + r.gpuLayers + '/' + r.numLayers + ')';
+            kpiFit.className = 'kpi-val brass';
+          }
+        }
+
+        setText('kpiGpuApp', r.gpuAppLedger.gpuAppUsedGib.toFixed(2) + ' / ' + r.gpuAppLedger.gpuAppBudgetGib.toFixed(2) + ' GiB');
+        setText('kpiPhysVram', r.physicalVramLedger.physicalUsedGib.toFixed(2) + ' / ' + r.physicalVramLedger.physicalTotalGib.toFixed(2) + ' GiB');
+
+        var kpiNaive = document.getElementById('kpiNaiveOom');
+        var naiveDiff = r.physicalVramLedger.naiveFullGpuFp16PhysicalGib - r.physicalVramLedger.physicalTotalGib;
+        if (kpiNaive) {
+          if (naiveDiff > 0) {
+            kpiNaive.textContent = r.physicalVramLedger.naiveFullGpuFp16PhysicalGib.toFixed(2) + ' GiB (OOM +' + naiveDiff.toFixed(2) + ')';
+            kpiNaive.className = 'kpi-val crimson';
+          } else {
+            kpiNaive.textContent = r.physicalVramLedger.naiveFullGpuFp16PhysicalGib.toFixed(2) + ' GiB (Fits Card)';
+            kpiNaive.className = 'kpi-val sage';
+          }
+        }
+
+        setText('kpiKvElems', fmtInt(r.totalKvElements) + ' (' + r.kvCacheGib.toFixed(2) + ' GiB)');
+        var kpiRam = document.getElementById('kpiRamOffload');
+        if (kpiRam) {
+          kpiRam.textContent = r.ramOffloadGib.toFixed(2) + ' / ' + r.usableRamGib.toFixed(2) + ' GiB';
+          kpiRam.className = r.fitsMemory ? 'kpi-val sage' : 'kpi-val crimson';
+        }
+
+        // GQA Formula & 4-Row Counterfactual Comparison
+        var banner = document.getElementById('gqaFormulaBanner');
+        if (banner) {
+          var gqaRatio = (r.numQueryHeads / Math.max(1, r.numKvHeads)).toFixed(1).replace(/\.0$/, '');
+          banner.innerHTML =
+            '2 (K&amp;V) &times; L=' + r.numLayers + ' &times; H_kv=' + r.numKvHeads + ' &times; d=' + r.headDim + ' &times; ctx=' + fmtInt(r.contextTokens) +
+            ' = <span class="hi">' + fmtInt(r.totalKvElements) + ' elements</span>' +
+            '<span class="sub">GQA ' + gqaRatio + ':1 (H_q=' + r.numQueryHeads + ' vs H_kv=' + r.numKvHeads + ') + ' + (state.kvQuant === 'f16' ? 'fp16' : state.kvQuant) +
+            ' KV cuts cache from ' + r.mhaFp16Gib.toFixed(2) + ' GiB counterfactual MHA fp16 &rarr; ' + r.kvCacheGib.toFixed(2) + ' GiB (-' + r.kvSavingsVsMhaPct.toFixed(2) + '%).</span>';
+        }
+
+        var maxKvBar = Math.max(0.5, r.mhaFp16Gib);
+        var kvRows = [
+          {
+            key: 'mha',
+            label: 'Counterfactual ' + r.numQueryHeads + '-Head MHA (fp16, 2.00 B/el)',
+            elems: fmtInt(r.mhaElements) + ' el',
+            gib: r.mhaFp16Gib,
+            color: '#de5664',
+            selected: false
+          },
+          {
+            key: 'f16',
+            label: r.numKvHeads + '-Head GQA Unquantized (fp16, 2.00 B/el)',
+            elems: fmtInt(r.totalKvElements) + ' el',
+            gib: r.kvFp16Gib,
+            color: '#d89b48',
+            selected: state.kvQuant === 'f16'
+          },
+          {
+            key: 'q8_0',
+            label: r.numKvHeads + '-Head GQA Quantized (q8_0, 1.06 B/el)',
+            elems: fmtInt(r.totalKvElements) + ' el',
+            gib: r.kvQ8Gib,
+            color: '#73b98b',
+            selected: state.kvQuant === 'q8_0'
+          },
+          {
+            key: 'q4_0',
+            label: r.numKvHeads + '-Head GQA Aggressive (q4_0, 0.56 B/el)',
+            elems: fmtInt(r.totalKvElements) + ' el',
+            gib: r.kvQ4Gib,
+            color: '#5bb8e4',
+            selected: state.kvQuant === 'q4_0'
+          }
+        ];
+
+        var kvListEl = document.getElementById('kvCompareList');
+        if (kvListEl) {
+          kvListEl.innerHTML = kvRows.map(function (row) {
+            var pct = Math.min(100, Math.max(2, (row.gib / maxKvBar) * 100));
+            return (
+              '<div class="kv-row' + (row.selected ? ' selected' : '') + '">' +
+                '<div class="kv-row-top">' +
+                  '<span>' + row.label + (row.selected ? ' &middot; <strong style="color:var(--brass-hi);">ACTIVE</strong>' : '') + '</span>' +
+                  '<strong>' + row.gib.toFixed(2) + ' GiB <span style="color:var(--dim);font-weight:400;">(' + row.elems + ')</span></strong>' +
+                '</div>' +
+                '<div class="kv-bar-bg"><div class="kv-bar-fill" style="width:' + pct.toFixed(1) + '%;background:' + row.color + ';"></div></div>' +
+              '</div>'
+            );
+          }).join('');
+        }
+
+        // Right Column Bar 1: Naive Baseline
+        var lblNaiveTitle = document.getElementById('lblNaiveTitle');
+        if (lblNaiveTitle) {
+          lblNaiveTitle.innerHTML = '1. Counterfactual Naive Full-GPU (<code>-ngl ' + r.numLayers + '</code>, fp16 KV + ' + r.physicalVramLedger.osDwmReserveGib.toFixed(2) + ' GiB DWM)';
+        }
+        var lblNaiveBar = document.getElementById('lblNaiveBar');
+        var segNaiveFit = document.getElementById('segNaiveFit');
+        var segNaiveOver = document.getElementById('segNaiveOver');
+        var naiveTotal = r.physicalVramLedger.naiveFullGpuFp16PhysicalGib;
+        var physCeil = r.physicalVramLedger.physicalTotalGib;
+        if (naiveTotal > physCeil) {
+          if (lblNaiveBar) {
+            lblNaiveBar.textContent = naiveTotal.toFixed(2) + ' / ' + physCeil.toFixed(2) + ' GiB (OOM +' + (naiveTotal - physCeil).toFixed(2) + ' GiB)';
+            lblNaiveBar.style.color = '#ff8c99';
+          }
+          var fitRatio = (physCeil / naiveTotal) * 100;
+          if (segNaiveFit) { segNaiveFit.style.width = fitRatio.toFixed(1) + '%'; segNaiveFit.style.background = '#de5664'; }
+          if (segNaiveOver) { segNaiveOver.style.width = (100 - fitRatio).toFixed(1) + '%'; }
+        } else {
+          if (lblNaiveBar) {
+            lblNaiveBar.textContent = naiveTotal.toFixed(2) + ' / ' + physCeil.toFixed(2) + ' GiB (Fits Without Split)';
+            lblNaiveBar.style.color = 'var(--sage)';
+          }
+          var usedPct = (naiveTotal / physCeil) * 100;
+          if (segNaiveFit) { segNaiveFit.style.width = usedPct.toFixed(1) + '%'; segNaiveFit.style.background = '#73b98b'; }
+          if (segNaiveOver) { segNaiveOver.style.width = '0%'; }
+        }
+        setText(
+          'legNaiveText',
+          r.weightsTotalGib.toFixed(2) + ' GiB ' + state.quant.toUpperCase() + ' weights + ' +
+          r.kvFp16Gib.toFixed(2) + ' GiB fp16 KV + 0.55 GiB compute + ' +
+          r.physicalVramLedger.osDwmReserveGib.toFixed(2) + ' GiB OS/DWM.'
+        );
+
+        // Bar 2: GPU App Budget
+        var appB = r.gpuAppLedger.gpuAppBudgetGib;
+        var appU = r.gpuAppLedger.gpuAppUsedGib;
+        var appHeadroom = Math.max(0, appB - appU);
+        setText('lblAppBar', appU.toFixed(2) + ' / ' + appB.toFixed(2) + ' GiB (' + appHeadroom.toFixed(2) + ' GiB Headroom)');
+        setText('legShared', r.gpuAppLedger.sharedAttentionRouterGib.toFixed(2) + ' GiB');
+        setText('legGpuExp', r.gpuAppLedger.gpuExpertLayersGib.toFixed(2) + ' GiB');
+        setText('legKv', r.gpuAppLedger.kvCacheGib.toFixed(2) + ' GiB');
+        setText('legComp', r.gpuAppLedger.computeBufferGib.toFixed(2) + ' GiB');
+
+        var denomApp = Math.max(0.5, appB);
+        document.getElementById('segAppShared').style.width = Math.min(100, (r.gpuAppLedger.sharedAttentionRouterGib / denomApp) * 100).toFixed(1) + '%';
+        document.getElementById('segAppExperts').style.width = Math.min(100, (r.gpuAppLedger.gpuExpertLayersGib / denomApp) * 100).toFixed(1) + '%';
+        document.getElementById('segAppKv').style.width = Math.min(100, (r.gpuAppLedger.kvCacheGib / denomApp) * 100).toFixed(1) + '%';
+        document.getElementById('segAppComp').style.width = Math.min(100, (r.gpuAppLedger.computeBufferGib / denomApp) * 100).toFixed(1) + '%';
+
+        // Bar 3: Physical GPU VRAM
+        var pUsed = r.physicalVramLedger.physicalUsedGib;
+        setText('lblPhysBar', pUsed.toFixed(2) + ' / ' + physCeil.toFixed(2) + ' GiB (' + Math.max(0, physCeil - pUsed).toFixed(2) + ' GiB Margin)');
+        setText('legPhysApp', appU.toFixed(2) + ' GiB');
+        document.getElementById('segPhysDwm').style.width = ((r.physicalVramLedger.osDwmReserveGib / physCeil) * 100).toFixed(1) + '%';
+        document.getElementById('segPhysApp').style.width = Math.min(100, (appU / physCeil) * 100).toFixed(1) + '%';
+
+        // Bar 4: Host DDR5 RAM
+        var lblRamBar = document.getElementById('lblRamBar');
+        if (lblRamBar) {
+          lblRamBar.textContent = r.ramOffloadGib.toFixed(2) + ' / ' + r.usableRamGib.toFixed(2) + ' GiB Usable DDR5';
+          lblRamBar.style.color = r.fitsMemory ? 'var(--cyan)' : '#ff8c99';
+        }
+        var ramPct = Math.min(100, (r.ramOffloadGib / Math.max(1, r.usableRamGib)) * 100);
+        var segRam = document.getElementById('segRamUsed');
+        if (segRam) {
+          segRam.style.width = ramPct.toFixed(1) + '%';
+          segRam.style.background = r.fitsMemory ? '#5bb8e4' : '#de5664';
+        }
+
+        // Layer-by-Layer Grid
+        var lblLayerLegend = document.getElementById('lblLayerLegend');
+        if (lblLayerLegend) {
+          lblLayerLegend.innerHTML = r.isMoe
+            ? '<i class="dot" style="background:#c8a25a;"></i>GDDR7 Full &nbsp; <i class="dot" style="background:#5bb8e4;"></i>DDR5 Cold Experts (<code>--n-cpu-moe</code>)'
+            : '<i class="dot" style="background:#c8a25a;"></i>GDDR7 Resident &nbsp; <i class="dot" style="background:#6e7385;"></i>DDR5 Offloaded Dense Layers';
+        }
+        var legRamNote = document.getElementById('legRamNote');
+        if (legRamNote) {
+          legRamNote.innerHTML = r.isMoe
+            ? '<span>4.00 GiB OS host reserve excluded &middot; Cold expert FFN tensors streamed only when selected by top-k router.</span>'
+            : '<span>4.00 GiB OS host reserve excluded &middot; Offloaded dense transformer blocks streamed sequentially across DDR5-6400.</span>';
+        }
+        var hotExpertLayers = r.fitMode === 'hybrid_moe_expert_split' ? (r.numLayers - r.cpuMoeLayers) : r.gpuLayers;
+        if (r.fitMode === 'full_gpu_vram') {
+          setText('lblLayerMapTitle', 'Transformer Block Residency (' + r.numLayers + ' Layers: 100% GDDR7 Resident, 0 DDR5 Spill)');
+        } else if (r.fitMode === 'hybrid_moe_expert_split') {
+          setText('lblLayerMapTitle', 'Transformer Block Residency (' + r.numLayers + ' Layers: ' + hotExpertLayers + ' GDDR7 Hot / ' + r.cpuMoeLayers + ' DDR5 Cold MoE)');
+        } else {
+          setText('lblLayerMapTitle', 'Transformer Block Residency (' + r.numLayers + ' Dense Layers: ' + r.gpuLayers + ' GDDR7 / ' + (r.numLayers - r.gpuLayers) + ' DDR5)');
+        }
+
+        var gridEl = document.getElementById('layerCellsGrid');
+        if (gridEl) {
+          var cellsHtml = [];
+          var displayCount = Math.min(96, r.numLayers);
+          for (var i = 0; i < displayCount; i++) {
+            var cls = 'gpu-hot';
+            var tip = 'Layer ' + i + ': Full Attention + FFN in GDDR7';
+            if (r.fitMode === 'hybrid_moe_expert_split' && i >= hotExpertLayers) {
+              cls = 'cpu-moe';
+              tip = 'Layer ' + i + ': Attention+KV in GDDR7, Cold Expert FFN in DDR5 (--n-cpu-moe)';
+            } else if (r.fitMode === 'hybrid_layer_split' && i >= r.gpuLayers) {
+              cls = 'cpu-dense';
+              tip = 'Layer ' + i + ': Full Dense Layer in Host DDR5';
+            }
+            cellsHtml.push('<div class="l-cell ' + cls + '" title="' + tip + '">' + (i + 1) + '</div>');
+          }
+          gridEl.innerHTML = cellsHtml.join('');
+        }
+
+        var routingEl = document.getElementById('activeRoutingNote');
+        if (routingEl) {
+          if (r.isMoe) {
+            routingEl.innerHTML =
+              '<strong>Active-Expert Byte Accounting:</strong> Each token activates <strong>' + r.activeParamsB.toFixed(1) + 'B / ' + r.totalParamsB.toFixed(1) + 'B</strong> parameters (<strong>' +
+              r.activeWeightsGib.toFixed(2) + ' GiB</strong> active ' + state.quant.toUpperCase() + ' weights vs ' + r.weightsTotalGib.toFixed(2) + ' GiB full model). ' +
+              'Attention + GQA KV stay 100% in GDDR7 across all ' + r.numLayers + ' layers; only routed cold-layer FFN slices read from dual-channel 64-bit DDR5-6400 (<strong>102.4 GB/s</strong> theoretical peak = <code>2 &times; 8 B &times; 6.4 GT/s</code>).';
+          } else {
+            routingEl.innerHTML =
+              '<strong>Dense Layer-Split Byte Accounting:</strong> Dense FFN activates <strong>100% (' + r.totalParamsB.toFixed(1) + 'B)</strong> parameters every token (<strong>' +
+              r.activeWeightsGib.toFixed(2) + ' GiB</strong> read per token). Offloaded layers (' + (r.numLayers - r.gpuLayers) + '/' + r.numLayers + ') stream across dual-channel 64-bit DDR5-6400 (<strong>102.4 GB/s</strong> theoretical peak = <code>2 &times; 8 B &times; 6.4 GT/s</code>).';
+          }
+        }
+
+        // Command output box
+        setText('cmdOutputPre', r.commands[state.cmdTab] || r.commands.llama);
+        return r;
+      }
+
+      // =========================================================================
+      // 4. INTERACTIVE CONTROLS WIRING & HEADLESS VERIFICATION API
+      // =========================================================================
+      function syncInputsFromState() {
+        document.getElementById('inpTotalB').value = state.totalParamsB;
+        document.getElementById('inpActiveB').value = state.activeParamsB;
+        document.getElementById('inpLayers').value = state.numLayers;
+        document.getElementById('inpHq').value = state.numQueryHeads;
+        document.getElementById('inpHkv').value = state.numKvHeads;
+        document.getElementById('inpHeadDim').value = state.headDim;
+        document.getElementById('selTopology').value = state.isMoe ? 'moe' : 'dense';
+        document.getElementById('inpExpertPct').value = state.routedExpertPct;
+        document.getElementById('inpExpertPct').disabled = !state.isMoe;
+      }
+
+      function markActiveButtons(attr, val) {
+        var btns = document.querySelectorAll('[' + attr + ']');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.toggle('active', String(btns[i].getAttribute(attr)) === String(val));
+        }
+      }
+
+      function applyPreset(key) {
+        state.presetKey = key;
+        if (PRESETS[key]) {
+          var p = PRESETS[key];
+          state.modelName = p.name;
+          state.ggufSlug = p.ggufSlug;
+          state.totalParamsB = p.totalParamsB;
+          state.activeParamsB = p.activeParamsB;
+          state.numLayers = p.numLayers;
+          state.numQueryHeads = p.numQueryHeads;
+          state.numKvHeads = p.numKvHeads;
+          state.headDim = p.headDim;
+          state.isMoe = p.isMoe;
+          state.routedExpertPct = p.routedExpertPct;
+          syncInputsFromState();
+        } else {
+          state.modelName = 'Custom (' + state.totalParamsB + 'B ' + (state.isMoe ? 'MoE' : 'Dense') + ')';
+          state.ggufSlug = 'Custom-' + state.totalParamsB + 'B';
+        }
+        markActiveButtons('data-preset', key);
+        return render();
+      }
+
+      // Bind preset buttons
+      document.querySelectorAll('[data-preset]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyPreset(btn.getAttribute('data-preset'));
+        });
+      });
+
+      // Bind architecture inputs -> auto-switch to Custom
+      ['inpTotalB', 'inpActiveB', 'inpLayers', 'inpHq', 'inpHkv', 'inpHeadDim', 'selTopology', 'inpExpertPct'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', function () {
+          state.presetKey = 'custom';
+          state.totalParamsB = parseFloat(document.getElementById('inpTotalB').value) || 35.0;
+          state.activeParamsB = parseFloat(document.getElementById('inpActiveB').value) || 3.2;
+          state.numLayers = parseInt(document.getElementById('inpLayers').value, 10) || 48;
+          state.numQueryHeads = parseInt(document.getElementById('inpHq').value, 10) || 32;
+          state.numKvHeads = parseInt(document.getElementById('inpHkv').value, 10) || 4;
+          state.headDim = parseInt(document.getElementById('inpHeadDim').value, 10) || 128;
+          state.isMoe = document.getElementById('selTopology').value === 'moe';
+          document.getElementById('inpExpertPct').disabled = !state.isMoe;
+          state.routedExpertPct = state.isMoe ? (parseFloat(document.getElementById('inpExpertPct').value) || 0) : 0;
+          state.modelName = 'Custom (' + state.totalParamsB + 'B ' + (state.isMoe ? 'MoE' : 'Dense') + ')';
+          state.ggufSlug = 'Custom-' + state.totalParamsB + 'B';
+          markActiveButtons('data-preset', 'custom');
+          render();
+        });
+      });
+
+      // Bind pill selectors
+      function bindPillGroup(attr, handler) {
+        document.querySelectorAll('[' + attr + ']').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var v = btn.getAttribute(attr);
+            markActiveButtons(attr, v);
+            handler(v);
+            render();
+          });
+        });
+      }
+
+      bindPillGroup('data-vram', function (v) { state.vramGib = parseFloat(v); });
+      bindPillGroup('data-ram', function (v) { state.ramGib = parseFloat(v); });
+      bindPillGroup('data-ctx', function (v) { state.contextTokens = parseInt(v, 10); });
+      bindPillGroup('data-quant', function (v) { state.quant = v; });
+      bindPillGroup('data-kv', function (v) { state.kvQuant = v; });
+      bindPillGroup('data-cmdtab', function (v) { state.cmdTab = v; });
+
+      // Copy command button
+      var btnCopy = document.getElementById('btnCopyCmd');
+      if (btnCopy) {
+        btnCopy.addEventListener('click', function () {
+          var txt = (state.lastReport && state.lastReport.commands[state.cmdTab]) || '';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(txt).then(function () {
+              btnCopy.textContent = 'Copied';
+              setTimeout(function () { btnCopy.textContent = 'Copy Command'; }, 1500);
+            }).catch(function () {});
+          }
+        });
+      }
+
+      // Expose deterministic automation handle for headless verification
+      window.SiliconTunerDemo = {
+        selectPreset: function (key) { return applyPreset(key); },
+        configure: function (opts) {
+          if (opts.preset) applyPreset(opts.preset);
+          if (opts.vramGib !== undefined) { state.vramGib = opts.vramGib; markActiveButtons('data-vram', String(opts.vramGib)); }
+          if (opts.ramGib !== undefined) { state.ramGib = opts.ramGib; markActiveButtons('data-ram', String(opts.ramGib)); }
+          if (opts.contextTokens !== undefined) { state.contextTokens = opts.contextTokens; markActiveButtons('data-ctx', String(opts.contextTokens)); }
+          if (opts.quant !== undefined) { state.quant = opts.quant; markActiveButtons('data-quant', String(opts.quant)); }
+          if (opts.kvQuant !== undefined) { state.kvQuant = opts.kvQuant; markActiveButtons('data-kv', String(opts.kvQuant)); }
+          if (opts.cmdTab !== undefined) { state.cmdTab = opts.cmdTab; markActiveButtons('data-cmdtab', String(opts.cmdTab)); }
+          return render();
+        },
+        getTelemetry: function () { return state.lastReport; }
+      };
+
+      syncInputsFromState();
+      render();
+    })();
+  </script>
+</body>
+</html>

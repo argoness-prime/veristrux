@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy &mdash; Veristrux Inc.</title>
+  <meta name="description" content="Zero Content Telemetry Privacy Policy for Veristrux Inc. websites, local developer tools, and Cloudflare/Polar.sh license activation." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="canonical" href="https://veristrux.com/privacy.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 7L16 25L25 7' fill='none' stroke='%23c99a52' stroke-width='2.6' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E" />
+  <style>
+    :root { --bg:#0b0b0c; --surface:#121214; --rule:#252528; --ink:#ece7de; --muted:#989289; --dim:#6d6860; --brass:#c99a52; --brass-bright:#dfb671; --serif:Georgia,"Iowan Old Style",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; --mono:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    *,*::before,*::after { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:14.5px; line-height:1.68; -webkit-font-smoothing:antialiased; }
+    a { color:var(--brass); text-decoration:none; }
+    a:hover { color:var(--brass-bright); }
+    .bar { border-bottom:1px solid var(--rule); background:rgba(11,11,12,0.95); padding:14px 24px; }
+    .bar-in { max-width:860px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.08em; }
+    .bar-nav { display:flex; gap:18px; flex-wrap:wrap; }
+    .bar-nav a { color:var(--muted); }
+    .bar-nav a.cur, .bar-nav a:hover { color:var(--brass-bright); }
+    .wrap { max-width:860px; margin:40px auto 72px; padding:0 24px; }
+    .doc { background:var(--surface); border:1px solid var(--rule); padding:40px 44px; }
+    .kicker { font-family:var(--mono); font-size:10.5px; letter-spacing:0.13em; text-transform:uppercase; color:var(--brass); display:block; margin-bottom:10px; }
+    h1 { margin:0 0 8px; font-family:var(--serif); font-weight:400; font-size:2rem; line-height:1.15; }
+    .meta { font-family:var(--mono); font-size:11px; color:var(--dim); margin-bottom:28px; padding-bottom:16px; border-bottom:1px solid var(--rule); }
+    h2 { margin:28px 0 10px; font-family:var(--mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--brass-bright); border-bottom:1px solid var(--rule); padding-bottom:6px; }
+    p, li { color:var(--muted); }
+    strong { color:var(--ink); }
+    ul { margin:8px 0 14px 20px; padding:0; }
+    li { margin-bottom:6px; }
+    code { font-family:var(--mono); font-size:0.86em; color:#e4d4b7; background:#1a1815; border:1px solid #2e2a23; padding:1px 5px; }
+    footer { max-width:860px; margin:22px auto 0; padding-top:16px; border-top:1px solid var(--rule); font-family:var(--mono); font-size:11px; color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    @media (max-width:640px) { .doc { padding:26px 20px; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-in">
+      <a href="./index.html">&larr; Veristrux Inc.</a>
+      <nav class="bar-nav" aria-label="Legal navigation">
+        <a href="./terms.html">Terms</a>
+        <a href="./eula.html">EULA</a>
+        <a href="./privacy.html" class="cur">Privacy</a>
+        <a href="./refunds.html">Refunds</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="doc">
+      <span class="kicker">Veristrux Inc. &middot; Zero Content Telemetry Architecture &middot; Version 2026-11-27-v2</span>
+      <h1>Privacy Policy</h1>
+      <div class="meta">Effective Date: November 27, 2026 (v2) &middot; Controller: Veristrux Inc. (Delaware Corporation) &middot; Contact: argoness@veristrux.com</div>
+
+      <p>
+        <strong>Veristrux Inc.</strong> builds local-first developer tools with <strong>Zero Content Telemetry</strong>. We never sell personal data,
+        run third-party ad trackers, or upload your source code, AI prompts, chat transcripts, or local file paths to Veristrux servers.
+      </p>
+
+      <h2>1. Local-First Tools &amp; Pro Licensing Data (What Leaves Your Device)</h2>
+      <ul>
+        <li><strong>Offline / Zero-Network Tools:</strong> <em>Iron Veil</em>, <em>UE5 Build &amp; VRAM Doctor</em>, <em>UE 5.9 Cinema Capture Toolkit</em>, <em>Hybrid Silicon AI Tuner</em>, <em>ViewDrift (/ppd)</em>, and <em>Token Czar Lite</em> run locally without transmitting code, prompts, transcripts, or file paths to Veristrux.</li>
+        <li><strong>Token Czar Pro License Check-In:</strong> While a paid <em>Token Czar Pro</em> subscription is active, the app contacts <code>veristrux-tokenczar-stream.veristrux.workers.dev</code> (hosted on <strong>Cloudflare Workers</strong>) at activation and approximately every 24 hours to validate seat entitlement and refresh its 72-hour Ed25519 lease, transmitting: (1) your license key, (2) a salted SHA-256 hardware seat hash (<code>HWID</code>, treated as pseudonymous device data under applicable privacy laws), (3) your <code>activation_id</code>, (4) Python/OS ABI string (e.g., <code>cp312-win_amd64</code>), (5) app version and EULA acceptance version, and (6) the SHA-256 hash of your installed Pro binary. Cloudflare necessarily processes your IP address to route HTTPS requests. We pass your license key and truncated <code>HWID</code> hash to <strong>Polar Software Inc. (Polar.sh)</strong> to enforce seat limits.</li>
+        <li><strong>Activation &amp; Fraud-Prevention Ledger (24-Month Retention):</strong> We retain a minimal activation ledger (UTC timestamp, <code>activation_id</code>, <code>HWID</code> hash, masked key, IP address, app version, and EULA version) in Cloudflare Workers KV with automatic <strong>twenty-four (24) month</strong> TTL expiration strictly for seat enforcement, abuse/HWID blocklisting on resolved payment disputes, and payment-dispute evidence (GDPR Art. 6(1)(b) contract performance &amp; Art. 6(1)(f) legitimate interest). <strong>No source code, prompts, transcripts, or file paths leave your machine.</strong></li>
+      </ul>
+
+      <h2>2. Website, Hosting &amp; Payment Processors</h2>
+      <ul>
+        <li><strong>Static Storefront &amp; Do Not Track (CalOPPA):</strong> Our storefront is hosted on <strong>GitHub Pages</strong> (which processes standard web-server access logs including IP addresses) and sets zero third-party marketing cookies or cross-site behavioral trackers. Because we do not track users across third-party sites, browser &ldquo;Do Not Track&rdquo; (DNT) signals do not alter our already zero-tracking behavior.</li>
+        <li><strong>Payment &amp; Billing Processors:</strong> Orders and subscriptions are processed by <strong>Polar Software Inc. (Polar.sh / Stripe)</strong>, <strong>PayPal</strong>, <strong>itch.io</strong>, or <strong>Epic Games Fab</strong>. Veristrux never sees or stores raw payment card numbers and receives only order metadata (buyer email, order ID, SKU, subscription status) needed for fulfillment and support. Support emails to <code>argoness@veristrux.com</code> are hosted on <strong>Google Workspace</strong>.</li>
+      </ul>
+
+      <h2>3. Async Engineering Rescue Materials</h2>
+      <p>
+        Sanitized logs, crash dumps, or repro snippets submitted to <code>argoness@veristrux.com</code> for a fixed-scope engineering rescue are kept
+        confidential, used solely to perform your engagement, and automatically deleted within <strong>thirty (30) days</strong> after engagement completion.
+      </p>
+
+      <h2>4. Retention, Your Rights &amp; Policy Updates</h2>
+      <ul>
+        <li><strong>Retention:</strong> Support emails and billing/tax records are retained as required by U.S. tax and commercial recordkeeping laws (typically 3&ndash;7 years); activation ledger logs are retained up to 24 months; rescue intake materials are deleted within 30 days of completion.</li>
+        <li><strong>Access, Correction &amp; Deletion:</strong> We do not sell or share personal information for cross-context behavioral advertising. You may request access to, correction of, seat deactivation for, or deletion of personal data held by Veristrux (including support records and activation ledger entries, subject to legal/fraud-prevention retention exceptions) by emailing <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>. EEA and UK residents also have the right to lodge a complaint with their local data-protection supervisory authority.</li>
+        <li><strong>Changes to This Policy:</strong> Material updates to this Privacy Policy will be posted on this page with an updated version date and emailed to active subscribers at least 30 days in advance where required by law.</li>
+      </ul>
+    </article>
+
+    <footer>
+      <span>&copy; 2026 VERISTRUX INC. &middot; DELAWARE, USA &middot; ALL RIGHTS RESERVED</span>
+      <span><a href="./index.html">Storefront</a> &middot; <a href="./terms.html">Terms</a> &middot; <a href="./eula.html">EULA</a> &middot; <a href="./refunds.html">Refunds</a></span>
+    </footer>
+  </main>
+</body>
+</html>

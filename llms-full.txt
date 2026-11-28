@@ -1,0 +1,126 @@
+# Veristrux Inc. — Complete Technical, MCP & Product Reference (`llms-full.txt`)
+
+> Deterministic spatial verification for Unreal Engine 5.8/5.9, `<5 ms` zero-content-telemetry agent context & security guards, and GQA/MoE local silicon memory planners.
+
+- **Organization:** Veristrux Inc. (Delaware Corporation, USA)
+- **Canonical Domain:** https://veristrux.com/
+- **Support & Studio Licensing:** mailto:argoness@veristrux.com
+- **GitHub Organization / Engineering Lab:** https://github.com/argoness-prime
+- **Merchants of Record:** Polar.sh (`https://buy.polar.sh/...`) and itch.io (`https://argoness-prime.itch.io`)
+- **Privacy Invariant:** Zero-Content-Telemetry across all interactive browser labs, MIT CLI/MCP servers, and desktop utilities. Source code, prompts, UBT/Cook logs, `DefaultEngine.ini` files, and 3D meshes never leave the user's local machine.
+
+---
+
+## 1. Interactive Client-Side Browser Labs (`4 / 4` Live `HTTP 200`)
+
+All four sandboxes execute 100% locally in the visitor's browser with zero signup, zero cookies, and zero backend uploads.
+
+### 1.1 ViewDrift (`/ppd v1.5.0`) — Showcase & 4-Pillar Spatial Verification Walkthrough
+- **URL:** https://veristrux.com/viewdrift-demo.html
+- **Domain:** Unreal Engine 5.8 & 5.9 C++20 / RDG HLSL spatial verification & AI/MCP mutation guard.
+- **Architectural Highlights:**
+  - **6-Surface Optical Chamber (`A-NORTH` .. `F-CEILING`):** Equal-solid-angle **29-Prime** (`12` pentagons + `17` hexagons, `4pi/29 sr`) 6-wall optical reference frame shipped inside the proprietary UE 5.8/5.9 Render Dependency Graph (`RDG`) plugin.
+  - **Projective-Radiometric Null-Space Drift (Modes I–III):**
+    1. *Mode I (Viewing-Ray Depth Spikes):* Standard `0 deg` Lit captures hide `20 mm` vertex spikes aligned along the camera ray; oblique chamber walls and multi-azimuth parallax expose them immediately.
+    2. *Mode II (Sub-Nyquist Seams & Folds):* Post-deformation 3D point-to-triangle gate (`<= 0.50 mm`) catches seams that can evade 2D RGB inspection.
+    3. *Mode III (Radiometric Metamerism):* UE 5.9 `0.30` Detail Lighting override boosts orphaned `SSS=0` contrast by `8.9x` compared to `0 deg` Lit lighting, paired with an optional `64-SPP` relative Path-Tracer check.
+  - **Stateful `SelectiveDirtyBit` (`b_mesh` / `b_uv`) MCP Save Firewall:** Separates geometry and material dirty state before `SavePackage`.
+
+### 1.2 Token Czar v2.0 — `<3 ms` AST Symbol-Map & `165K` Prompt-Cache Sandbox
+- **URL:** https://veristrux.com/tokenczar-demo.html
+- **Domain:** Context-window hygiene and prompt-cache preservation for Claude Code, Google Antigravity, and Cursor.
+- **Capabilities:**
+  - Parses pasted Python, TypeScript, or Unreal Engine 5.9 C++ source files in `<3 ms` client-side.
+  - Emits compact `Lstart-Lend` AST Symbol-Maps plus 80-line `[CHUNK]` breadcrumbs to enforce `<=350`-line `PreToolUse` read windowing instead of multi-thousand-line raw file dumps.
+  - Models cumulative prompt-cache economics across multi-hour sessions: `165K` Warm Auto-Compactor + `240s` Cache Sleep Guard (`0.10x` warm cache read rate) versus unguarded `512K` context growth and `>5 min` TTL expiry cliffs (`1.25x` cold cache re-write penalty).
+  - **Important Disclosure:** Token Czar and Iron Veil are local workflow middleware hooks — **not** a provider financial spend cap. Users should configure hard billing caps directly in their AI provider console.
+
+### 1.3 UE5 Build, Crash-Log & VRAM Doctor — `<5 ms` Triage & OpenXR 90 Hz INI Lab
+- **URL:** https://veristrux.com/ue5-doctor-demo.html
+- **Domain:** Unreal Engine 5.4–5.9 C++ build failure isolation and GPU VRAM / OpenXR 90 Hz `DefaultEngine.ini` auditing.
+- **Capabilities:**
+  - **Tab 1 (`<5 ms` UBT / UAT / Cook Triage):** Deduplicates noisy UnrealBuildTool, UAT, and Cook logs down to the originating first-cause error (`LNK2019` unresolved symbols, `D3D12 Out of Video Memory` / Virtual Shadow Map page overflow, missing redirectors). Distinguishes symbols referenced in public `.h` headers (`PublicDependencyModuleNames`) vs `.cpp`-only compilation units (`PrivateDependencyModuleNames`) to generate minimal `<Module>.Build.cs` patches.
+  - **Tab 2 (`8–32 GB` Desktop Deferred vs OpenXR 90 Hz INI Lab):** Audits `Config/DefaultEngine.ini` across `8 / 12 / 16 / 24 / 32 GB` GPUs while strictly separating **Desktop Deferred (`0.32` streaming pool ratio, `4096` VSM pages at `>=16 GB`)** from **OpenXR 90 Hz (`11.1 ms` stereo budget, `0.22` pool ratio -> `3604 MiB` on `16 GB`, `r.Shadow.Virtual.MaxPhysicalPages=2048`, `r.Lumen.Reflections.Allow=0`, `r.HairStrands.SkyLighting.IntegrationType=2`, `vr.InstancedStereo=True`)**.
+
+### 1.4 Hybrid Silicon Tuner v1.1.0 — Exact GQA KV-Cache & Sparse MoE Split Lab
+- **URL:** https://veristrux.com/silicon-tuner-demo.html
+- **Domain:** Deterministic GPU GDDR + Host DDR5-6400 memory planning for local LLMs (`llama.cpp`, `Ollama`, `vLLM`).
+- **Deterministic Byte Accounting (Zero Unmeasured `tok/s` Claims):**
+  - **Exact GQA KV-Cache Element Formula:** `N_elem = 2 (K&V) * num_layers * num_kv_heads * head_dim * context_tokens`. For `Qwen3.6-35B-A3B` (`L=48, H_q=32, H_kv=4, d=128, ctx=32,768`), `N_elem = 1,610,612,736` elements:
+    - Counterfactual 32-head MHA (`fp16`, `2.00 B/el`): `24.00 GiB`
+    - 4-head GQA unquantized (`fp16`, `2.00 B/el`): `3.00 GiB`
+    - 4-head GQA quantized (`q8_0`, `1.06 B/el`): `1.59 GiB` (`-93.38%` vs MHA `fp16`)
+    - 4-head GQA quantized (`q4_0`, `0.56 B/el`): `0.84 GiB`
+  - **Explicitly Separated GPU Ledgers (16 GiB Card + 64 GiB DDR5 Example):**
+    - *Naive Full-GPU `-ngl 48` (`fp16` KV + `1.25 GiB` DWM):* `24.56 GiB` (`+8.56 GiB` CUDA/DX12 OOM)
+    - *GPU Application Budget (`Physical - 1.25 GiB DWM`):* `14.64 / 14.75 GiB` (`3.16 GiB` Shared Attention/Router + `9.34 GiB` Hot GPU Experts `27/48` + `1.59 GiB` `q8_0` KV + `0.55 GiB` Compute Scratch)
+    - *Physical GPU Card Ceiling (`w/ 1.25 GiB OS/DWM Reserve`):* `15.89 / 16.00 GiB` (`0.11 GiB` hard margin preventing DX12 shared-memory demotion)
+    - *Host DDR5-6400 Cold-Expert Pool:* `7.26 / 60.00 GiB` (`21/48` cold expert FFN layers via `--n-cpu-moe 21`; `3.2B / 35.0B` = `1.81 GiB` active weights routed per token; `102.4 GB/s` theoretical peak for dual-channel 64-bit DDR5-6400 = `2 * 8 B * 6.4 GT/s`).
+
+---
+
+## 2. Official MCP Registry Servers (`3 / 3` Active on `registry.modelcontextprotocol.io`)
+
+All three MIT open-core packages run with **zero third-party Python dependencies** (`Python >= 3.10` stdlib only) over `stdio` JSON-RPC 2.0.
+
+### 2.1 `io.github.argoness-prime/iron-veil` (`v1.3.0`)
+- **Repository:** https://github.com/argoness-prime/iron-veil
+- **Registry Endpoint:** https://registry.modelcontextprotocol.io/v0.1/servers/io.github.argoness-prime%2Firon-veil/versions/latest
+- **Glama Directory:** https://glama.ai/mcp/servers/argoness-prime/iron-veil
+- **Quickstart:**
+  ```bash
+  claude mcp add iron-veil -- uvx --from https://github.com/argoness-prime/iron-veil/releases/download/v1.3.0/iron_veil_core-1.3.0-py3-none-any.whl iron-veil-core mcp
+  npx skills add argoness-prime/iron-veil
+  ```
+- **Tools & CLI Commands:** `PreToolUse` secret airgap (`11/11` open-core selftest), Unicode/Bidi & hidden DOM prompt-injection sanitizer, `quarantine-repo` for third-party clones, `<=350`-line AST read guard, and `iron-veil-core xray` offline Claude Code transcript auditor.
+
+### 2.2 `io.github.argoness-prime/ue5-doctor` (`v1.1.0`)
+- **Repository:** https://github.com/argoness-prime/ue5-doctor
+- **Registry Endpoint:** https://registry.modelcontextprotocol.io/v0.1/servers/io.github.argoness-prime%2Fue5-doctor/versions/latest
+- **Glama Directory:** https://glama.ai/mcp/servers/argoness-prime/ue5-doctor
+- **Quickstart:**
+  ```bash
+  claude mcp add ue5-doctor -- uvx --from https://github.com/argoness-prime/ue5-doctor/releases/download/v1.1.0/ue5_doctor-1.1.0-py3-none-any.whl ue5-doctor mcp
+  npx skills add argoness-prime/ue5-doctor
+  ```
+- **Exposed MCP Tools:** `triage_ue5_log`, `audit_ue5_ini`, `trim_ue5_uproject`.
+
+### 2.3 `io.github.argoness-prime/silicon-tuner` (`v1.1.0`)
+- **Repository:** https://github.com/argoness-prime/silicon-tuner
+- **Registry Endpoint:** https://registry.modelcontextprotocol.io/v0.1/servers/io.github.argoness-prime%2Fsilicon-tuner/versions/latest
+- **Glama Directory:** https://glama.ai/mcp/servers/argoness-prime/silicon-tuner
+- **Quickstart:**
+  ```bash
+  claude mcp add silicon-tuner -- uvx --from https://github.com/argoness-prime/silicon-tuner/releases/download/v1.1.0/silicon_tuner_core-1.1.0-py3-none-any.whl silicon-tuner-core mcp
+  npx skills add argoness-prime/silicon-tuner
+  ```
+- **Exposed MCP Tools:** `plan_hybrid_moe_split`, `compute_gqa_kv_cache`.
+
+---
+
+## 3. Commercial Products, Pricing & Merchant-of-Record Checkout Links
+
+Launch pricing (`BLACKFRIDAY26` / pre-applied launch discounts) is active through **December 1, 2026, 11:59 PM ET**. Polar.sh and itch.io act as Merchants of Record handling global tax/VAT and instant digital delivery.
+
+| Product | License Type | Launch Rate (through Dec 1) | Regular Rate | Merchant-of-Record Checkout |
+| :--- | :--- | :--- | :--- | :--- |
+| **ViewDrift (`/ppd v1.5.0`) — Personal** | One-time UE 5.8/5.9 Plugin + SDK | **$77.40** | $129.00 | https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9 |
+| **ViewDrift (`/ppd v1.5.0`) — Studio-5** | One-time (up to 5 seats) | **$479.40** | $799.00 | https://buy.polar.sh/polar_cl_l04tSHl8LLF8eKXw502e8p6AMWonIqBKK8mQ808CGEe |
+| **Token Czar v2.0 Pro — Annual** | Subscription (3 seats, auto-renews) | **$59.40** first yr | $99.00/yr | https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6 |
+| **Token Czar v2.0 Pro — Monthly** | Subscription (auto-renews) | **$7.20** first mo | $12.00/mo | https://buy.polar.sh/polar_cl_dQXZToDEEbTQFeeGtSXEsnAQ34XAFUBWAEMwU0FsX9X |
+| **Token Czar v2.0 Lite (.exe)** | Free Windows 10/11 Host | **$0.00** | $0.00 | https://github.com/argoness-prime/veristrux/releases/download/tokenczar-v2.0.0/TokenCzar-Setup-v2.0.0.exe |
+| **UE 5.9 Cinema Capture & `-15.5 LUFS` Kit** | One-time Studio ZIP | **$29.40** (Polar) / **$29** (itch) | $49.00 | https://buy.polar.sh/polar_cl_PD2J6tSXYKF8gG2KDYvfKRU2t28wIo0Zs8EF71r1Tgz · https://argoness-prime.itch.io/ue59-cinema-capture-kit |
+| **Hybrid Silicon Local-AI Tuner Pro (`v1.1`)** | One-time Commercial Python ZIP | **$9.00** | $24.00 | https://buy.polar.sh/polar_cl_TVRrxqrnOe6dEY5t90PvtwiVR38yJ1vzYBGBE249JMB |
+| **Iron Veil + Token Miser Pro (`v1.3`)** | One-time Commercial Python ZIP | **$5.00** | $29.00 | https://argoness-prime.itch.io/iron-veil-token-miser-pro |
+| **UE5 Build, Crash-Log & VRAM Doctor (`v1.1`)** | One-time Commercial Python ZIP | **$5.00** | $15.00 | https://argoness-prime.itch.io/ue5-build-vram-doctor |
+| **Veristrux All-Access 3-Kit Pro Bundle (`v1.1`)** | One-time Bundle (All 3 CLI Kits) | **$12.00** | $49.00 | https://buy.polar.sh/polar_cl_OiHCEOTX9ovzwEUrH96Joo7mncVDINoG2l8Gg1fFWeH |
+
+---
+
+## 4. Legal & Governance Links
+
+- **Terms of Service (incl. Bilateral Arbitration & 30-Day Opt-Out):** https://veristrux.com/terms.html
+- **Commercial Software EULA:** https://veristrux.com/eula.html
+- **Zero Content Telemetry Privacy Policy:** https://veristrux.com/privacy.html
+- **Refund Policy (All Sales Final Upon Digital Delivery):** https://veristrux.com/refunds.html
+- **VP of Engineering Dossier (Argoness Vane):** https://veristrux.com/argoness.html

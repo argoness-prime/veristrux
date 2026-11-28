@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Token Czar v2.0 &mdash; Interactive AST Symbol-Map &amp; 165K Prompt-Cache Sandbox | Veristrux Inc.</title>
+  <meta
+    name="description"
+    content="Zero-signup client-side browser sandbox for Veristrux Token Czar v2.0: paste any Python, TypeScript, or Unreal Engine 5.9 C++ file to measure <3 ms AST Symbol-Map & 80-line [CHUNK] Breadcrumb windowing and model 165K Warm Auto-Compactor vs 512K prompt-cache cliffs."
+  />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="canonical" href="https://veristrux.com/tokenczar-demo.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Veristrux Inc." />
+  <meta property="og:url" content="https://veristrux.com/tokenczar-demo.html" />
+  <meta property="og:title" content="Token Czar v2.0 — Client-Side AST Symbol-Map & Prompt-Cache Playground" />
+  <meta property="og:description" content="Paste any Python, TypeScript, or UE 5.9 C++ file right in your browser (zero-content-telemetry). Inspect <3 ms Lstart-Lend AST Symbol-Maps, 80-line [CHUNK] Breadcrumbs, and 165K vs 512K prompt-cache cost curves." />
+  <meta property="og:image" content="https://veristrux.com/media/og_tokenczar_lab.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Token Czar v2.0 Interactive AST Symbol-Map and 165K Prompt-Cache Sandbox" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Token Czar v2.0 — Live AST Symbol-Map & Prompt-Cache Sandbox" />
+  <meta name="twitter:description" content="Test <=350-line PreToolUse AST Read-Shield windowing and 0.10x warm vs 1.25x cold prompt-cache curves in your browser with zero signup." />
+  <meta name="twitter:image" content="https://veristrux.com/media/og_tokenczar_lab.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Token Czar v2.0 Interactive AST Symbol-Map & 165K Prompt-Cache Lab",
+        "url": "https://veristrux.com/tokenczar-demo.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "image": "https://veristrux.com/media/og_tokenczar_lab.png",
+        "description": "Zero-content-telemetry client-side browser sandbox for <3 ms Python/TypeScript/UE5.9 C++ AST Symbol-Maps, 80-line [CHUNK] breadcrumbs, and 165K vs 512K prompt-cache cost modeling.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free client-side browser sandbox (zero-content-telemetry)"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Veristrux Inc.",
+          "url": "https://veristrux.com/"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Veristrux Token Czar v2.0",
+        "softwareVersion": "2.0.0",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "url": "https://veristrux.com/#tokenczar",
+        "image": "https://veristrux.com/media/og_tokenczar_lab.png",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Token Czar v2.0 Lite Host",
+            "price": "0",
+            "priceCurrency": "USD",
+            "url": "https://github.com/argoness-prime/veristrux/releases/download/tokenczar-v2.0.0/TokenCzar-Setup-v2.0.0.exe"
+          },
+          {
+            "@type": "Offer",
+            "name": "Token Czar v2.0 Pro Annual (First Year Launch Rate)",
+            "price": "59.40",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-02",
+            "url": "https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 7L16 25L25 7' fill='none' stroke='%23c8a25a' stroke-width='2.6' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #111113;
+      --surface-2: #161619;
+      --surface-3: #1c1b1f;
+      --rule: #242428;
+      --rule-strong: #37342e;
+      --ink: #ece7de;
+      --muted: #9a948b;
+      --dim: #6b665e;
+      --brass: #c8a25a;
+      --brass-bright: #e2be78;
+      --brass-bg: rgba(200, 162, 90, 0.11);
+      --brass-rule: rgba(200, 162, 90, 0.38);
+      --sage: #7ea88b;
+      --sage-bg: rgba(126, 168, 139, 0.13);
+      --cyan: #5bb8e4;
+      --crimson: #de5664;
+      --crimson-bg: rgba(222, 86, 100, 0.12);
+      --code-bg: #08080a;
+      --serif: "Fraunces", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+      --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(880px 320px at 85% -6%, rgba(200, 162, 90, 0.07), transparent 65%),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.52;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    a { color: var(--brass); text-decoration: none; }
+    a:hover { color: var(--brass-bright); }
+    a:focus-visible, button:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 1px solid var(--brass);
+      outline-offset: 2px;
+    }
+
+    code, pre, .mono { font-family: var(--mono); }
+    p code, li code {
+      background: #191713;
+      border: 1px solid #2e2a22;
+      color: #e6d7bb;
+      padding: 1px 5px;
+      border-radius: 2px;
+      font-size: 0.86em;
+    }
+
+    /* Compliance Top Strip */
+    .compliance-strip {
+      background: #13110d;
+      border-bottom: 1px solid var(--brass-rule);
+      padding: 7px 20px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .compliance-strip strong { color: var(--brass-bright); font-weight: 600; }
+
+    /* Sticky Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 11, 12, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 1820px;
+      margin: 0 auto;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-size: 12.5px;
+    }
+    .brand:hover { color: var(--ink); }
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--brass-rule);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #14120e;
+    }
+    .hdr-pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--brass-bright);
+      background: var(--brass-bg);
+      border: 1px solid var(--brass-rule);
+      padding: 3px 9px;
+      border-radius: 2px;
+    }
+    .hdr-spec {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-links a { color: var(--muted); white-space: nowrap; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 2px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface-2);
+      color: var(--ink);
+      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    }
+    .btn:hover { border-color: var(--brass); color: var(--brass-bright); }
+    .btn.active {
+      border-color: var(--brass);
+      background: var(--brass-bg);
+      color: var(--brass-bright);
+    }
+    .btn-brass {
+      background: var(--brass);
+      color: #0b0b0c !important;
+      border-color: var(--brass);
+    }
+    .btn-brass:hover {
+      background: var(--brass-bright);
+      border-color: var(--brass-bright);
+      color: #0b0b0c !important;
+    }
+    .btn-full { width: 100%; }
+
+    /* Main Container */
+    .studio-wrap {
+      max-width: 1820px;
+      margin: 0 auto;
+      padding: 14px 22px 72px;
+    }
+
+    /* Top Title & Preset Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      scroll-margin-top: 68px;
+    }
+    .top-title-block {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .top-title-block h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.52rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .top-title-block h1 span { color: var(--brass-bright); }
+    .top-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .preset-bar .btn {
+      padding: 5px 10px;
+      font-size: 10.5px;
+    }
+
+    /* KPI Telemetry Ribbon */
+    .kpi-ribbon {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule-strong);
+      margin-bottom: 12px;
+    }
+    .kpi-cell {
+      background: var(--surface);
+      padding: 8px 12px;
+    }
+    .kpi-lbl {
+      display: block;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--dim);
+    }
+    .kpi-val {
+      display: block;
+      font-family: var(--mono);
+      font-size: 1.04rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kpi-val.brass { color: var(--brass-bright); }
+    .kpi-val.sage { color: var(--sage); }
+    .kpi-val.crimson { color: #ff8c99; }
+    .kpi-val.cyan { color: var(--cyan); }
+
+    /* Primary Above-the-Fold Playground Grid */
+    .playground-deck {
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--rule-strong);
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #0d0d10;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--brass-bright);
+    }
+    .panel-hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10.5px;
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0.01em;
+    }
+
+    /* Left Pane: Live Source Code Input */
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 12px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+    .lang-select {
+      background: var(--code-bg);
+      color: var(--ink);
+      border: 1px solid var(--rule-strong);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+    #sourceTextarea {
+      flex: 1;
+      width: 100%;
+      min-height: 540px;
+      resize: vertical;
+      border: none;
+      background: var(--code-bg);
+      color: #dcd6cb;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      line-height: 1.5;
+      padding: 12px 14px;
+      tab-size: 4;
+    }
+    .editor-foot {
+      padding: 7px 12px;
+      border-top: 1px solid var(--rule);
+      background: #0e0e11;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--dim);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Right Pane: Live PreToolUse AST Symbol-Map + [CHUNK] Breadcrumbs + Surgical Slice */
+    .output-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+    }
+    .tab-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tab-group .btn {
+      padding: 4px 9px;
+      font-size: 10px;
+    }
+
+    .ast-split {
+      display: grid;
+      grid-template-rows: 235px 1fr;
+      flex: 1;
+      min-height: 540px;
+    }
+    .symbol-list-wrap {
+      overflow-y: auto;
+      border-bottom: 1px solid var(--rule);
+      background: #0a0a0d;
+      padding: 6px 8px;
+    }
+    .sym-row {
+      display: grid;
+      grid-template-columns: 96px 76px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 4px 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .sym-row:hover {
+      background: rgba(200, 162, 90, 0.08);
+      border-color: rgba(200, 162, 90, 0.28);
+    }
+    .sym-row.selected {
+      background: var(--brass-bg);
+      border-color: var(--brass);
+    }
+    .sym-range { color: var(--brass-bright); font-variant-numeric: tabular-nums; }
+    .sym-kind {
+      font-size: 9.5px;
+      padding: 1px 5px;
+      border-radius: 2px;
+      text-align: center;
+      background: #181a20;
+      border: 1px solid #2b303c;
+      color: var(--cyan);
+    }
+    .sym-kind.cls { color: var(--brass-bright); border-color: rgba(200,162,90,0.4); background: rgba(200,162,90,0.10); }
+    .sym-kind.ue { color: var(--sage); border-color: rgba(126,168,139,0.4); background: rgba(126,168,139,0.10); }
+    .sym-sig {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #e2ddd3;
+    }
+    .sym-span-tag {
+      font-size: 10px;
+      color: var(--dim);
+    }
+
+    .raw-wire-box {
+      margin: 0;
+      padding: 11px 14px;
+      background: var(--code-bg);
+      color: #d6d1c6;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.5;
+      overflow: auto;
+      white-space: pre;
+      max-height: 315px;
+    }
+
+    /* Below-the-Fold Sections */
+    .sec {
+      margin-top: 44px;
+      scroll-margin-top: 78px;
+    }
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 18px;
+    }
+    .sec-index {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brass);
+      display: block;
+      margin-bottom: 4px;
+    }
+    h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.38rem, 2.2vw, 1.85rem);
+      color: var(--ink);
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+    }
+    .sec-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      max-width: 560px;
+      text-align: right;
+    }
+
+    /* Section 02: 165K Warm Auto-Compactor vs 512K Uncompacted Prompt-Cache Curve */
+    .cache-grid {
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .sim-controls {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .sl-block {
+      background: var(--surface-2);
+      border: 1px solid var(--rule);
+      padding: 10px 12px;
+    }
+    .sl-block label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .sl-block label output {
+      color: var(--brass-bright);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    input[type="range"] {
+      width: 100%;
+      margin: 0;
+      accent-color: var(--brass);
+      cursor: pointer;
+    }
+    .rate-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .rate-card {
+      background: #0c0c0f;
+      border: 1px solid var(--rule);
+      padding: 9px 10px;
+      font-family: var(--mono);
+    }
+    .rate-card .rc-k {
+      font-size: 10px;
+      color: var(--dim);
+      text-transform: uppercase;
+      display: block;
+    }
+    .rate-card .rc-v {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-top: 3px;
+      display: block;
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-stage {
+      padding: 12px;
+      background: #08080b;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #cacheCurveCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 7.8;
+      border: 1px solid var(--rule);
+    }
+    .chart-foot {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--dim);
+      line-height: 1.55;
+    }
+    .chart-foot strong { color: var(--muted); }
+
+    /* Section 03: 3-Tier Direct CTAs (Pro Polar.sh, Free Lite .exe, Mac/Linux MIT MCP) */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.94fr 0.94fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .tier-card {
+      background: var(--surface);
+      border: 1px solid var(--rule-strong);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .tier-card.lead {
+      border-color: var(--brass-rule);
+      background: linear-gradient(180deg, #16130e 0%, #111113 100%);
+    }
+    .tier-tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brass-bright);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .tier-card h3 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.24rem;
+      color: var(--ink);
+    }
+    .price-line {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+    }
+    .price-big {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .price-note {
+      font-size: 11px;
+      color: var(--brass-bright);
+      background: var(--brass-bg);
+      border: 1px solid var(--brass-rule);
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+    .feat-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .feat-list li { margin-bottom: 4px; }
+    .cmd-snippet {
+      margin: 10px 0 0;
+      padding: 9px 11px;
+      background: var(--code-bg);
+      border: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: #dfd7c8;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .legal-fine {
+      margin: 10px 0 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.55;
+      color: var(--dim);
+    }
+    .legal-fine strong { color: var(--muted); }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-links a { color: var(--muted); }
+
+    .playground-deck > *, .cache-grid > *, .tier-grid > *, .kpi-ribbon > *, .panel, .tier-card, .cache-card { min-width: 0; max-width: 100%; }
+    @media (max-width: 1280px) {
+      .playground-deck, .cache-grid, .tier-grid { grid-template-columns: 1fr; }
+      .sec-note { text-align: left; }
+    }
+    @media (max-width: 820px) {
+      .nav-inner { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+      .nav-links { flex-wrap: wrap; gap: 10px; }
+      .kpi-ribbon { grid-template-columns: repeat(2, 1fr); }
+      .sym-row { grid-template-columns: 84px 66px 1fr; }
+      .sym-span-tag, .nav-links .hide-sm, .hdr-spec { display: none; }
+      .studio-wrap { padding: 14px 12px 48px; }
+      .code-input, .inspector-body { min-height: 300px; }
+      .cache-summary-grid { grid-template-columns: 1fr; }
+      .kpi-val { white-space: normal; word-break: break-word; font-size: 0.96rem; }
+      .preset-bar { flex-wrap: wrap; }
+    }
+    @media (max-width: 600px) {
+      .hdr-pill { display: none; }
+      .kpi-ribbon { grid-template-columns: 1fr; }
+      .btn { white-space: normal; text-align: center; }
+      .tier-card div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+      .panel-head { flex-wrap: wrap; gap: 6px; }
+      .cmd-snippet { max-width: 100%; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="compliance-strip" role="region" aria-label="Privacy and billing scope notice">
+    <strong>100% CLIENT-SIDE SANDBOX (ZERO-CONTENT-TELEMETRY)</strong> &mdash;
+    Pasted code runs strictly inside your browser tab &middot; Local context-hygiene guard &mdash; <strong>not a provider spend cap</strong>; set hard billing limits in your AI provider console.
+  </div>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-group">
+        <a class="brand" href="./index.html" aria-label="Veristrux Inc. Home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 16 16">
+              <path d="M2 2.5L8 13.5L14 2.5" fill="none" stroke="#c8a25a" stroke-width="1.8" stroke-linecap="square" />
+            </svg>
+          </span>
+          <span>Veristrux</span>
+        </a>
+        <span class="hdr-pill">Token Czar v2.0 &middot; AST &amp; Prompt-Cache Lab</span>
+        <span class="hdr-spec">&le;350-Line Read-Shield &middot; 80-Line [CHUNK] Breadcrumbs &middot; 165K Auto-Compactor</span>
+      </div>
+      <nav class="nav-links" aria-label="Sandbox navigation">
+        <a href="#ast-playground" class="hide-sm">AST Symbol-Map</a>
+        <a href="#cache-simulator" class="hide-sm">165K vs 512K Curve</a>
+        <a href="#deploy-options" class="hide-sm">Pro &middot; Lite &middot; Mac/Linux MCP</a>
+        <a href="./viewdrift-demo.html" class="hide-sm">ViewDrift Showcase</a>
+        <a href="./index.html#tokenczar">Main Suite</a>
+        <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6" target="_blank" rel="noopener">Get Pro &mdash; $59.40/yr &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-wrap">
+    <!-- TOP BAR & 3 REAL REPO PRESETS -->
+    <div id="ast-playground" class="top-bar">
+      <div class="top-title-block">
+        <h1><span>&lt;3 ms</span> AST Symbol-Map &amp; Breadcrumb Windowing Playground</h1>
+        <span class="top-sub">Paste any source file or load a real repo preset &mdash; click any extracted symbol to preview a surgical &le;350-line read</span>
+      </div>
+      <div class="preset-bar" role="toolbar" aria-label="Repository file presets">
+        <button type="button" class="btn active" id="btnPresetPy">Preset 1: 505-Line Python AST Engine</button>
+        <button type="button" class="btn" id="btnPresetTs">Preset 2: 1,200-Line TypeScript MCP Router</button>
+        <button type="button" class="btn" id="btnPresetCpp">Preset 3: 840-Line UE 5.9 C++ Header</button>
+      </div>
+    </div>
+
+    <!-- LIVE MEASURED TELEMETRY RIBBON -->
+    <div class="kpi-ribbon" aria-label="Live client-side AST measurement telemetry">
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Unbounded Input Size</span>
+        <span class="kpi-val crimson" id="kpiRawSize">505 lines &middot; ~4,620 tok</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Token Czar AST Outline</span>
+        <span class="kpi-val sage" id="kpiGuardedSize">~690 tok (Map + 50L)</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Single-Read Token Delta</span>
+        <span class="kpi-val brass" id="kpiDeltaPct">&minus;85.1% (&minus;3,930 tok)</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Extracted Symbols</span>
+        <span class="kpi-val cyan" id="kpiSymCount">22 symbols + 7 [CHUNK]s</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">In-Browser Parse Time</span>
+        <span class="kpi-val sage" id="kpiLatencyMs">0.42 ms (&lt;3 ms budget)</span>
+      </div>
+      <div class="kpi-cell">
+        <span class="kpi-lbl">Fail-Safe Retry TTL</span>
+        <span class="kpi-val" id="kpiFailSafe">300s Full Pass-Through</span>
+      </div>
+    </div>
+
+    <!-- PRIMARY ABOVE-THE-FOLD PLAYGROUND -->
+    <section class="playground-deck" aria-label="Source Input and PreToolUse AST Symbol-Map Output">
+      <!-- LEFT: Paste / Edit Source File -->
+      <div class="panel">
+        <div class="panel-hdr">
+          <span>Input Source Buffer &middot; Unbounded <code>read_file</code> Target</span>
+          <div class="panel-hdr-right">
+            <span id="lblActiveFilename">src/tokenczar/ast_hook_dispatcher.py</span>
+          </div>
+        </div>
+        <div class="editor-toolbar">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label for="selLang">Grammar:</label>
+            <select id="selLang" class="lang-select">
+              <option value=".py">Python (.py / .pyi)</option>
+              <option value=".ts">TypeScript / JS (.ts / .tsx / .js)</option>
+              <option value=".h">C++ / Unreal Engine 5.9 (.h / .cpp)</option>
+              <option value=".rs">Rust / Go (.rs / .go)</option>
+              <option value=".md">Markdown / Config (.md / .json)</option>
+            </select>
+          </div>
+          <span>Threshold: <code>MAX_SURGICAL_LINES = 350</code> &middot; Zero network upload</span>
+        </div>
+        <textarea id="sourceTextarea" spellcheck="false" aria-label="Paste Python, TypeScript, or C++ source code here"></textarea>
+        <div class="editor-foot">
+          <span id="footCharStats">0 bytes &middot; 0 lines</span>
+          <span>Tip: Paste your own largest repo file to measure exact <code>Lstart-Lend</code> extraction speed.</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Token Czar PreToolUse Output + Interactive Symbol Inspector -->
+      <div class="panel">
+        <div class="panel-hdr">
+          <span>Token Czar <code>PreToolUse</code> Output &middot; Symbol-Map &amp; [CHUNK] Breadcrumbs</span>
+          <div class="panel-hdr-right">
+            <button type="button" class="btn" id="btnCopyWire" style="padding:2px 8px;font-size:10px;">Copy Output</button>
+          </div>
+        </div>
+        <div class="output-tabs">
+          <div class="tab-group" role="tablist" aria-label="Inspector output modes">
+            <button type="button" class="btn active" id="tabWireOutline">1. Full AST Outline + 50L Preview</button>
+            <button type="button" class="btn" id="tabBreadcrumbs">2. 80-Line [CHUNK] Breadcrumbs</button>
+            <button type="button" class="btn" id="tabSurgicalSlice">3. Selected Surgical Slice (&le;350L)</button>
+            <button type="button" class="btn" id="tabClaudeJson">4. Claude PreToolUse JSON</button>
+          </div>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Click a symbol row below to window</span>
+        </div>
+
+        <div class="ast-split">
+          <div class="symbol-list-wrap" id="symbolListContainer" aria-label="Extracted Lstart-Lend AST symbols"></div>
+          <pre class="raw-wire-box" id="wireOutputBox"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: INTERACTIVE 165K WARM AUTO-COMPACTOR VS 512K UNCOMPACTED PROMPT-CACHE CURVE -->
+    <section id="cache-simulator" class="sec" aria-labelledby="cache-sim-title">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">01 / Prompt-Cache Prefix Physics &middot; 0.10&times; Warm Read vs. 1.25&times; Cold Write</span>
+          <h2 id="cache-sim-title">Interactive <code>165K</code> Warm Auto-Compactor vs. <code>512K</code> Uncompacted Context Curve</h2>
+        </div>
+        <div class="sec-note">
+          Illustrative model using public API list multipliers (<code>1.00&times;</code> base input, <code>1.25&times;</code> 5-min cache write, <code>0.10&times;</code> warm cache read). Not a billing spend cap.
+        </div>
+      </div>
+
+      <div class="cache-grid">
+        <div class="panel">
+          <div class="panel-hdr">
+            <span>Session &amp; Cache-Cliff Parameters</span>
+            <span class="panel-hdr-right">Drag sliders to update curve</span>
+          </div>
+          <div class="sim-controls">
+            <div class="sl-block">
+              <label for="slTurns"><span>Coding Session Turns</span><output id="outTurns">80 turns</output></label>
+              <input type="range" id="slTurns" min="20" max="160" step="5" value="80" />
+            </div>
+
+            <div class="sl-block">
+              <label for="slFullReads"><span>Unwindowed Large-File Reads / Session</span><output id="outFullReads">16 reads</output></label>
+              <input type="range" id="slFullReads" min="2" max="45" step="1" value="16" />
+            </div>
+
+            <div class="sl-block">
+              <label for="slIdleCliffs"><span>Idle Pauses &gt; 5 min (1.25&times; Cold Cache Cliffs)</span><output id="outIdleCliffs">4 cliffs</output></label>
+              <input type="range" id="slIdleCliffs" min="0" max="12" step="1" value="4" />
+            </div>
+
+            <div class="sl-block">
+              <label for="selRateTier"><span>Illustrative Public API List Tier</span><output id="outRateTier">$3.00 / MTok</output></label>
+              <select id="selRateTier" class="lang-select" style="width:100%;margin-top:4px;">
+                <option value="3.0">Standard Coding Tier ($3.00/M base &middot; $3.75/M cold write &middot; $0.30/M warm read)</option>
+                <option value="15.0">Frontier Reasoning Tier ($15.00/M base &middot; $18.75/M cold write &middot; $1.50/M warm read)</option>
+              </select>
+            </div>
+
+            <div class="rate-cards">
+              <div class="rate-card">
+                <span class="rc-k">512K Unguarded Session</span>
+                <span class="rc-v" id="rcUnguardedCost" style="color:#ff8c99;">$8.94 / session</span>
+              </div>
+              <div class="rate-card">
+                <span class="rc-k">165K Guarded + 240s Sleep</span>
+                <span class="rc-v" id="rcGuardedCost" style="color:var(--sage);">$1.62 / session</span>
+              </div>
+              <div class="rate-card">
+                <span class="rc-k">Peak Prefix Footprint</span>
+                <span class="rc-v" id="rcPeakPrefix" style="color:var(--brass-bright);">468K &rarr; 165K cap</span>
+              </div>
+              <div class="rate-card">
+                <span class="rc-k">Illustrative 22-Day Month</span>
+                <span class="rc-v" id="rcMonthlyDelta" style="color:var(--ink);">&minus;$161 / mo est.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-hdr">
+            <span>Turn-by-Turn Context Window &amp; Cumulative Cache-Billing Trajectory</span>
+            <div class="panel-hdr-right">
+              <span style="color:#ff8c99;">&#9644; 512K Uncompacted + Cold Cliffs</span>
+              <span style="color:var(--brass-bright);margin-left:10px;">&#9644; 165K Warm Auto-Compactor + 240s Guard</span>
+            </div>
+          </div>
+          <div class="chart-stage">
+            <canvas id="cacheCurveCanvas" width="1240" height="604" aria-label="Turn-by-turn comparison of 512K uncompacted context growth and 1.25x cold cache cliffs versus Token Czar 165K warm auto-compactor"></canvas>
+            <div class="chart-foot">
+              <strong>Methodology &amp; Scope Disclosure:</strong> Models cumulative context growth from per-turn tool outputs plus unwindowed file reads, comparing uncompacted growth toward <code>512K</code> (where each <code>&gt;5 min</code> idle gap re-writes the entire prefix at <code>1.25&times;</code> instead of reading warm cache at <code>0.10&times;</code>) against Token Czar Lite&rsquo;s <code>&le;350</code>-line AST Read-Shield + Token Czar Pro&rsquo;s <code>165K</code> Warm Auto-Compactor &amp; <code>240s</code> Cache Sleep Guard. Subscription plans (e.g., flat-rate seats) are not billed per token; dollar figures are illustrative API-equivalent estimates and vary by workflow. <strong>Local context-hygiene guard &mdash; not a provider spend cap; set hard spend limits directly in your AI provider console.</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: DIRECT MULTI-PLATFORM DEPLOYMENT (PRO POLAR.SH, LITE FREE EXE, MAC/LINUX MIT MCP) -->
+    <section id="deploy-options" class="sec" aria-labelledby="deploy-title">
+      <div class="sec-head">
+        <div>
+          <span class="sec-index">02 / Deploy Locally in 60 Seconds &middot; Windows, macOS &amp; Linux</span>
+          <h2 id="deploy-title">Choose Your Local Workflow Layer</h2>
+        </div>
+        <div class="sec-note">
+          Zero-content-telemetry across every tier &middot; Polar.sh Merchant of Record &middot; Pure MIT open-core CLI &amp; MCP for macOS/Linux.
+        </div>
+      </div>
+
+      <div class="tier-grid">
+        <!-- Tier 1: Token Czar Pro -->
+        <article class="tier-card lead">
+          <div>
+            <span class="tier-tag">Token Czar v2.0 Pro &middot; Split-Binary Streamed Extension</span>
+            <h3>Token Czar Pro &mdash; Full 165K &amp; Cache-Sleep Suite</h3>
+            <div class="price-line">
+              <span class="price-big">$7.20/mo</span>
+              <span class="price-note">Launch through Dec 1 &middot; $12/mo regular</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13.5px;">
+              Annual plan: <strong style="color:var(--ink);">$59.40 first year</strong> through Dec 1 ($99/yr regular, 3 seats). Streams the Ed25519 + HWID signed native <code>tokenczar_pro.pyd</code> (<code>143 KB</code> gzipped, Payload SHA256-OK) into your free Lite host in <code>&lt;200 ms</code>.
+            </p>
+            <ul class="feat-list">
+              <li><strong>165K Warm Auto-Compactor</strong> &amp; <strong>240s Prompt-Cache Sleep Guard</strong></li>
+              <li><strong>90% Diff-Hunk Write Coordinator</strong> (blocks wasteful full-file rewrites)</li>
+              <li><strong>Update-Drift Self-Healer</strong> &amp; <strong>7-Vector Orphan Process Reaper</strong></li>
+              <li>Zero-content-telemetry (prompts, code &amp; file paths never leave your machine)</li>
+            </ul>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_KSAXMopVcA5GpMzvdBdYele9VoPhtoCRFn94j0dlvN6" target="_blank" rel="noopener">Annual Pro &mdash; $59.40 &rarr;</a>
+              <a class="btn" href="https://buy.polar.sh/polar_cl_dQXZToDEEbTQFeeGtSXEsnAQ34XAFUBWAEMwU0FsX9X" target="_blank" rel="noopener">Monthly Pro &mdash; $7.20 &rarr;</a>
+            </div>
+            <p class="legal-fine">
+              <strong>Auto-Renewal &amp; Middleware Notice:</strong> Monthly bills <strong>$7.20 today</strong> with <code>BLACKFRIDAY26</code>, then <strong>$12/mo</strong> billed monthly until canceled; Annual bills <strong>$59.40 today</strong>, then <strong>$99/yr</strong> billed annually until canceled. Cancel anytime via your Polar.sh Customer Portal receipt link or <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a> (access continues to period end). <strong>Not a provider spend cap</strong>&mdash;set hard billing limits in your AI provider console. Provided &ldquo;AS IS&rdquo; (<a href="./refunds.html">Refund Policy</a> &middot; <a href="./terms.html">Terms &amp; Arbitration</a> &middot; <a href="./eula.html">EULA</a>).
+            </p>
+          </div>
+        </article>
+
+        <!-- Tier 2: Token Czar Lite Free (.exe) -->
+        <article class="tier-card">
+          <div>
+            <span class="tier-tag">Windows 10 / 11 Desktop Host &middot; 0 Pro Bytes on Disk</span>
+            <h3>Token Czar v2.0 Lite &mdash; Free</h3>
+            <div class="price-line">
+              <span class="price-big">$0</span>
+              <span class="price-note">Free Forever &middot; No Account Required</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13.5px;">
+              Standalone WebView2 Matte Obsidian desktop dashboard and active <code>PreToolUse</code> hook host for Claude Code &amp; Google Antigravity on Windows.
+            </p>
+            <ul class="feat-list">
+              <li>Active <code>&le;350</code>-line AST Symbol-Map &amp; 80-line <code>[CHUNK]</code> Read-Shield</li>
+              <li>8-day deduplicated local <strong>Quota X-Ray</strong> &amp; live <strong>Wire Tap</strong> ledger</li>
+              <li>300-second fail-safe retry pass-through &amp; atomic <code>FileLock</code> state</li>
+              <li><code>TokenCzar-Setup-v2.0.0.exe</code> (29.7 MB &middot; SHA-256 <code>bff41254&hellip;fd177a7b6</code>)</li>
+            </ul>
+          </div>
+          <div>
+            <a class="btn btn-full" href="https://github.com/argoness-prime/veristrux/releases/download/tokenczar-v2.0.0/TokenCzar-Setup-v2.0.0.exe" target="_blank" rel="noopener">Download Token Czar Lite (.exe) &mdash; Free &darr;</a>
+            <p class="legal-fine">
+              Verify checksums on the <a href="https://github.com/argoness-prime/veristrux/releases/tag/tokenczar-v2.0.0" target="_blank" rel="noopener">GitHub v2.0.0 Release</a>. Installer is not yet Authenticode-signed: if Windows SmartScreen appears, verify SHA-256 above, then select <em>More info &rarr; Run anyway</em>. Local context-hygiene guard &mdash; not a provider spend cap.
+            </p>
+          </div>
+        </article>
+
+        <!-- Tier 3: MIT iron-veil-core CLI & MCP (macOS / Linux / Windows) -->
+        <article class="tier-card">
+          <div>
+            <span class="tier-tag">macOS &middot; Linux &middot; Windows &middot; MIT Open-Source</span>
+            <h3><code>iron-veil-core</code> v1.3.0 MCP &amp; CLI</h3>
+            <div class="price-line">
+              <span class="price-big">MIT</span>
+              <span class="price-note">Zero Dependencies &middot; Python 3.10+</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13.5px;">
+              On macOS or Linux? Listed on the <a href="https://registry.modelcontextprotocol.io/v0.1/servers/io.github.argoness-prime%2Firon-veil/versions/latest" target="_blank" rel="noopener">Official MCP Registry (<code>io.github.argoness-prime/iron-veil</code>)</a> &mdash; run our pure-stdlib <code>stdio</code> MCP server and offline Claude transcript <code>xray</code> auditor via <code>uvx</code> or <code>npx</code>:
+            </p>
+            <pre class="cmd-snippet" id="mcpCmdBlock"># 1. Add Open-Plugin Skill (Claude / Cursor / AGY):
+npx skills add argoness-prime/iron-veil
+
+# 2. X-ray ~/.claude/projects transcripts offline:
+uvx --from https://github.com/argoness-prime/iron-veil/releases/download/v1.3.0/iron_veil_core-1.3.0-py3-none-any.whl iron-veil-core xray
+
+# 3. Register local stdio MCP server in Claude Code:
+claude mcp add iron-veil -- uvx --from https://github.com/argoness-prime/iron-veil/releases/download/v1.3.0/iron_veil_core-1.3.0-py3-none-any.whl iron-veil-core mcp</pre>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <button type="button" class="btn" id="btnCopyMcpCmds">Copy CLI / MCP</button>
+              <a class="btn" href="https://github.com/argoness-prime/iron-veil" target="_blank" rel="noopener">GitHub Repo &nearr;</a>
+            </div>
+            <p class="legal-fine">
+              Exposes <code>sanitize_untrusted_text</code>, <code>quarantine_repo_traps</code>, and <code>xray_transcripts</code> offline in <code>&lt;2.5 ms</code> (<code>11/11</code> selftest). Client-side diagnostic only &mdash; not a billing cap.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 VERISTRUX INC. &middot; DELAWARE, USA &middot; ALL RIGHTS RESERVED &middot; <a href="https://veristrux.com/">VERISTRUX.COM</a></span>
+      <div class="footer-links">
+        <a href="./index.html">Suite Home</a>
+        <a href="./viewdrift-demo.html">ViewDrift Showcase</a>
+        <a href="./terms.html">Terms</a>
+        <a href="./eula.html">EULA</a>
+        <a href="./privacy.html">Zero Content Telemetry Privacy</a>
+        <a href="./refunds.html">Refunds</a>
+        <a href="https://github.com/argoness-prime/iron-veil" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================================
+      // 1. DETERMINISTIC REAL-REPO PRESET GENERATORS (EXACT 505 / 1200 / 840 LINES)
+      // =========================================================================
+      function padToExactLines(lines, targetCount, fillerFn) {
+        let idx = 1;
+        while (lines.length < targetCount) {
+          const block = fillerFn(idx++, targetCount - lines.length);
+          for (let i = 0; i < block.length && lines.length < targetCount; i++) {
+            lines.push(block[i]);
+          }
+        }
+        return lines.slice(0, targetCount).join('\n');
+      }
+
+      function buildPresetPython505() {
+        const lines = [
+          '"""Zero-Dependency PreToolUse AST Read-Shield & Atomic Ledger Engine.',
+          '',
+          'Intercepts unbounded file reads (> 350 lines) in < 3.0 ms, returning an',
+          'exact Lstart-Lend AST Symbol-Map, 80-line [CHUNK] Breadcrumbs, and a',
+          'bounded 50-line header preview with a 300s fail-safe retry pass-through.',
+          '"""',
+          '',
+          'from __future__ import annotations',
+          '',
+          'import ast',
+          'from dataclasses import dataclass, field',
+          'from datetime import datetime, timezone',
+          'import json',
+          'import os',
+          'from pathlib import Path',
+          'import re',
+          'import tempfile',
+          'import time',
+          'from typing import Any, Callable',
+          '',
+          'MAX_SURGICAL_LINES: int = 350',
+          'MAX_UNBOUNDED_BYTES: int = 16_384',
+          'HEADER_PREVIEW_LINES: int = 50',
+          'RETRY_PASSTHROUGH_TTL_SEC: float = 300.0',
+          '',
+          '',
+          '@dataclass(frozen=True)',
+          'class SymbolSpan:',
+          '    start_line: int',
+          '    end_line: int',
+          '    kind: str',
+          '    signature: str',
+          '',
+          '    def format_row(self) -> str:',
+          '        return f"  L{self.start_line:4d}-L{self.end_line:<4d} [{self.kind}] {self.signature}"',
+          '',
+          '',
+          'class ExclusiveFileLock:',
+          '    """Inter-process O_CREAT | O_EXCL file lock with stale-lock recovery."""',
+          '',
+          '    def __init__(self, lock_path: Path, timeout_sec: float = 3.5) -> None:',
+          '        self.lock_path = lock_path',
+          '        self.timeout_sec = timeout_sec',
+          '        self.fd: int | None = None',
+          '',
+          '    def acquire(self) -> bool:',
+          '        deadline = time.monotonic() + self.timeout_sec',
+          '        while True:',
+          '            try:',
+          '                self.fd = os.open(str(self.lock_path), os.O_CREAT | os.O_EXCL | os.O_RDWR)',
+          '                return True',
+          '            except OSError:',
+          '                if self.lock_path.exists():',
+          '                    age = time.time() - self.lock_path.stat().st_mtime',
+          '                    if age > 3.0:',
+          '                        self.lock_path.unlink(missing_ok=True)',
+          '                if time.monotonic() >= deadline:',
+          '                    return False',
+          '                time.sleep(0.004)',
+          '',
+          '    def release(self) -> None:',
+          '        if self.fd is not None:',
+          '            try:',
+          '                os.close(self.fd)',
+          '            except OSError:',
+          '                pass',
+          '            self.fd = None',
+          '        self.lock_path.unlink(missing_ok=True)',
+          '',
+          '',
+          'class AstSymbolMapper:',
+          '    """Extracts top-level and nested class/function coordinates across languages."""',
+          '',
+          '    def __init__(self, max_symbols: int = 48) -> None:',
+          '        self.max_symbols = max_symbols',
+          '',
+          '    def parse_python_module(self, source_text: str) -> list[SymbolSpan]:',
+          '        lines = source_text.splitlines()',
+          '        tree = ast.parse(source_text)',
+          '        spans: list[SymbolSpan] = []',
+          '        for node in tree.body:',
+          '            if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):',
+          '                kind = "CLASS" if isinstance(node, ast.ClassDef) else "DEF"',
+          '                st = getattr(node, "lineno", 1)',
+          '                en = getattr(node, "end_lineno", st)',
+          '                sig = lines[st - 1].strip()[:108]',
+          '                spans.append(SymbolSpan(st, en, kind, sig))',
+          '                if isinstance(node, ast.ClassDef):',
+          '                    for child in node.body:',
+          '                        if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)):',
+          '                            cst = getattr(child, "lineno", st)',
+          '                            cen = getattr(child, "end_lineno", cst)',
+          '                            spans.append(SymbolSpan(cst, cen, "METHOD", f"{node.name}.{child.name}(...)"))',
+          '        return spans[: self.max_symbols]',
+          '',
+          '    def build_chunk_breadcrumbs(self, lines: list[str], step: int = 80) -> list[str]:',
+          '        anchors: list[str] = []',
+          '        total = len(lines)',
+          '        for start in range(1, total + 1, step):',
+          '            end = min(total, start + step - 1)',
+          '            first_non_empty = "(blank)"',
+          '            for row in lines[start - 1 : end]:',
+          '                stripped = row.strip()',
+          '                if stripped:',
+          '                    first_non_empty = stripped[:96]',
+          '                    break',
+          '            anchors.append(f"  L{start:4d}-L{end:<4d} [CHUNK] {first_non_empty}")',
+          '        return anchors'
+        ];
+
+        const handlers = [
+          ['SurgicalReadShield', 'evaluate_read_request', 'validate_window_bounds', 'format_outline_response'],
+          ['RetryPassThroughStore', 'check_recent_denial', 'record_denial_timestamp', 'prune_expired_entries'],
+          ['AtomicSavingsLedger', 'record_intercept_delta', 'read_8day_velocity', 'export_wire_tap_event'],
+          ['TranscriptCliffScanner', 'scan_jsonl_turn_stream', 'detect_5min_cache_cliffs', 'summarize_top_offenders'],
+          ['HookWireFormatter', 'emit_claude_deny_payload', 'emit_agy_deny_payload', 'build_header_preview']
+        ];
+
+        handlers.forEach(([clsName, m1, m2, m3], idx) => {
+          lines.push(
+            '',
+            '',
+            `class ${clsName}:`,
+            `    """Subsystem ${idx + 1}: deterministic local PreToolUse enforcement component."""`,
+            '',
+            '    def __init__(self, state_dir: Path, max_lines: int = MAX_SURGICAL_LINES) -> None:',
+            '        self.state_dir = state_dir',
+            '        self.max_lines = max_lines',
+            '        self.invocations = 0',
+            '',
+            `    def ${m1}(self, target_path: Path, start_line: int | None, end_line: int | None) -> dict[str, Any]:`,
+            '        self.invocations += 1',
+            '        if start_line is not None and end_line is not None:',
+            '            span = end_line - start_line + 1',
+            '            if 0 < span <= self.max_lines:',
+            '                return {"decision": "allow", "window_lines": span}',
+            '        raw_text = target_path.read_text(encoding="utf-8", errors="replace")',
+            '        split_rows = raw_text.splitlines()',
+            '        if len(split_rows) <= self.max_lines:',
+            '            return {"decision": "allow", "window_lines": len(split_rows)}',
+            '        return {"decision": "deny", "total_lines": len(split_rows), "bytes": len(raw_text)}',
+            '',
+            `    def ${m2}(self, raw_lines: list[str], limit: int = 50) -> list[str]:`,
+            '        preview: list[str] = []',
+            '        for line_no, content in enumerate(raw_lines[:limit], start=1):',
+            '            trimmed = content[:140] + (" ..." if len(content) > 140 else "")',
+            '            preview.append(f"{line_no:4d} | {trimmed}")',
+            '        return preview',
+            '',
+            `    def ${m3}(self, metrics: dict[str, int]) -> str:`,
+            '        saved = max(0, metrics.get("raw_tokens", 0) - metrics.get("outline_tokens", 0))',
+            '        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")',
+            '        return json.dumps({"ts": ts, "saved_tokens": saved, "ok": True})'
+          );
+        });
+
+        return padToExactLines(lines, 505, (n) => [
+          '',
+          `def verify_canary_invariant_${n}(sample_lines: list[str], threshold: int = MAX_SURGICAL_LINES) -> bool:`,
+          `    """Deterministic selftest check #${n} for local AST windowing invariants."""`,
+          '    if not sample_lines:',
+          '        return True',
+          '    window_span = min(len(sample_lines), threshold)',
+          '    est_tokens = sum(len(r) for r in sample_lines[:window_span]) // 4',
+          '    return window_span <= threshold and est_tokens >= 0'
+        ]);
+      }
+
+      function buildPresetTypeScript1200() {
+        const lines = [
+          '/**',
+          ' * Local JSON-RPC 2.0 MCP Session Router & Prompt-Cache Hygiene Middleware.',
+          ' * Zero-content-telemetry stdio/SSE dispatcher with bounded tool-output guards.',
+          ' */',
+          '',
+          'export interface JsonRpcRequest {',
+          '  readonly jsonrpc: "2.0";',
+          '  readonly id?: string | number | null;',
+          '  readonly method: string;',
+          '  readonly params?: Record<string, unknown>;',
+          '}',
+          '',
+          'export interface JsonRpcResponse {',
+          '  readonly jsonrpc: "2.0";',
+          '  readonly id: string | number | null;',
+          '  readonly result?: unknown;',
+          '  readonly error?: { code: number; message: string; data?: unknown };',
+          '}',
+          '',
+          'export type FramingMode = "newline-json" | "content-length";',
+          '',
+          'export class StdioFrameCodec {',
+          '  private buffer: Uint8Array = new Uint8Array(0);',
+          '  private readonly maxFrameBytes: number = 16 * 1024 * 1024;',
+          '',
+          '  public pushChunk(chunk: Uint8Array): string[] {',
+          '    const merged = new Uint8Array(this.buffer.length + chunk.length);',
+          '    merged.set(this.buffer, 0);',
+          '    merged.set(chunk, this.buffer.length);',
+          '    this.buffer = merged;',
+          '    const messages: string[] = [];',
+          '    const text = new TextDecoder().decode(this.buffer);',
+          '    const parts = text.split("\\n");',
+          '    if (parts.length > 1) {',
+          '      for (let i = 0; i < parts.length - 1; i++) {',
+          '        const trimmed = parts[i].trim();',
+          '        if (trimmed.length > 0) messages.push(trimmed);',
+          '      }',
+          '      this.buffer = new TextEncoder().encode(parts[parts.length - 1]);',
+          '    }',
+          '    return messages;',
+          '  }',
+          '',
+          '  public encodeFrame(payload: JsonRpcResponse, mode: FramingMode): string {',
+          '    const body = JSON.stringify(payload);',
+          '    if (mode === "content-length") {',
+          '      const byteLen = new TextEncoder().encode(body).byteLength;',
+          '      return `Content-Length: ${byteLen}\\r\\n\\r\\n${body}`;',
+          '    }',
+          '    return `${body}\\n`;',
+          '  }',
+          '}'
+        ];
+
+        const tsModules = [
+          'CapabilityNegotiator', 'ToolSchemaRegistry', 'SurgicalReadWindowGuard',
+          'DiffHunkWriteCoordinator', 'PromptCacheTtlMonitor', 'UnicodeInjectionSanitizer',
+          'RepoTrapQuarantineScanner', 'TranscriptXrayAggregator', 'SessionRateGovernor',
+          'DeterministicCanaryRunner', 'WorkspaceBoundaryValidator', 'McpSessionRouter'
+        ];
+
+        tsModules.forEach((modName, idx) => {
+          lines.push(
+            '',
+            `export interface ${modName}Options {`,
+            '  readonly maxSurgicalLines: number;',
+            '  readonly warmCompactionCeilingTokens: number;',
+            '  readonly idleSleepGuardSeconds: number;',
+            '  readonly enableZeroContentTelemetry: boolean;',
+            '}',
+            '',
+            `export class ${modName} {`,
+            `  private readonly moduleIndex: number = ${idx + 1};`,
+            `  private readonly opts: ${modName}Options;`,
+            '  private processedCalls: number = 0;',
+            '  private savedTokensTotal: number = 0;',
+            '',
+            `  constructor(opts: ${modName}Options) {`,
+            '    this.opts = opts;',
+            '  }',
+            '',
+            '  public evaluateToolPayload(toolName: string, args: Record<string, unknown>): { allowed: boolean; reason?: string } {',
+            '    this.processedCalls += 1;',
+            '    const startLine = typeof args.startLine === "number" ? args.startLine : undefined;',
+            '    const endLine = typeof args.endLine === "number" ? args.endLine : undefined;',
+            '    if (toolName === "read_file" && (startLine === undefined || endLine === undefined)) {',
+            '      this.savedTokensTotal += 4200;',
+            '      return {',
+            '        allowed: false,',
+            '        reason: `Unbounded read intercepted by ${toolName}; request <= ${this.opts.maxSurgicalLines} lines.`',
+            '      };',
+            '    }',
+            '    if (startLine !== undefined && endLine !== undefined && (endLine - startLine + 1) > this.opts.maxSurgicalLines) {',
+            '      return {',
+            '        allowed: false,',
+            '        reason: `Requested span exceeds ${this.opts.maxSurgicalLines}-line surgical window.`',
+            '      };',
+            '    }',
+            '    return { allowed: true };',
+            '  }',
+            '',
+            '  public computeCacheSnapshot(turnIndex: number, idleGapSec: number): { warmHit: boolean; multiplier: number } {',
+            '    const cacheExpired = idleGapSec > 300 && idleGapSec > this.opts.idleSleepGuardSeconds;',
+            '    const multiplier = cacheExpired ? 1.25 : 0.10;',
+            '    return { warmHit: !cacheExpired, multiplier };',
+            '  }',
+            '',
+            '  public getDiagnostics(): Record<string, number> {',
+            '    return {',
+            '      moduleIndex: this.moduleIndex,',
+            '      processedCalls: this.processedCalls,',
+            '      savedTokensTotal: this.savedTokensTotal,',
+            '    };',
+            '  }',
+            '}'
+          );
+        });
+
+        return padToExactLines(lines, 1200, (n) => [
+          '',
+          `export const buildRouterRouteSpec${n} = (routeId: string, maxLines = 350): Record<string, unknown> => {`,
+          '  const normalized = routeId.trim().toLowerCase();',
+          '  const budgetBytes = maxLines * 46;',
+          '  return {',
+          `    slot: ${n},`,
+          '    route: normalized,',
+          '    maxLines,',
+          '    budgetBytes,',
+          '    zeroContentTelemetry: true,',
+          '  };',
+          '};'
+        ]);
+      }
+
+      function buildPresetUeCpp840() {
+        const lines = [
+          '// Copyright 2026 Veristrux Systems Lab. Generic Unreal Engine 5.9 Gameplay Inventory Header.',
+          '#pragma once',
+          '',
+          '#include "CoreMinimal.h"',
+          '#include "Components/ActorComponent.h"',
+          '#include "Engine/DataTable.h"',
+          '#include "GameplayTagContainer.h"',
+          '#include "Subsystems/GameInstanceSubsystem.h"',
+          '',
+          'UENUM(BlueprintType)',
+          'enum class EInventorySlotCategory : uint8',
+          '{',
+          '    PrimaryWeapon = 0,',
+          '    SecondaryTool = 1,',
+          '    Consumable    = 2,',
+          '    KeyItem       = 3,',
+          '    CraftingPart  = 4,',
+          '    QuestArtifact = 5',
+          '};',
+          '',
+          'USTRUCT(BlueprintType)',
+          'struct FInventorySlotRecord',
+          '{',
+          '    GENERATED_BODY()',
+          '',
+          '    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")',
+          '    FName ItemId = NAME_None;',
+          '',
+          '    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")',
+          '    EInventorySlotCategory Category = EInventorySlotCategory::CraftingPart;',
+          '',
+          '    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")',
+          '    int32 StackCount = 1;',
+          '',
+          '    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")',
+          '    float UnitWeightKg = 0.25f;',
+          '};',
+          '',
+          'UCLASS(BlueprintType)',
+          'class UInventoryLedgerSubsystem : public UGameInstanceSubsystem',
+          '{',
+          '    GENERATED_BODY()',
+          '',
+          'public:',
+          '    virtual void Initialize(FSubsystemCollectionBase& Collection) override',
+          '    {',
+          '        Super::Initialize(Collection);',
+          '        bLedgerDirty = false;',
+          '        MaxCarryWeightKg = 45.0f;',
+          '    }',
+          '',
+          '    UFUNCTION(BlueprintCallable, Category = "Inventory")',
+          '    bool ValidateCarryBudget(const TArray<FInventorySlotRecord>& Slots, float BudgetKg) const',
+          '    {',
+          '        float TotalKg = 0.0f;',
+          '        for (const FInventorySlotRecord& Slot : Slots)',
+          '        {',
+          '            TotalKg += FMath::Max(0, Slot.StackCount) * FMath::Max(0.0f, Slot.UnitWeightKg);',
+          '            if (TotalKg > BudgetKg)',
+          '            {',
+          '                return false;',
+          '            }',
+          '        }',
+          '        return true;',
+          '    }',
+          '',
+          '    UFUNCTION(BlueprintCallable, Category = "Inventory")',
+          '    bool CanCommitSaveSlot() const',
+          '    {',
+          '        return !bLedgerDirty && MaxCarryWeightKg > 0.0f;',
+          '    }',
+          '',
+          'private:',
+          '    bool bLedgerDirty = false;',
+          '    float MaxCarryWeightKg = 45.0f;',
+          '};'
+        ];
+
+        const ueBlocks = [
+          ['FWeaponLoadoutEntry', 'ComputeLoadoutWeightKg'],
+          ['FVendorQuoteEntry', 'EvaluateDiscountedPrice'],
+          ['FCraftingRecipeStep', 'ResolveCraftingDurationSec'],
+          ['FLootTableWeightRow', 'SampleNormalizedDropWeight'],
+          ['FStatusEffectStack', 'ComputeDecayedModifier'],
+          ['FQuestObjectiveState', 'CalculateCompletionRatio'],
+          ['FCheckpointSaveHeader', 'EstimateSerializedByteSize'],
+          ['FTelemetryCounterPack', 'AccumulateWindowAverage']
+        ];
+
+        ueBlocks.forEach(([structName, fnName], idx) => {
+          lines.push(
+            '',
+            'USTRUCT()',
+            `struct ${structName}`,
+            '{',
+            '    GENERATED_BODY()',
+            '',
+            `    int32 RowIndex = ${idx + 1};`,
+            '    int32 TierLevel = 1;',
+            '    float BaseScalar = 10.0f;',
+            '    FVector4f CurveParams = FVector4f(1.0f, 0.25f, 0.50f, 2.0f);',
+            '};',
+            '',
+            `FORCEINLINE float ${fnName}(const ${structName}& State, float DeltaSeconds, float Multiplier)`,
+            '{',
+            '    const float ClampedDelta = FMath::Clamp(DeltaSeconds, 0.0f, 5.0f);',
+            '    const float Scaled = State.BaseScalar * FMath::Max(0.0f, Multiplier);',
+            '    return Scaled * (State.CurveParams.X + State.CurveParams.Y * ClampedDelta);',
+            '}'
+          );
+        });
+
+        return padToExactLines(lines, 840, (n) => [
+          '',
+          `inline bool VerifyInventorySlotIndex${n}(int32 SlotIndex, int32 MaxSlots)`,
+          '{',
+          `    return (SlotIndex >= 0) && (SlotIndex < MaxSlots) && (${n} > 0);`,
+          '}'
+        ]);
+      }
+
+      const PRESETS = {
+        py: {
+          filename: 'src/tokenczar/ast_hook_dispatcher.py',
+          ext: '.py',
+          build: buildPresetPython505
+        },
+        ts: {
+          filename: 'src/mcp/mcp_session_router.ts',
+          ext: '.ts',
+          build: buildPresetTypeScript1200
+        },
+        cpp: {
+          filename: 'Source/DemoGame/Public/InventoryLedgerComponent.h',
+          ext: '.h',
+          build: buildPresetUeCpp840
+        }
+      };
+
+      // =========================================================================
+      // 2. GENUINE <3 MS CLIENT-SIDE MULTI-LANGUAGE AST & [CHUNK] ENGINE
+      // =========================================================================
+      const PY_DEF_RE = /^(\s*)(?:async\s+def|def|class)\s+([A-Za-z_][A-Za-z0-9_]*)/;
+      const UE_MACRO_RE = /^\s*(UCLASS|USTRUCT|UFUNCTION|UPROPERTY|UENUM|UINTERFACE)\b/;
+      const CLASS_LIKE_RE = /^\s*(?:export\s+)?(?:default\s+)?(?:abstract\s+)?(?:pub\s+)?(?:template\s*<[^>]+>\s*)?(class|struct|interface|enum(?:\s+class)?|trait|impl|type)\s+(?:[A-Z0-9_]+_API\s+)?([A-Za-z_][A-Za-z0-9_]*)/;
+      const FUNC_LIKE_RE = /^\s*(?:export\s+)?(?:default\s+)?(?:public|private|protected|virtual|static|inline|FORCEINLINE|constexpr|async|pub|fn|func)\s+(?:[\w:<>\*&\s,\[\]]+?\s+)?([A-Za-z_~][A-Za-z0-9_:~]*)\s*\(/;
+      const ARROW_FN_RE = /^\s*(?:export\s+)?(?:const|let|var)\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*=\s*(?:async\s*)?\([^)]*\)\s*(?::\s*[^=]+)?=>/;
+      const MD_HEAD_RE = /^(#{1,4})\s+(.+)$/;
+
+      function extractPythonSymbolsJS(lines) {
+        const total = lines.length;
+        const raw = [];
+        for (let i = 0; i < total; i++) {
+          const line = lines[i];
+          const m = PY_DEF_RE.exec(line);
+          if (!m) continue;
+          const indent = m[1].replace(/\t/g, '    ').length;
+          const trimmed = line.trim();
+          const isClass = trimmed.startsWith('class ');
+          const name = m[2];
+          raw.push({ lineIdx: i, indent, isClass, name, sig: trimmed.slice(0, 110) });
+        }
+
+        const out = [];
+        let currentClass = null;
+        for (let idx = 0; idx < raw.length; idx++) {
+          const item = raw[idx];
+          if (item.indent === 0) {
+            currentClass = item.isClass ? item.name : null;
+          } else if (item.indent > 4) {
+            continue;
+          }
+
+          let endLine = total;
+          for (let j = iNext(raw, idx); j < raw.length; j++) {
+            if (raw[j].indent <= item.indent) {
+              endLine = raw[j].lineIdx;
+              break;
+            }
+          }
+          // Trim trailing blank lines from symbol block
+          while (endLine > item.lineIdx + 1 && lines[endLine - 1].trim() === '') {
+            endLine--;
+          }
+          const kind = item.isClass ? 'CLASS' : (item.indent > 0 && currentClass ? 'METHOD' : 'DEF');
+          const sig = kind === 'METHOD' ? (currentClass + '.' + item.name + '(...)') : item.sig;
+          out.push({
+            startLine: item.lineIdx + 1,
+            endLine: Math.max(item.lineIdx + 1, endLine),
+            kind,
+            signature: sig
+          });
+        }
+        return out;
+      }
+
+      function iNext(arr, idx) { return idx + 1; }
+
+      function extractCLikeSymbolsJS(lines) {
+        const total = lines.length;
+        const raw = [];
+        let pendingUe = '';
+
+        for (let i = 0; i < total; i++) {
+          const s = lines[i].trim();
+          if (!s || s.startsWith('//') || s.startsWith('/*') || s.startsWith('*')) continue;
+
+          const um = UE_MACRO_RE.exec(s);
+          if (um) {
+            pendingUe = um[1];
+            continue;
+          }
+          const cm = CLASS_LIKE_RE.exec(s);
+          if (cm) {
+            const kind = pendingUe || cm[1].toUpperCase().split(/\s+/)[0];
+            pendingUe = '';
+            raw.push({ startLine: i + 1, kind, signature: s.slice(0, 110) });
+            continue;
+          }
+          const am = ARROW_FN_RE.exec(s);
+          if (am) {
+            pendingUe = '';
+            raw.push({ startLine: i + 1, kind: 'FUNC', signature: s.slice(0, 110) });
+            continue;
+          }
+          const fm = FUNC_LIKE_RE.exec(s);
+          if (fm && !s.endsWith(';')) {
+            const fnName = fm[1];
+            if (!['if', 'for', 'while', 'switch', 'catch', 'return', 'sizeof'].includes(fnName)) {
+              const kind = pendingUe || 'FUNC';
+              pendingUe = '';
+              raw.push({ startLine: i + 1, kind, signature: s.slice(0, 110) });
+              continue;
+            }
+          }
+          if (!s.startsWith('GENERATED_BODY')) pendingUe = '';
+        }
+
+        return raw.map((item, idx) => {
+          let endLine = idx + 1 < raw.length ? raw[idx + 1].startLine - 1 : total;
+          // Compute exact brace-balanced end line when declaration opens a { ... } block
+          let depth = 0;
+          let opened = false;
+          for (let ln = item.startLine - 1; ln < total; ln++) {
+            const row = lines[ln];
+            if (!opened && ln > item.startLine + 2) break;
+            if (!opened && row.includes(';') && !row.includes('{')) {
+              endLine = ln + 1;
+              opened = true;
+              break;
+            }
+            for (let ch = 0; ch < row.length; ch++) {
+              const c = row[ch];
+              if (c === '{') { depth++; opened = true; }
+              else if (c === '}') { depth--; }
+            }
+            if (opened && depth <= 0) {
+              endLine = ln + 1;
+              break;
+            }
+          }
+          while (endLine > item.startLine && lines[endLine - 1].trim() === '') endLine--;
+          return {
+            startLine: item.startLine,
+            endLine: Math.max(item.startLine, endLine),
+            kind: item.kind,
+            signature: item.signature
+          };
+        });
+      }
+
+      function extractMarkdownSymbolsJS(lines) {
+        const total = lines.length;
+        const raw = [];
+        for (let i = 0; i < total; i++) {
+          const m = MD_HEAD_RE.exec(lines[i].trim());
+          if (m) raw.push({ startLine: i + 1, kind: 'H' + m[1].length, signature: m[2].slice(0, 100) });
+        }
+        return raw.map((item, idx) => ({
+          startLine: item.startLine,
+          endLine: idx + 1 < raw.length ? Math.max(item.startLine, raw[idx + 1].startLine - 1) : total,
+          kind: item.kind,
+          signature: item.signature
+        }));
+      }
+
+      function buildBreadcrumbsJS(lines, interval) {
+        const total = lines.length;
+        const out = [];
+        for (let start = 1; start <= total; start += interval) {
+          const end = Math.min(total, start + interval - 1);
+          let snippet = '(blank)';
+          for (let k = start - 1; k < end; k++) {
+            const s = lines[k].trim();
+            if (s) {
+              snippet = s.length > 96 ? (s.slice(0, 96) + '...') : s;
+              break;
+            }
+          }
+          out.push(
+            '  L' + String(start).padStart(4, ' ') + '-L' + String(end).padEnd(4, ' ') + ' [CHUNK] ' + snippet
+          );
+        }
+        return out;
+      }
+
+      function buildHeaderPreviewJS(lines, maxLines) {
+        const limit = Math.min(lines.length, maxLines);
+        const out = [];
+        for (let i = 0; i < limit; i++) {
+          const s = lines[i].length > 140 ? (lines[i].slice(0, 140) + ' ... [truncated]') : lines[i];
+          out.push(String(i + 1).padStart(4, ' ') + ' | ' + s);
+        }
+        return out.join('\n');
+      }
+
+      // =========================================================================
+      // 3. STATE & INTERACTIVE PLAYGROUND CONTROLLER
+      // =========================================================================
+      const appState = {
+        filename: PRESETS.py.filename,
+        ext: '.py',
+        activeTab: 'outline', // 'outline' | 'breadcrumbs' | 'slice' | 'json'
+        selectedSymIdx: 0,
+        lastResult: null
+      };
+
+      function analyzeCurrentBuffer() {
+        const textarea = document.getElementById('sourceTextarea');
+        const rawText = textarea.value || '';
+        const ext = document.getElementById('selLang').value;
+        appState.ext = ext;
+
+        const t0 = performance.now();
+        const lines = rawText.split(/\r?\n/);
+        const totalLines = rawText.length === 0 ? 0 : lines.length;
+        const byteLen = new TextEncoder().encode(rawText).byteLength;
+
+        let symbols = [];
+        if (ext === '.py') symbols = extractPythonSymbolsJS(lines);
+        else if (ext === '.md') symbols = extractMarkdownSymbolsJS(lines);
+        else symbols = extractCLikeSymbolsJS(lines);
+
+        const breadcrumbs = buildBreadcrumbsJS(lines, 80);
+        const headerPreview = buildHeaderPreviewJS(lines, 50);
+        const elapsedMs = Math.max(0.05, performance.now() - t0);
+
+        const baseName = appState.filename.split('/').pop();
+        const symFormatted = symbols.slice(0, 40).map((s) =>
+          '  L' + String(s.startLine).padStart(4, ' ') + '-L' + String(s.endLine).padEnd(4, ' ') +
+          ' [' + s.kind + '] ' + s.signature
+        );
+        if (symbols.length > 40) {
+          symFormatted.push('  ... (' + (symbols.length - 40) + ' more symbols)');
+        }
+
+        const outlineParts = [
+          `[Token Czar AST Outline — '${baseName}' has ${totalLines.toLocaleString()} lines (${byteLen.toLocaleString()} bytes); intercepting unbounded read]`,
+          `Next Step: Call read_file(Path='${appState.filename}', StartLine=<start>, EndLine=<end>) with <= 350 lines.`,
+          `(Fail-Safe: Re-issuing the same read_file within 5 minutes passes through in full.)`,
+          ''
+        ];
+        if (symFormatted.length > 0) {
+          outlineParts.push(`=== AST SYMBOL MAP (${symbols.length} symbols in ${baseName}) ===`);
+          outlineParts.push(...symFormatted);
+          outlineParts.push('');
+        } else {
+          outlineParts.push(`=== BREADCRUMB ANCHORS (80-line intervals) ===`);
+          outlineParts.push(...breadcrumbs.slice(0, 18));
+          outlineParts.push('');
+        }
+        outlineParts.push(`=== HEADER PREVIEW (Lines 1-${Math.min(totalLines, 50)} of ${totalLines}) ===`);
+        outlineParts.push(headerPreview);
+
+        let fullOutlineText = outlineParts.join('\n');
+        if (fullOutlineText.length > 3500) {
+          fullOutlineText = fullOutlineText.slice(0, 3440) + '\n... [preview capped at 3,500 chars]';
+        }
+
+        const rawTokens = Math.max(1, Math.round(byteLen / 4));
+        const guardedTokens = totalLines <= 350 && byteLen <= 16384
+          ? rawTokens
+          : Math.max(1, Math.round(fullOutlineText.length / 4));
+        const savedTokens = Math.max(0, rawTokens - guardedTokens);
+        const deltaPct = rawTokens > 0 ? ((savedTokens / rawTokens) * 100.0) : 0.0;
+
+        if (appState.selectedSymIdx >= symbols.length) {
+          appState.selectedSymIdx = 0;
+        }
+
+        appState.lastResult = {
+          lines,
+          totalLines,
+          byteLen,
+          symbols,
+          breadcrumbs,
+          fullOutlineText,
+          rawTokens,
+          guardedTokens,
+          savedTokens,
+          deltaPct,
+          elapsedMs,
+          intercepted: totalLines > 350 || byteLen > 16384
+        };
+
+        renderPlaygroundUI();
+        drawPromptCacheCurve();
+      }
+
+      function renderPlaygroundUI() {
+        const r = appState.lastResult;
+        if (!r) return;
+
+        document.getElementById('lblActiveFilename').textContent = appState.filename;
+        document.getElementById('footCharStats').textContent =
+          r.byteLen.toLocaleString() + ' bytes · ' + r.totalLines.toLocaleString() + ' lines · ' +
+          (r.intercepted ? 'INTERCEPTED (>350L Read-Shield)' : 'ALLOWED DIRECTLY (<=350L)');
+
+        document.getElementById('kpiRawSize').textContent =
+          r.totalLines.toLocaleString() + 'L · ~' + r.rawTokens.toLocaleString() + ' tok';
+        document.getElementById('kpiGuardedSize').textContent =
+          r.intercepted ? ('~' + r.guardedTokens.toLocaleString() + ' tok (Map + 50L)') : ('~' + r.rawTokens.toLocaleString() + ' tok (Allowed)');
+        document.getElementById('kpiDeltaPct').textContent =
+          r.intercepted ? ('−' + r.deltaPct.toFixed(1) + '% (−' + r.savedTokens.toLocaleString() + ' tok)') : '0.0% (<=350L OK)';
+        document.getElementById('kpiSymCount').textContent =
+          r.symbols.length + ' syms + ' + r.breadcrumbs.length + ' [CHUNK]s';
+        document.getElementById('kpiLatencyMs').textContent =
+          r.elapsedMs.toFixed(2) + ' ms (<3 ms budget)';
+
+        // Render interactive clickable symbol rows
+        const listEl = document.getElementById('symbolListContainer');
+        listEl.innerHTML = '';
+        if (r.symbols.length === 0) {
+          const empty = document.createElement('div');
+          empty.style.cssText = 'padding:12px;font-family:var(--mono);font-size:11px;color:var(--muted);';
+          empty.textContent = 'No AST class/function declarations detected — automatic 80-line [CHUNK] Breadcrumb anchors active.';
+          listEl.appendChild(empty);
+        } else {
+          r.symbols.forEach((sym, idx) => {
+            const row = document.createElement('div');
+            row.className = 'sym-row' + (idx === appState.selectedSymIdx ? ' selected' : '');
+
+            const rangeSpan = document.createElement('span');
+            rangeSpan.className = 'sym-range';
+            rangeSpan.textContent = 'L' + sym.startLine + '–L' + sym.endLine;
+
+            const kindSpan = document.createElement('span');
+            const isUe = sym.kind.startsWith('U');
+            const isCls = sym.kind === 'CLASS' || sym.kind === 'STRUCT' || sym.kind === 'INTERFACE';
+            kindSpan.className = 'sym-kind' + (isUe ? ' ue' : (isCls ? ' cls' : ''));
+            kindSpan.textContent = sym.kind;
+
+            const sigSpan = document.createElement('span');
+            sigSpan.className = 'sym-sig';
+            sigSpan.textContent = sym.signature;
+
+            const lenSpan = document.createElement('span');
+            lenSpan.className = 'sym-span-tag';
+            lenSpan.textContent = (sym.endLine - sym.startLine + 1) + 'L';
+
+            row.appendChild(rangeSpan);
+            row.appendChild(kindSpan);
+            row.appendChild(sigSpan);
+            row.appendChild(lenSpan);
+
+            row.addEventListener('click', () => {
+              appState.selectedSymIdx = idx;
+              appState.activeTab = 'slice';
+              syncTabButtons();
+              renderPlaygroundUI();
+            });
+            listEl.appendChild(row);
+          });
+        }
+
+        // Render active output tab
+        const box = document.getElementById('wireOutputBox');
+        if (appState.activeTab === 'outline') {
+          box.textContent = r.fullOutlineText;
+        } else if (appState.activeTab === 'breadcrumbs') {
+          box.textContent =
+            `=== 80-LINE [CHUNK] BREADCRUMB ANCHORS (${r.breadcrumbs.length} intervals across ${r.totalLines} lines) ===\n` +
+            `(Used automatically for logs, JSON/YAML data, or low-symbol files > 350 lines)\n\n` +
+            r.breadcrumbs.join('\n');
+        } else if (appState.activeTab === 'slice') {
+          const sym = r.symbols[appState.selectedSymIdx];
+          if (!sym) {
+            box.textContent = buildHeaderPreviewJS(r.lines, 80);
+          } else {
+            const st = sym.startLine;
+            const en = Math.min(r.totalLines, Math.min(sym.endLine, st + 349));
+            const sliceLines = [];
+            for (let ln = st; ln <= en; ln++) {
+              sliceLines.push(String(ln).padStart(4, ' ') + ' | ' + r.lines[ln - 1]);
+            }
+            const sliceText = sliceLines.join('\n');
+            const sliceTok = Math.max(1, Math.round(sliceText.length / 4));
+            box.textContent =
+              `# Follow-Up Surgical Tool Call (ALLOWED — ${en - st + 1} lines <= 350-line budget, ~${sliceTok} tokens):\n` +
+              `read_file(Path="${appState.filename}", StartLine=${st}, EndLine=${en})\n\n` +
+              sliceText;
+          }
+        } else {
+          const claudePayload = {
+            hookSpecificOutput: {
+              hookEventName: 'PreToolUse',
+              permissionDecision: r.intercepted ? 'deny' : 'allow',
+              permissionDecisionReason: r.intercepted ? r.fullOutlineText : 'File within <=350-line surgical threshold.'
+            }
+          };
+          box.textContent = JSON.stringify(claudePayload, null, 2);
+        }
+      }
+
+      function syncTabButtons() {
+        const map = {
+          outline: 'tabWireOutline',
+          breadcrumbs: 'tabBreadcrumbs',
+          slice: 'tabSurgicalSlice',
+          json: 'tabClaudeJson'
+        };
+        Object.keys(map).forEach((k) => {
+          document.getElementById(map[k]).classList.toggle('active', appState.activeTab === k);
+        });
+      }
+
+      // =========================================================================
+      // 4. SECTION 02: 165K WARM AUTO-COMPACTOR VS 512K CACHE-CLIFF CHART
+      // =========================================================================
+      const curveCanvas = document.getElementById('cacheCurveCanvas');
+      const curveCtx = curveCanvas.getContext('2d');
+
+      function drawPromptCacheCurve() {
+        const turns = parseInt(document.getElementById('slTurns').value, 10);
+        const fullReads = parseInt(document.getElementById('slFullReads').value, 10);
+        const idleCliffs = parseInt(document.getElementById('slIdleCliffs').value, 10);
+        const baseRatePerM = parseFloat(document.getElementById('selRateTier').value);
+
+        document.getElementById('outTurns').textContent = turns + ' turns';
+        document.getElementById('outFullReads').textContent = fullReads + ' reads';
+        document.getElementById('outIdleCliffs').textContent = idleCliffs + ' cliffs';
+        document.getElementById('outRateTier').textContent = '$' + baseRatePerM.toFixed(2) + ' / MTok';
+
+        // Public API cache multipliers: 1.00x fresh input, 1.25x 5-min cache write, 0.10x warm cache read
+        const warmReadRate = baseRatePerM * 0.10;
+        const coldWriteRate = baseRatePerM * 1.25;
+
+        const activeSavedPerRead = appState.lastResult && appState.lastResult.savedTokens > 800
+          ? appState.lastResult.savedTokens
+          : 6200;
+
+        // Place idle pauses (>5m) and unwindowed file reads deterministically across turns
+        const cliffTurns = new Set();
+        for (let c = 1; c <= idleCliffs; c++) {
+          cliffTurns.add(Math.max(3, Math.round((c / (idleCliffs + 1)) * turns)));
+        }
+
+        const unguardedPrefix = [];
+        const guardedPrefix = [];
+        let unguardedCost = 0.0;
+        let guardedCost = 0.0;
+
+        let pUnguarded = 18000; // Initial system + repo instructions prefix
+        let pGuarded = 18000;
+        const WARM_CAP = 165000;
+        const HARD_CEIL = 512000;
+
+        for (let t = 1; t <= turns; t++) {
+          const isReadTurn = (t % Math.max(1, Math.floor(turns / fullReads))) === 0;
+          const readAddUnguarded = isReadTurn ? (activeSavedPerRead + 750) : 0;
+          const readAddGuarded = isReadTurn ? 750 : 0;
+
+          const deltaU = 2900 + readAddUnguarded;
+          const deltaG = 1850 + readAddGuarded;
+
+          const isCliff = cliffTurns.has(t);
+          if (isCliff) {
+            // Unguarded: >5m idle gap expires TTL -> entire accumulated prefix rewritten at 1.25x!
+            unguardedCost += ((pUnguarded + deltaU) / 1e6) * coldWriteRate;
+          } else {
+            // Warm cache read on prefix (0.10x) + write on new turn delta (1.25x)
+            unguardedCost += (pUnguarded / 1e6) * warmReadRate + (deltaU / 1e6) * coldWriteRate;
+          }
+          pUnguarded = Math.min(HARD_CEIL, pUnguarded + deltaU);
+
+          // Guarded (Token Czar Lite <=350L Read-Shield + Pro 165K Warm Auto-Compactor + 240s Sleep Guard):
+          // 240s Sleep Guard keeps prefix warm across pauses; 165K Auto-Compactor trims cold middle turns cleanly
+          if (pGuarded + deltaG > WARM_CAP) {
+            pGuarded = 112000 + deltaG; // Compacted summary anchor keeps prefix below 165K
+            guardedCost += (pGuarded / 1e6) * warmReadRate + ((deltaG + 4000) / 1e6) * coldWriteRate;
+          } else {
+            guardedCost += (pGuarded / 1e6) * warmReadRate + (deltaG / 1e6) * coldWriteRate;
+            pGuarded += deltaG;
+          }
+
+          unguardedPrefix.push({ turn: t, tokens: pUnguarded, cost: unguardedCost, isCliff });
+          guardedPrefix.push({ turn: t, tokens: pGuarded, cost: guardedCost });
+        }
+
+        const peakK = Math.round(unguardedPrefix[unguardedPrefix.length - 1].tokens / 1000);
+        const guardPeakK = Math.round(Math.max(...guardedPrefix.map((x) => x.tokens)) / 1000);
+        const monthlySaved = Math.max(0, (unguardedCost - guardedCost) * 22);
+
+        document.getElementById('rcUnguardedCost').textContent = '$' + unguardedCost.toFixed(2) + ' / session';
+        document.getElementById('rcGuardedCost').textContent = '$' + guardedCost.toFixed(2) + ' / session';
+        document.getElementById('rcPeakPrefix').textContent = peakK + 'K → ' + guardPeakK + 'K';
+        document.getElementById('rcMonthlyDelta').textContent = '−$' + Math.round(monthlySaved) + ' / mo est.';
+
+        // Draw high-DPI Canvas chart
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const cssW = Math.max(460, curveCanvas.clientWidth || 880);
+        const cssH = Math.round(cssW * (7.8 / 16.0));
+        if (curveCanvas.width !== Math.floor(cssW * dpr) || curveCanvas.height !== Math.floor(cssH * dpr)) {
+          curveCanvas.width = Math.floor(cssW * dpr);
+          curveCanvas.height = Math.floor(cssH * dpr);
+        }
+        const ctx = curveCtx;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.fillStyle = '#08080b';
+        ctx.fillRect(0, 0, cssW, cssH);
+
+        const padL = 64, padR = 28, padT = 30, padB = 42;
+        const plotW = cssW - padL - padR;
+        const plotH = cssH - padT - padB;
+        const maxTok = 520000;
+
+        const xOf = (t) => padL + ((t - 1) / Math.max(1, turns - 1)) * plotW;
+        const yOf = (tok) => padT + plotH - (Math.min(maxTok, tok) / maxTok) * plotH;
+
+        // Horizontal gridlines (0K, 165K Warm Cap, 300K, 512K Ceiling)
+        const levels = [
+          { tok: 0, lbl: '0K', col: '#1f2026' },
+          { tok: 165000, lbl: '165K WARM CAP', col: 'rgba(200, 162, 90, 0.55)' },
+          { tok: 320000, lbl: '320K', col: '#1a1b20' },
+          { tok: 512000, lbl: '512K UNCOMPACTED', col: 'rgba(222, 86, 100, 0.40)' }
+        ];
+        ctx.font = '600 10px "JetBrains Mono", Consolas, monospace';
+        levels.forEach((lv) => {
+          const y = yOf(lv.tok);
+          ctx.strokeStyle = lv.col;
+          ctx.lineWidth = lv.tok === 165000 ? 1.4 : 1;
+          if (lv.tok === 165000) ctx.setLineDash([6, 4]);
+          ctx.beginPath();
+          ctx.moveTo(padL, y);
+          ctx.lineTo(padL + plotW, y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          ctx.fillStyle = lv.tok === 165000 ? '#e2be78' : '#7b756c';
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(lv.lbl.split(' ')[0], padL - 8, y);
+          if (lv.tok === 165000) {
+            ctx.textAlign = 'left';
+            ctx.fillText('Pro 165K Warm Auto-Compactor Ceiling (0.10× warm cache reads)', padL + 8, y - 9);
+          }
+        });
+
+        // Unguarded area fill & curve
+        ctx.beginPath();
+        ctx.moveTo(xOf(1), yOf(0));
+        unguardedPrefix.forEach((pt) => ctx.lineTo(xOf(pt.turn), yOf(pt.tokens)));
+        ctx.lineTo(xOf(turns), yOf(0));
+        ctx.closePath();
+        const uGrad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+        uGrad.addColorStop(0, 'rgba(222, 86, 100, 0.24)');
+        uGrad.addColorStop(1, 'rgba(222, 86, 100, 0.02)');
+        ctx.fillStyle = uGrad;
+        ctx.fill();
+
+        ctx.beginPath();
+        unguardedPrefix.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(xOf(pt.turn), yOf(pt.tokens));
+          else ctx.lineTo(xOf(pt.turn), yOf(pt.tokens));
+        });
+        ctx.strokeStyle = '#de5664';
+        ctx.lineWidth = 2.3;
+        ctx.stroke();
+
+        // Mark 1.25x Cold-Cache Rewrite Cliffs (>5 min idle pauses)
+        unguardedPrefix.forEach((pt) => {
+          if (!pt.isCliff) return;
+          const cx = xOf(pt.turn), cy = yOf(pt.tokens);
+          ctx.strokeStyle = 'rgba(222, 86, 100, 0.55)';
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx, padT + plotH);
+          ctx.stroke();
+
+          ctx.fillStyle = '#ff8c99';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 4.2, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.font = '700 9.5px "JetBrains Mono", Consolas, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('1.25× CLIFF', cx, Math.max(padT + 12, cy - 10));
+        });
+
+        // Guarded area fill & curve
+        ctx.beginPath();
+        ctx.moveTo(xOf(1), yOf(0));
+        guardedPrefix.forEach((pt) => ctx.lineTo(xOf(pt.turn), yOf(pt.tokens)));
+        ctx.lineTo(xOf(turns), yOf(0));
+        ctx.closePath();
+        const gGrad = ctx.createLinearGradient(0, yOf(165000), 0, padT + plotH);
+        gGrad.addColorStop(0, 'rgba(200, 162, 90, 0.25)');
+        gGrad.addColorStop(1, 'rgba(126, 168, 139, 0.04)');
+        ctx.fillStyle = gGrad;
+        ctx.fill();
+
+        ctx.beginPath();
+        guardedPrefix.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(xOf(pt.turn), yOf(pt.tokens));
+          else ctx.lineTo(xOf(pt.turn), yOf(pt.tokens));
+        });
+        ctx.strokeStyle = '#e2be78';
+        ctx.lineWidth = 2.4;
+        ctx.stroke();
+
+        // X-axis ticks
+        ctx.fillStyle = '#7b756c';
+        ctx.font = '600 10px "JetBrains Mono", Consolas, monospace';
+        ctx.textAlign = 'center';
+        for (let k = 0; k <= 4; k++) {
+          const tVal = Math.max(1, Math.round(1 + (k / 4) * (turns - 1)));
+          ctx.fillText('Turn ' + tVal, xOf(tVal), padT + plotH + 20);
+        }
+      }
+
+      // =========================================================================
+      // 5. EVENT BINDINGS & PROGRAMMATIC HARNESS API
+      // =========================================================================
+      function loadPresetKey(key) {
+        const p = PRESETS[key];
+        if (!p) return;
+        ['btnPresetPy', 'btnPresetTs', 'btnPresetCpp'].forEach((id) => {
+          document.getElementById(id).classList.remove('active');
+        });
+        if (key === 'py') document.getElementById('btnPresetPy').classList.add('active');
+        if (key === 'ts') document.getElementById('btnPresetTs').classList.add('active');
+        if (key === 'cpp') document.getElementById('btnPresetCpp').classList.add('active');
+
+        appState.filename = p.filename;
+        appState.selectedSymIdx = 0;
+        document.getElementById('selLang').value = p.ext;
+        document.getElementById('sourceTextarea').value = p.build();
+        analyzeCurrentBuffer();
+      }
+
+      document.getElementById('btnPresetPy').addEventListener('click', () => loadPresetKey('py'));
+      document.getElementById('btnPresetTs').addEventListener('click', () => loadPresetKey('ts'));
+      document.getElementById('btnPresetCpp').addEventListener('click', () => loadPresetKey('cpp'));
+
+      document.getElementById('sourceTextarea').addEventListener('input', () => {
+        appState.filename = 'pasted_buffer' + document.getElementById('selLang').value;
+        analyzeCurrentBuffer();
+      });
+      document.getElementById('selLang').addEventListener('change', () => {
+        analyzeCurrentBuffer();
+      });
+
+      document.getElementById('tabWireOutline').addEventListener('click', () => {
+        appState.activeTab = 'outline'; syncTabButtons(); renderPlaygroundUI();
+      });
+      document.getElementById('tabBreadcrumbs').addEventListener('click', () => {
+        appState.activeTab = 'breadcrumbs'; syncTabButtons(); renderPlaygroundUI();
+      });
+      document.getElementById('tabSurgicalSlice').addEventListener('click', () => {
+        appState.activeTab = 'slice'; syncTabButtons(); renderPlaygroundUI();
+      });
+      document.getElementById('tabClaudeJson').addEventListener('click', () => {
+        appState.activeTab = 'json'; syncTabButtons(); renderPlaygroundUI();
+      });
+
+      document.getElementById('btnCopyWire').addEventListener('click', (e) => {
+        const txt = document.getElementById('wireOutputBox').textContent || '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(() => {
+            e.target.textContent = 'Copied';
+            setTimeout(() => { e.target.textContent = 'Copy Output'; }, 1500);
+          }).catch(() => {});
+        }
+      });
+
+      document.getElementById('btnCopyMcpCmds').addEventListener('click', (e) => {
+        const txt = document.getElementById('mcpCmdBlock').textContent || '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(() => {
+            e.target.textContent = 'Copied';
+            setTimeout(() => { e.target.textContent = 'Copy CLI / MCP'; }, 1500);
+          }).catch(() => {});
+        }
+      });
+
+      ['slTurns', 'slFullReads', 'slIdleCliffs', 'selRateTier'].forEach((id) => {
+        document.getElementById(id).addEventListener('input', drawPromptCacheCurve);
+        document.getElementById(id).addEventListener('change', drawPromptCacheCurve);
+      });
+
+      window.addEventListener('resize', drawPromptCacheCurve);
+
+      window.TokenCzarDemo = {
+        loadPreset(key) {
+          loadPresetKey(key);
+          return this.getTelemetry();
+        },
+        getTelemetry() {
+          const r = appState.lastResult || {};
+          return {
+            filename: appState.filename,
+            ext: appState.ext,
+            totalLines: r.totalLines || 0,
+            byteLen: r.byteLen || 0,
+            symbolCount: r.symbols ? r.symbols.length : 0,
+            breadcrumbCount: r.breadcrumbs ? r.breadcrumbs.length : 0,
+            rawTokens: r.rawTokens || 0,
+            guardedTokens: r.guardedTokens || 0,
+            savedTokens: r.savedTokens || 0,
+            deltaPct: Number((r.deltaPct || 0).toFixed(2)),
+            parseLatencyMs: Number((r.elapsedMs || 0).toFixed(3)),
+            intercepted: Boolean(r.intercepted)
+          };
+        }
+      };
+
+      loadPresetKey('py');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ViewDrift (/ppd v1.5.0) — Interactive Showcase &amp; 4-Pillar Architecture | Veristrux Inc.</title>
+  <meta name="description" content="Explore ViewDrift (/ppd v1.5.0) for Unreal Engine 5.8 and 5.9: real UE 5.9 wireframe and 0.30 Detail Lighting captures, 4-pillar spatial verification walkthrough, and stateful SelectiveDirtyBit MCP save-gate concepts." />
+  <link rel="canonical" href="https://veristrux.com/viewdrift-demo.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://veristrux.com/viewdrift-demo.html" />
+  <meta property="og:title" content="ViewDrift (/ppd v1.5.0) — Spatial Verification for UE 5.8 &amp; 5.9 | Veristrux Inc." />
+  <meta property="og:description" content="Catch 20 mm viewing-ray spikes, <=0.50 mm seams, and 8.9x SSS=0 radiometric dropouts before SavePackage in Unreal Engine 5.8 &amp; 5.9." />
+  <meta property="og:image" content="https://veristrux.com/media/og_viewdrift_lab.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ViewDrift (/ppd v1.5.0) — Spatial Verification for UE 5.8 &amp; 5.9" />
+  <meta name="twitter:description" content="Four-pillar deterministic 3D verification &amp; 29-Prime 6-wall optical chamber plugin for Unreal Engine 5.8 and 5.9." />
+  <meta name="twitter:image" content="https://veristrux.com/media/og_viewdrift_lab.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0c'/%3E%3Cpath d='M7 8l9 17 9-17' fill='none' stroke='%23c8a25a' stroke-width='2.6' stroke-linecap='square'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "ViewDrift (/ppd v1.5.0) Interactive Showcase & 4-Pillar Walkthrough",
+        "url": "https://veristrux.com/viewdrift-demo.html",
+        "description": "Showcase and four-pillar architectural walkthrough of ViewDrift (/ppd v1.5.0) for Unreal Engine 5.8 and 5.9.",
+        "publisher": { "@type": "Organization", "name": "Veristrux Inc.", "url": "https://veristrux.com/" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "ViewDrift (/ppd v1.5.0) for Unreal Engine 5.8 & 5.9",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, Linux",
+        "url": "https://veristrux.com/viewdrift-demo.html",
+        "offers": [
+          { "@type": "Offer", "name": "Personal License (Launch Rate)", "price": "77.40", "priceCurrency": "USD", "url": "https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" },
+          { "@type": "Offer", "name": "Studio-5 License (Launch Rate)", "price": "479.40", "priceCurrency": "USD", "url": "https://buy.polar.sh/polar_cl_l04tSHl8LLF8eKXw502e8p6AMWonIqBKK8mQ808CGEe" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --surface: #121214;
+      --surface-2: #17171a;
+      --ink: #ece7de;
+      --muted: #a19a8f;
+      --dim: #736d64;
+      --rule: #232328;
+      --rule-strong: #34343c;
+      --brass: #c8a25a;
+      --brass-bright: #e0be7a;
+      --brass-soft: rgba(200, 162, 90, 0.12);
+      --brass-rule: rgba(200, 162, 90, 0.36);
+      --sage: #69b78a;
+      --sage-soft: rgba(105, 183, 138, 0.12);
+      --coral: #d96b63;
+      --coral-soft: rgba(217, 107, 99, 0.14);
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      overflow-x: clip;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brass-bright); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      color: var(--brass-bright);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1px 5px;
+      border-radius: 2px;
+      word-break: break-word;
+    }
+
+    .top-notice {
+      background: #0e0e11;
+      border-bottom: 1px solid var(--rule);
+      padding: 8px 16px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .top-notice strong { color: var(--brass-bright); }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(11, 11, 12, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+    .brand:hover { text-decoration: none; }
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--brass-rule);
+      background: #101012;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .brand-badge {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--brass-bright);
+      border: 1px solid var(--brass-rule);
+      background: var(--brass-soft);
+      padding: 2px 7px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 11.5px;
+    }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); text-decoration: none; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--rule-strong);
+      background: var(--surface-2);
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+      text-align: center;
+    }
+    .btn:hover { border-color: var(--brass); color: var(--brass-bright); text-decoration: none; }
+    .btn-brass {
+      background: var(--brass);
+      border-color: var(--brass);
+      color: #0b0b0c;
+    }
+    .btn-brass:hover {
+      background: var(--brass-bright);
+      border-color: var(--brass-bright);
+      color: #0b0b0c;
+    }
+    .btn-sm { padding: 7px 12px; font-size: 11px; }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: start;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero > *, .showcase-grid > *, .firewall-grid > *, .cta-grid > *, .labs-grid > * {
+      min-width: 0;
+    }
+    .kicker {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass-bright);
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.75rem, 3.6vw, 2.7rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+    h1 span { color: var(--brass-bright); }
+    .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 12px;
+    }
+    .metric b {
+      display: block;
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--brass-bright);
+      margin-bottom: 3px;
+    }
+    .metric span {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .video-card {
+      background: var(--surface);
+      border: 1px solid var(--rule-strong);
+      overflow: hidden;
+    }
+    .video-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 14px;
+      background: #0e0e10;
+      border-bottom: 1px solid var(--rule);
+    }
+    .video-hdr-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--brass-bright);
+    }
+    .tab-group {
+      display: inline-flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 5px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--surface-2);
+      border: 1px solid var(--rule-strong);
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .tab-btn[aria-selected="true"] {
+      background: var(--brass-soft);
+      border-color: var(--brass);
+      color: var(--brass-bright);
+    }
+    .video-stage {
+      background: #050506;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .video-stage video {
+      display: block;
+      width: 100%;
+      max-height: 540px;
+      background: #000;
+    }
+    .video-stage video.portrait {
+      max-width: 310px;
+      aspect-ratio: 9 / 16;
+    }
+    .video-stage video.landscape {
+      aspect-ratio: 16 / 9;
+    }
+    .video-foot {
+      padding: 10px 14px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .section {
+      padding: 36px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-hdr {
+      margin-bottom: 20px;
+    }
+    .section-hdr h2 {
+      margin: 4px 0 8px;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      letter-spacing: -0.015em;
+    }
+    .section-hdr p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .pillar-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .pillar-panel {
+      background: var(--surface);
+      border: 1px solid var(--rule-strong);
+      padding: 20px;
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .spec-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .spec-list li { margin-bottom: 8px; }
+    .spec-list strong { color: var(--ink); }
+    .kv-box {
+      background: #0d0d0f;
+      border: 1px solid var(--rule);
+      padding: 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .kv-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .kv-row:last-child { border-bottom: none; }
+    .kv-row span { color: var(--muted); }
+    .kv-row b { color: var(--ink); text-align: right; }
+    .kv-row b.ok { color: var(--sage); }
+    .kv-row b.warn { color: var(--coral); }
+    .kv-row b.gold { color: var(--brass-bright); }
+
+    .firewall-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .state-card {
+      background: var(--surface);
+      border: 1px solid var(--rule-strong);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid var(--rule-strong);
+      background: #0e0e10;
+    }
+    .pill.clean { color: var(--sage); border-color: rgba(105, 183, 138, 0.45); background: var(--sage-soft); }
+    .pill.dirty { color: var(--coral); border-color: rgba(217, 107, 99, 0.45); background: var(--coral-soft); }
+    .pill.sim { color: var(--brass-bright); border-color: var(--brass-rule); background: var(--brass-soft); }
+    .sim-log {
+      background: #0a0a0c;
+      border: 1px solid var(--rule);
+      padding: 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      min-height: 92px;
+      word-break: break-word;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .tier-card {
+      background: linear-gradient(180deg, #141310 0%, #101012 100%);
+      border: 1px solid var(--brass-rule);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .tier-card.secondary {
+      background: var(--surface);
+      border-color: var(--rule-strong);
+    }
+    .tier-price {
+      font-family: var(--mono);
+      font-size: 1.55rem;
+      color: var(--brass-bright);
+      margin: 6px 0 4px;
+    }
+    .tier-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .labs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .lab-link {
+      display: block;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink);
+    }
+    .lab-link:hover { border-color: var(--brass); color: var(--brass-bright); text-decoration: none; }
+    .lab-link.active { border-color: var(--brass); background: var(--brass-soft); color: var(--brass-bright); }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px) {
+      .hero, .showcase-grid, .firewall-grid, .cta-grid { grid-template-columns: 1fr; }
+      .labs-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .wrap { padding: 20px 14px 48px; }
+      .nav-inner { padding: 10px 14px; }
+      .nav-links { gap: 10px; font-size: 11px; }
+      .metric-strip { grid-template-columns: 1fr; }
+      .labs-grid { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+      .hero-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-notice">
+    <strong>VERISTRUX INC.</strong> &middot; ViewDrift (<code>/ppd v1.5.0</code>) for Unreal Engine 5.8 &amp; 5.9 &middot; Proprietary C++20 / D3D12 RDG Plugin &middot; Launch Rates through Dec 1
+  </div>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="./index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M2 2.5L8 13.5L14 2.5" fill="none" stroke="#c8a25a" stroke-width="1.8" stroke-linecap="square" /></svg>
+        </span>
+        <span>Veristrux</span>
+        <span class="brand-badge">ViewDrift v1.5</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#pillars">4 Pillars</a>
+        <a href="#firewall">Save Firewall</a>
+        <a href="#license">Licensing</a>
+        <a href="./tokenczar-demo.html">Token Czar</a>
+        <a href="./ue5-doctor-demo.html">UE5 Doctor</a>
+        <a href="./index.html">Main Suite</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="kicker">Unreal Engine 5.8 &amp; 5.9 &middot; Spatial Verification Plugin</span>
+        <h1>Catch 3D <span>Null-Space Drift</span> before <code>SavePackage</code>.</h1>
+        <p class="lead">
+          When an AI agent or automated mesh script evaluates its own Unreal Engine edits through a single <code>0&deg; Lit</code> screenshot, viewing-ray depth spikes, sub-2px modular seams, and masked <code>SSS=0</code> dropouts pass silently. ViewDrift (<code>/ppd v1.5.0</code>) closes all three blind zones deterministically inside UE 5.8 &amp; 5.9.
+        </p>
+
+        <div class="metric-strip">
+          <div class="metric">
+            <b>&le; 0.50 mm</b>
+            <span>Authoritative post-deformation 3D seam &amp; fold gate</span>
+          </div>
+          <div class="metric">
+            <b>29-Prime (6-Wall)</b>
+            <span>Equal-solid-angle Laguerre optical fiducial chamber</span>
+          </div>
+          <div class="metric">
+            <b>8.9&times; Contrast</b>
+            <span><code>0.30</code> Detail Lighting override exposes <code>SSS=0</code> masks</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" target="_blank" rel="noopener">
+            Personal License &mdash; $77.40
+          </a>
+          <a class="btn" href="https://buy.polar.sh/polar_cl_l04tSHl8LLF8eKXw502e8p6AMWonIqBKK8mQ808CGEe" target="_blank" rel="noopener">
+            Studio-5 License &mdash; $479.40
+          </a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-hdr">
+          <span class="video-hdr-title">Verified UE 5.9 Showcase Reel</span>
+          <div class="tab-group" role="tablist" aria-label="Video aspect ratio">
+            <button type="button" class="tab-btn" id="btnFmt169" role="tab" aria-selected="true">16:9 Desktop (1080p)</button>
+            <button type="button" class="tab-btn" id="btnFmt916" role="tab" aria-selected="false">9:16 Mobile Reel</button>
+          </div>
+        </div>
+        <div class="video-stage">
+          <video id="vdVideo" class="landscape" controls playsinline preload="metadata" poster="./media/viewdrift_ue59_showcase_poster.png">
+            <source id="vdSource" src="./media/viewdrift_ue59_showcase.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="video-foot">
+          <span id="vdCaption">Native UE 5.9 wireframe + 0.30 Detail Lighting captures &amp; 4-pillar overview</span>
+          <a id="vdDirect" href="./media/viewdrift_ue59_showcase.mp4" target="_blank" rel="noopener">Direct MP4 &nearr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pillars">
+      <div class="section-hdr">
+        <span class="kicker">Architecture Overview</span>
+        <h2>Four Deterministic Verification Pillars</h2>
+        <p>Select any pillar below to inspect what ViewDrift measures inside Unreal Engine 5.8 and 5.9 before an automated edit is permitted to persist.</p>
+      </div>
+
+      <div class="pillar-tabs" role="tablist" aria-label="ViewDrift Four Pillars">
+        <button type="button" class="tab-btn" data-pillar="p1" role="tab" aria-selected="true">Pillar 1 &middot; 3D Seam &amp; Fold Gate</button>
+        <button type="button" class="tab-btn" data-pillar="p2" role="tab" aria-selected="false">Pillar 2 &middot; 29-Prime Optical Chamber</button>
+        <button type="button" class="tab-btn" data-pillar="p3" role="tab" aria-selected="false">Pillar 3 &middot; 0.30 Detail Lighting &amp; PT</button>
+        <button type="button" class="tab-btn" data-pillar="p4" role="tab" aria-selected="false">Pillar 4 &middot; SelectiveDirtyBit Firewall</button>
+      </div>
+
+      <div class="pillar-panel" id="pillarPanel">
+        <div class="showcase-grid">
+          <div>
+            <span class="kicker" id="pTag">Pillar 1 &middot; Geometric &amp; Topological Continuity</span>
+            <h3 id="pTitle" style="margin: 0 0 10px; font-family: var(--serif); font-weight: 400; font-size: 1.35rem;">Post-Deformation 3D Seam &amp; Razor-Fold Gate</h3>
+            <p id="pDesc" style="margin: 0; color: var(--muted);">
+              Evaluates exact post-skinning directed point-to-triangle boundary distance and normal crease continuity in 3D space rather than relying on 2D RGB crops where sub-2px gaps can evade visual inspection.
+            </p>
+            <ul class="spec-list" id="pBullets">
+              <li><strong>Authoritative 3D Threshold:</strong> Rejects boundary seams exceeding <code>0.50 mm</code> or normal crease discontinuity <code>&gt; 0.05</code>.</li>
+              <li><strong>Razor-Fold Protection:</strong> Flags sharp interior dihedral ridges created by discontinuous vertex/bone scripts.</li>
+              <li><strong>Nyquist-Aligned Contact Sheet:</strong> Captures a <code>1536&times;1536</code> (<code>4&times;768&sup2;</code>) multi-angle multi-buffer audit sheet (<code>Q1</code> Detail Lighting, <code>Q2</code> <code>+90&deg;</code> Profile &amp; Seam Zoom, <code>Q3</code> Lit, <code>Q4</code> <code>-90&deg;</code> Profile &amp; Unobstructed NBV).</li>
+            </ul>
+          </div>
+          <div class="kv-box" id="pMetrics">
+            <div class="kv-row"><span>Boundary Distance Gate</span><b class="ok">&le; 0.50 mm</b></div>
+            <div class="kv-row"><span>Normal Crease Limit</span><b class="ok">&le; 0.05</b></div>
+            <div class="kv-row"><span>0.65 mm Test Projection</span><b class="warn">1.59 px (&lt; 2 px test view)</b></div>
+            <div class="kv-row"><span>20 mm Along-Ray Spike</span><b class="warn">0 px at 0&deg; &rarr; Caught at +90&deg;</b></div>
+            <div class="kv-row"><span>Contact Sheet Output</span><b class="gold">1536&times;1536 (4&times;768&sup2;)</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="firewall">
+      <div class="section-hdr">
+        <span class="kicker">Pillar 4 Conceptual State Model</span>
+        <h2><code>SelectiveDirtyBit</code> MCP Save Firewall</h2>
+        <p>ViewDrift separates geometry dirty state (<code>b_mesh</code>) from material/UV dirty state (<code>b_uv</code>) so unrelated asset work flows unimpeded while mutated 3D scene subjects require matching verification before save.</p>
+      </div>
+
+      <div class="firewall-grid">
+        <div class="state-card">
+          <div>
+            <div class="badge-row" style="margin-bottom: 12px;">
+              <span class="pill sim">STATE-MODEL SIMULATION &mdash; NOT A RECORDED MCP SAVE</span>
+            </div>
+            <div class="kv-box">
+              <div class="kv-row"><span>b_mesh (Geometry / Skinning)</span><b id="stMesh" class="ok">CLEAN (0)</b></div>
+              <div class="kv-row"><span>b_uv (Material / SSS / UV)</span><b id="stUv" class="ok">CLEAN (0)</b></div>
+              <div class="kv-row"><span>Required Audit Gate</span><b id="stReq" class="ok">NONE</b></div>
+              <div class="kv-row"><span>Simulated Save Eligibility</span><b id="stOut" class="ok">SIMULATED SAVE ELIGIBLE</b></div>
+            </div>
+          </div>
+          <div class="tab-group">
+            <button type="button" class="btn btn-sm" id="btnSimMesh">1. Mutate Mesh Only</button>
+            <button type="button" class="btn btn-sm" id="btnSimUv">2. Mutate Material / SSS</button>
+            <button type="button" class="btn btn-sm btn-brass" id="btnSimVerify">3. Run Required Audit</button>
+          </div>
+        </div>
+
+        <div class="state-card">
+          <div>
+            <span class="kicker">Firewall Behavior Summary</span>
+            <p style="margin: 0 0 12px; color: var(--muted); font-size: 13.5px;">
+              Toggle a mesh-only or material-only mutation on the left to observe how <code>FViewDriftToolsetFirewall</code> scopes verification requirements instead of imposing blind full-scene stalls.
+            </p>
+            <div class="sim-log" id="simLog">[State Model] Initial clean state: b_mesh = 0, b_uv = 0 -&gt; SIMULATED SAVE ELIGIBLE.</div>
+          </div>
+          <div class="badge-row">
+            <span class="pill">UE 5.8 &amp; 5.9 C++20</span>
+            <span class="pill">D3D12 RDG Shader</span>
+            <span class="pill">Claude &amp; Antigravity MCP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="license">
+      <div class="section-hdr">
+        <span class="kicker">Commercial Licensing &middot; Polar.sh Merchant of Record</span>
+        <h2>Deploy ViewDrift (<code>/ppd v1.5.0</code>) in Unreal Engine 5.8 &amp; 5.9</h2>
+        <p>Includes full UE 5.8/5.9 C++20 &amp; D3D12 RDG HLSL plugin source, dockable Slate Spatial Fiducial Inspector, Claude &amp; Antigravity MCP integration, and Python <code>ppd-auditor</code> SDK. Local-first, zero-content-telemetry.</p>
+      </div>
+
+      <div class="cta-grid">
+        <div class="tier-card">
+          <div>
+            <span class="kicker">Individual Engineer / Indie Studio</span>
+            <h3 style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.35rem;">ViewDrift Personal License</h3>
+            <div class="tier-price">$77.40</div>
+            <div class="tier-sub">Launch rate through Dec 1 (code BLACKFRIDAY26 pre-applied) &middot; $129 regular &middot; 1 seat perpetual source access</div>
+          </div>
+          <a class="btn btn-brass" href="https://buy.polar.sh/polar_cl_T5gLO00OTgqjhr3YGMW83vmfj1ysmA1AkCQiS1c9ud9" target="_blank" rel="noopener">
+            Get Personal License &mdash; $77.40 &rarr;
+          </a>
+        </div>
+
+        <div class="tier-card secondary">
+          <div>
+            <span class="kicker">Multi-Seat Team / CI Pipeline</span>
+            <h3 style="margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.35rem;">ViewDrift Studio-5 License</h3>
+            <div class="tier-price">$479.40</div>
+            <div class="tier-sub">Launch rate through Dec 1 (code BLACKFRIDAY26 pre-applied) &middot; $799 regular &middot; Up to 5 seats + headless CI gates</div>
+          </div>
+          <a class="btn" href="https://buy.polar.sh/polar_cl_l04tSHl8LLF8eKXw502e8p6AMWonIqBKK8mQ808CGEe" target="_blank" rel="noopener">
+            Get Studio-5 License &mdash; $479.40 &rarr;
+          </a>
+        </div>
+      </div>
+
+      <div class="labs-grid" aria-label="Veristrux Interactive Labs">
+        <a class="lab-link active" href="./viewdrift-demo.html">1. ViewDrift UE 5.9 Showcase</a>
+        <a class="lab-link" href="./tokenczar-demo.html">2. Token Czar AST &amp; Cache Lab &rarr;</a>
+        <a class="lab-link" href="./ue5-doctor-demo.html">3. UE 5.9 UBT &amp; OpenXR INI Lab &rarr;</a>
+        <a class="lab-link" href="./silicon-tuner-demo.html">4. Hybrid Silicon GQA &amp; MoE Lab &rarr;</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Veristrux Inc. (Delaware, USA) &middot; Zero-Content-Telemetry Engineering Software</span>
+      <span>
+        <a href="./index.html">Home</a> &middot;
+        <a href="./privacy.html">Privacy</a> &middot;
+        <a href="./terms.html">Terms</a> &middot;
+        <a href="./eula.html">EULA</a> &middot;
+        <a href="mailto:argoness@veristrux.com">argoness@veristrux.com</a>
+      </span>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const video = document.getElementById('vdVideo');
+      const source = document.getElementById('vdSource');
+      const caption = document.getElementById('vdCaption');
+      const direct = document.getElementById('vdDirect');
+      const btn169 = document.getElementById('btnFmt169');
+      const btn916 = document.getElementById('btnFmt916');
+
+      function setFormat(mode) {
+        const isPortrait = mode === '916';
+        btn169.setAttribute('aria-selected', String(!isPortrait));
+        btn916.setAttribute('aria-selected', String(isPortrait));
+        video.className = isPortrait ? 'portrait' : 'landscape';
+        const src = isPortrait ? './media/wave5/viewdrift_ue59_short.mp4' : './media/viewdrift_ue59_showcase.mp4';
+        source.src = src;
+        direct.href = src;
+        caption.textContent = isPortrait
+          ? '9:16 mobile reel: native UE 5.9 captures, zoomed Q1/Q2 views & Pillar 4 walkthrough'
+          : '16:9 1080p showcase: native UE 5.9 wireframe + 0.30 Detail Lighting captures & 4-pillar overview';
+        video.load();
+      }
+      btn169.addEventListener('click', () => setFormat('169'));
+      btn916.addEventListener('click', () => setFormat('916'));
+      if (window.innerWidth <= 640) setFormat('916');
+
+      const PILLARS = {
+        p1: {
+          tag: 'Pillar 1 · Geometric & Topological Continuity',
+          title: 'Post-Deformation 3D Seam & Razor-Fold Gate',
+          desc: 'Evaluates exact post-skinning directed point-to-triangle boundary distance and normal crease continuity in 3D space rather than relying on 2D RGB crops where sub-2px gaps can evade visual inspection.',
+          bullets: [
+            '<strong>Authoritative 3D Threshold:</strong> Rejects boundary seams exceeding <code>0.50 mm</code> or normal crease discontinuity <code>&gt; 0.05</code>.',
+            '<strong>Razor-Fold Protection:</strong> Flags sharp interior dihedral ridges created by discontinuous vertex/bone scripts.',
+            '<strong>Nyquist-Aligned Contact Sheet:</strong> Captures a <code>1536&times;1536</code> (<code>4&times;768&sup2;</code>) multi-angle multi-buffer audit sheet (<code>Q1</code> Detail Lighting, <code>Q2</code> <code>+90&deg;</code> Profile &amp; Seam Zoom, <code>Q3</code> Lit, <code>Q4</code> <code>-90&deg;</code> Profile &amp; Unobstructed NBV).'
+          ],
+          metrics: [
+            ['Boundary Distance Gate', '&le; 0.50 mm', 'ok'],
+            ['Normal Crease Limit', '&le; 0.05', 'ok'],
+            ['0.65 mm Test Projection', '1.59 px (&lt; 2 px test view)', 'warn'],
+            ['20 mm Along-Ray Spike', '0 px at 0&deg; &rarr; Caught at +90&deg;', 'warn'],
+            ['Contact Sheet Output', '1536&times;1536 (4&times;768&sup2;)', 'gold']
+          ]
+        },
+        p2: {
+          tag: 'Pillar 2 · Equal-Solid-Angle Spatial Reference',
+          title: '29-Prime 6-Wall Dynamic Laguerre Optical Chamber',
+          desc: 'Surrounds any 3D subject with a prime-sector equal-solid-angle spatial fiducial (12 pentagons + 17 hexagons) unfolded across all six chamber walls (A-NORTH through F-CEILING) to eliminate rotational symmetry aliasing and disambiguate FOV compression from dolly standoff.',
+          bullets: [
+            '<strong>Zero Beauty-GI Pollution:</strong> Evaluates sector bearings analytically during beauty contact-sheet capture so zero gizmo bounce contaminates Lumen GI.',
+            '<strong>Standalone RDG Chamber Render:</strong> Invokes the native UE 5.9 Render Dependency Graph (D3D12) optical chamber on demand via <code>CaptureFiducialCubeView</code> or the docked Slate Inspector.',
+            '<strong>Deterministic NBV Guidance:</strong> Distinguishes combinatorial face pairings from exact geometric ray-antipodal directions across all <code>4&pi;</code> angles.'
+          ],
+          metrics: [
+            ['Prime Sector Partition', '29 faces (12P + 17H)', 'gold'],
+            ['Solid Angle Uniformity', '4&pi; / 29 sr equal-area', 'ok'],
+            ['Chamber Surfaces', 'A-NORTH &ndash; F-CEILING', 'gold'],
+            ['Beauty GI Interference', 'Zero (analytical pass)', 'ok'],
+            ['Native Engine Pass', 'UE 5.8 / 5.9 Render Graph (D3D12)', 'ok']
+          ]
+        },
+        p3: {
+          tag: 'Pillar 3 · Radiometric & G-Buffer Hygiene',
+          title: '0.30 Neutral Gray Detail Lighting & 64-SPP Relative Check',
+          desc: 'Orphaned subsurface scattering (SSS=0) or roughness mask errors can hide beneath matched BaseColor textures at ~7.8% contrast in Lit mode. Applying UE 5.9 VMI_Lit_DetailLighting neutral gray override amplifies those discontinuities 8.9x.',
+          bullets: [
+            '<strong>Substrate &amp; Legacy Deferred Parity:</strong> Runs cleanly across both UE 5.9 Substrate and Legacy Deferred rendering paths.',
+            '<strong>Eroded UV Contour Gate:</strong> Isolates true interior material dropouts while ignoring expected silhouette edge gradients.',
+            '<strong>Relative Path-Tracer Strip:</strong> Optional <code>[Lit | 64-SPP Path Tracer | 4&times; Abs-Diff]</code> side-by-side diagnostic strip (relative denoised check, clearly documented with tonemapped caveats).'
+          ],
+          metrics: [
+            ['Lit Mode SSS=0 Contrast', '~7.8% (easily missed)', 'warn'],
+            ['0.30 Detail Lighting Jump', '69.1% (8.9&times; gain)', 'ok'],
+            ['Rendering Support', 'Substrate + Deferred', 'ok'],
+            ['Relative PT Strip', '64-SPP Denoised Diff', 'gold'],
+            ['Verification Mode', 'Automated + Visual PNG', 'ok']
+          ]
+        },
+        p4: {
+          tag: 'Pillar 4 · Stateful MCP Mutation Guard',
+          title: 'SelectiveDirtyBit Save Firewall (b_mesh vs. b_uv)',
+          desc: 'Integrates directly into Unreal MCP toolsets to separate geometric mutations from material/UV changes, preventing unverified edits from overwriting clean assets while keeping non-scene workflows fast.',
+          bullets: [
+            '<strong>Scoped Dirty Tracking:</strong> Mesh edits flip <code>b_mesh = 1</code> without forcing unnecessary material checks; material edits flip <code>b_uv = 1</code>.',
+            '<strong>Non-Scene Exemption:</strong> Standalone DataTables, Blueprints, and config assets save without 3D audit friction.',
+            '<strong>Fail-Closed Persistence:</strong> Blocks silent save corruption until matching Pillar 1&ndash;3 gates return clean.'
+          ],
+          metrics: [
+            ['Mesh Dirty Flag', 'b_mesh (3D seam + NBV)', 'gold'],
+            ['Material Dirty Flag', 'b_uv (0.30 Gray + UV)', 'gold'],
+            ['Non-Scene Assets', 'Exempt (zero friction)', 'ok'],
+            ['MCP Compatibility', 'Claude &amp; Antigravity', 'ok'],
+            ['Telemetry Policy', 'Local-First / Zero Upload', 'ok']
+          ]
+        }
+      };
+
+      const pTag = document.getElementById('pTag');
+      const pTitle = document.getElementById('pTitle');
+      const pDesc = document.getElementById('pDesc');
+      const pBullets = document.getElementById('pBullets');
+      const pMetrics = document.getElementById('pMetrics');
+      document.querySelectorAll('[data-pillar]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-pillar]').forEach(b => b.setAttribute('aria-selected', 'false'));
+          btn.setAttribute('aria-selected', 'true');
+          const d = PILLARS[btn.dataset.pillar];
+          pTag.textContent = d.tag;
+          pTitle.textContent = d.title;
+          pDesc.textContent = d.desc;
+          pBullets.innerHTML = d.bullets.map(b => `<li>${b}</li>`).join('');
+          pMetrics.innerHTML = d.metrics.map(([k, v, cls]) => `<div class="kv-row"><span>${k}</span><b class="${cls}">${v}</b></div>`).join('');
+        });
+      });
+
+      let bMesh = 0, bUv = 0;
+      const stMesh = document.getElementById('stMesh');
+      const stUv = document.getElementById('stUv');
+      const stReq = document.getElementById('stReq');
+      const stOut = document.getElementById('stOut');
+      const simLog = document.getElementById('simLog');
+
+      function renderSim(msg) {
+        stMesh.textContent = bMesh ? 'DIRTY (1)' : 'CLEAN (0)';
+        stMesh.className = bMesh ? 'warn' : 'ok';
+        stUv.textContent = bUv ? 'DIRTY (1)' : 'CLEAN (0)';
+        stUv.className = bUv ? 'warn' : 'ok';
+        const reqs = [];
+        if (bMesh) reqs.push('Pillar 1 Seam + Pillar 2 NBV');
+        if (bUv) reqs.push('Pillar 3 0.30 Gray SSS');
+        stReq.textContent = reqs.length ? reqs.join(' + ') : 'NONE';
+        stReq.className = reqs.length ? 'gold' : 'ok';
+        const blocked = bMesh || bUv;
+        stOut.textContent = blocked ? 'SIMULATED SAVE BLOCKED' : 'SIMULATED SAVE ELIGIBLE';
+        stOut.className = blocked ? 'warn' : 'ok';
+        simLog.textContent = msg;
+      }
+
+      document.getElementById('btnSimMesh').addEventListener('click', () => {
+        bMesh = 1;
+        renderSim('[State Model] Mesh mutation recorded (b_mesh = 1, b_uv = ' + bUv + ') -> SIMULATED SAVE BLOCKED until 3D seam & parallax check passes.');
+      });
+      document.getElementById('btnSimUv').addEventListener('click', () => {
+        bUv = 1;
+        renderSim('[State Model] Material/UV edit recorded (b_mesh = ' + bMesh + ', b_uv = 1) -> SIMULATED SAVE BLOCKED until 0.30 Detail Lighting check passes.');
+      });
+      document.getElementById('btnSimVerify').addEventListener('click', () => {
+        bMesh = 0; bUv = 0;
+        renderSim('[State Model] Required Pillar gates cleared -> b_mesh = 0, b_uv = 0 -> SIMULATED SAVE ELIGIBLE.');
+      });
+    })();
+  </script>
+</body>
+</html>
